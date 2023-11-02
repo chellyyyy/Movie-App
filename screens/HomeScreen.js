@@ -13,12 +13,12 @@ const HomeScreen = ({ navigation }) => {
         page: 1
       }
     })
-    .then(response => {
-      setMovies(response.data.results);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+      .then(response => {
+        setMovies(response.data.results);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }, []);
 
   return (
