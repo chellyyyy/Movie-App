@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { ScrollView, View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { fetchTrendingMovies, image500 } from '../api/moviedb';
+import TrendingMovies from '../components/trendingMovies';
+import MovieList from '../components/movieList';
 
 const HomeScreen = ({ navigation }) => {
   const [trending, setTrending] = useState([]);
@@ -32,57 +34,43 @@ const HomeScreen = ({ navigation }) => {
   }
 
   // Hàm để cắt tên phim nếu quá dài và thêm dấu '...'
-  const truncateText = (text, length) => {
-    if (text.length > length) {
-      return text.slice(0, length) + '...';
-    } else {
-      return text;
-    }
-  };
+  // const truncateText = (text, length) => {
+  //   if (text.length > length) {
+  //     return text.slice(0, length) + '...';
+  //   } else {
+  //     return text;
+  //   }
+  // };
 
   return (
-    <View>
-      <Text style={styles.movieHeader}>Phim Hot</Text>
-      <FlatList
-        data={trending}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Detail', { movieId: item.id })}>
-            <View style={styles.movieItem}>
-              <Image
-                source={{ uri: image500(item.poster_path) }}
-                style={styles.posterImage}
-              />
-              <Text style={styles.movieTitle}>{truncateText(item.title, 20)}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-      />
-    </View>
+    <ScrollView>
+      {trending.length > 0 && <TrendingMovies title="Trending" data={trending} />}
+      <MovieList title="Trending" data={trending} />
+      <MovieList title="Upcoming" data={upcoming} />
+      <MovieList title="Top Rated" data={topRated} />
+    </ScrollView>
   );
 }
 
-const styles = StyleSheet.create({
-  movieHeader: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    margin: 10,
-  },
-  movieItem: {
-    marginRight: 10,
-    alignItems: 'center',
-  },
-  posterImage: {
-    width: 150,
-    height: 225,
-    borderRadius: 10,
-  },
-  movieTitle: {
-    marginTop: 5,
-    fontSize: 14,
-  },
-});
+// const styles = StyleSheet.create({
+//   movieHeader: {
+//     fontSize: 20,
+//     fontWeight: 'bold',
+//     margin: 10,
+//   },
+//   movieItem: {
+//     marginRight: 10,
+//     alignItems: 'center',
+//   },
+//   posterImage: {
+//     width: 150,
+//     height: 225,
+//     borderRadius: 10,
+//   },
+//   movieTitle: {
+//     marginTop: 5,
+//     fontSize: 14,
+//   },
+// });
 
 export default HomeScreen;
