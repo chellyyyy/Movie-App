@@ -9,7 +9,7 @@ export default function TrendingMovies({ title, data }) {
     const navigation = useNavigation();
 
     const handleClick = (item) => {
-        navigation.navigate('Movie', item);
+        navigation.navigate('DetailScreen', item);
     };
 
     return (
@@ -17,7 +17,9 @@ export default function TrendingMovies({ title, data }) {
             <Text style={styles.titleText}>{title}</Text>
             <ScrollView horizontal={true} style={styles.scrollViewContainer}>
                 {data.map((item, index) => (
-                    <MovieCard key={index} handleClick={handleClick} item={item} />
+                    <MovieCard key={index} 
+                        onPress={handleClick} item={item}
+                    />
                 ))}
             </ScrollView>
         </View>

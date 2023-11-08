@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ScrollView, View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { fetchTrendingMovies, image500 } from '../api/moviedb';
+import { fetchTrendingMovies, fetchUpcomingMovies, fetchTopRatedMovies, image500 } from '../api/moviedb';
 import TrendingMovies from '../components/trendingMovies';
 import MovieList from '../components/movieList';
 
@@ -8,7 +8,7 @@ const HomeScreen = ({ navigation }) => {
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [topRated, setTopRated] = useState([]);
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getTrendingMovies();
@@ -45,9 +45,10 @@ const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView>
       {trending.length > 0 && <TrendingMovies title="Trending" data={trending} />}
-      <MovieList title="Trending" data={trending} />
-      <MovieList title="Upcoming" data={upcoming} />
-      <MovieList title="Top Rated" data={topRated} />
+      {/* <MovieList title="Upcoming" data={upcoming} /> */}
+      { upcoming.length>0 && <MovieList title="Upcoming" data={upcoming} /> }
+      {/* <MovieList title="Top Rated" data={topRated} /> */}
+      { topRated.length>0 && <MovieList title="Top Rated" data={topRated} /> }
     </ScrollView>
   );
 }

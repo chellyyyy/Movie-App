@@ -1,6 +1,7 @@
 import axios from "axios";
-import { apiKey } from "../constants";
+// import { apiKey } from "../constants";
 
+export const apiKey = '4e80299570f883238b5b376377d6ea42';
 
 // endpoints
 const apiBaseUrl = 'https://api.themoviedb.org/3';
@@ -8,7 +9,7 @@ const trendingMoviesEndpoint = `${apiBaseUrl}/trending/movie/day?api_key=${apiKe
 const upcomingMoviesEndpoint = `${apiBaseUrl}/movie/upcoming?api_key=${apiKey}`;
 const topRatedMoviesEndpoint = `${apiBaseUrl}/movie/top_rated?api_key=${apiKey}`;
 const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
-
+// https://api.themoviedb.org/3/movie/top_rated?api_key=4e80299570f883238b5b376377d6ea42
 
 // endpoints with dynamic params
 

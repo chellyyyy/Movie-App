@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableWithoutFeedback, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
-import { moviesData } from '../constants';
+// import { moviesData } from '../constants';
 import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image185, image342, poster342 } from '../api/moviedb';
 
@@ -15,7 +15,7 @@ export default function MovieList({ title, hideSeeAll, data }) {
                 <Text style={styles.titleText}>{title} Movies</Text>
                 {!hideSeeAll && (
                     <TouchableOpacity>
-                        <Text style={styles.seeAllText}>See All</Text>
+                        <Text style={styles.seeAllText}>Xem Thêm</Text>
                     </TouchableOpacity>
                 )}
             </View>

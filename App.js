@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import Icons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from './screens/HomeScreen';
@@ -9,6 +10,7 @@ import DetailScreen from './screens/DetailScreen';
 import AccountScreen from './screens/AccountScreen';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const TabIcon = ({ name, focused }) => {
   return (
@@ -25,11 +27,20 @@ const homeScreenOptions = (headerShown, name) => {
   };
 };
 
+const HomeStack = () => {
+  return (
+    <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}} />
+        <Stack.Screen name="DetailScreen" component={DetailScreen} options={{headerShown:false}} />
+    </Stack.Navigator>
+  );
+};
+
 export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Home" component={HomeScreen}
+        <Tab.Screen name="Home" component={HomeStack}
           options={homeScreenOptions(true, 'home')} />
         <Tab.Screen name="Premium" component={PremiumScreen}
           options={homeScreenOptions(true, 'star')} />
