@@ -10,6 +10,7 @@ import DetailScreen from './screens/DetailScreen';
 import AccountScreen from './screens/AccountScreen';
 import SearchScreen from './screens/SearchScreen';
 import PersonScreen from './screens/PersonScreen';
+import ViewScreen from './screens/ViewScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -32,10 +33,11 @@ const homeScreenOptions = (headerShown, name) => {
 const HomeStack = () => {
   return (
     <Stack.Navigator>
-        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}} />
-        <Stack.Screen name="DetailScreen" component={DetailScreen} options={{headerShown:false}} />
-        <Stack.Screen name="Search" options={{headerShown: false}} component={SearchScreen} />
-        <Stack.Screen name="Person" options={{headerShown: false}} component={PersonScreen} />
+      <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Detail" component={DetailScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Search" options={{ headerShown: false }} component={SearchScreen} />
+      <Stack.Screen name="Person" options={{ headerShown: false }} component={PersonScreen} />
+      <Stack.Screen name="View" options={{ headerShown: false }} component={ViewScreen} />
     </Stack.Navigator>
   );
 };

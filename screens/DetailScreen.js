@@ -11,6 +11,7 @@ import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilar
 import Loading from '../components/loading';
 import { Mainstyles, theme } from '../theme';
 
+
 const topMargin = 24;
 const { width, height } = Dimensions.get('window');
 
@@ -60,7 +61,7 @@ export default function MovieScreen() {
       {/* back button and movie poster */}
       <View style={{ width: '100%' }}>
         <SafeAreaView style={styles.backButtonContainer}>
-          <TouchableOpacity style={[ Mainstyles.background, { borderRadius: 10, padding: 1 }]} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={[Mainstyles.background, { borderRadius: 10, padding: 1 }]} onPress={() => navigation.goBack()}>
             <ChevronLeftIcon size={28} strokeWidth={2.5} color="white" />
           </TouchableOpacity>
 
@@ -112,6 +113,14 @@ export default function MovieScreen() {
         <Text style={styles.movieDescription}>{movie?.overview}</Text>
       </View>
 
+      {/* button view */}
+      <TouchableOpacity
+        style={[Mainstyles.background, styles.movieButton]}
+        onPress={() => navigation.navigate('View', { id: item.id })}
+      >
+        <Text style={styles.movieButtonText}>Play Now </Text>
+      </TouchableOpacity>
+
       {/* cast */}
       {movie?.id && cast.length > 0 && <Cast navigation={navigation} cast={cast} />}
 
@@ -160,5 +169,15 @@ const styles = StyleSheet.create({
     color: '#8a8a8a',
     marginHorizontal: 16,
     letterSpacing: 0.5,
+  },
+  movieButton: {
+    alignItems: 'center',
+    borderRadius: 10,
+    padding: 10,
+    margin: 10,
+  },
+  movieButtonText: {
+    color: 'white',
+    fontSize: 16,
   },
 });

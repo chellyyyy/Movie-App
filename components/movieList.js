@@ -27,7 +27,7 @@ export default function MovieList({ title, hideSeeAll, data }) {
             >
                 {data.map((item, index) => {
                     return (
-                        <TouchableWithoutFeedback key={index} onPress={() => navigation.push('DetailScreen', item)}>
+                        <TouchableWithoutFeedback key={index} onPress={() => navigation.push('Detail', item)}>
                             <View style={styles.movieItemContainer}>
                                 <Image
                                     source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}
