@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableWithoutFeedback, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
-// import { moviesData } from '../constants';
 import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image185, image342, poster342 } from '../api/moviedb';
+import { Mainstyles } from '../theme';
 
-const {width, height} =  Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default function MovieList({ title, hideSeeAll, data }) {
     const navigation = useNavigation();
@@ -15,7 +15,7 @@ export default function MovieList({ title, hideSeeAll, data }) {
                 <Text style={styles.titleText}>{title} Movies</Text>
                 {!hideSeeAll && (
                     <TouchableOpacity>
-                        <Text style={styles.seeAllText}>Xem Thêm</Text>
+                        <Text style={Mainstyles.text}>Xem Thêm</Text>
                     </TouchableOpacity>
                 )}
             </View>
@@ -57,13 +57,13 @@ const styles = StyleSheet.create({
         marginHorizontal: 4,
     },
     titleText: {
-        // color: 'white',
+        color: 'white',
         fontSize: 20,
         fontWeight: 'bold',
         margin: 10,
     },
     seeAllText: {
-        color: 'blue',
+        // color: 'blue',
         // fontSize: 20,
     },
     scrollViewContainer: {
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     movieTitle: {
-        color: 'gray',
+        color: 'white',
         // marginLeft: 4,
     },
 });

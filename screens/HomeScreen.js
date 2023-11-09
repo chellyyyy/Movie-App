@@ -8,7 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
-// import { styles } from '../theme';
+import { Mainstyles } from '../theme';
 
 export default function HomeScreen() {
 
@@ -49,7 +49,7 @@ export default function HomeScreen() {
         <View style={styles.header}>
           <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" />
           <Text style={styles.title}>
-            <Text style={styles.text}>M</Text>ovies
+            <Text style={Mainstyles.text}>M</Text>ovies
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Search')}>
             <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />

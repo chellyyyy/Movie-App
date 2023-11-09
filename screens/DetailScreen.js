@@ -9,6 +9,7 @@ import Cast from '../components/cast';
 import MovieList from '../components/movieList';
 import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from '../api/moviedb';
 import Loading from '../components/loading';
+import { Mainstyles, theme } from '../theme';
 
 const topMargin = 24;
 const { width, height } = Dimensions.get('window');
@@ -59,7 +60,7 @@ export default function MovieScreen() {
       {/* back button and movie poster */}
       <View style={{ width: '100%' }}>
         <SafeAreaView style={styles.backButtonContainer}>
-          <TouchableOpacity style={{ borderRadius: 10, padding: 1 }} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={[ Mainstyles.background, { borderRadius: 10, padding: 1 }]} onPress={() => navigation.goBack()}>
             <ChevronLeftIcon size={28} strokeWidth={2.5} color="white" />
           </TouchableOpacity>
 
@@ -122,42 +123,42 @@ export default function MovieScreen() {
 
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#121212',
-    },
-    backButtonContainer: {
-      position: 'absolute',
-      zIndex: 20,
-      width: '100%',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingHorizontal: 16,
-      marginTop: topMargin,
-    },
-    movieTitle: {
-      color: 'white',
-      textAlign: 'center',
-      fontSize: 24,
-      fontWeight: 'bold',
-      letterSpacing: 1.2,
-    },
-    movieDetails: {
-      color: '#8a8a8a',
-      fontWeight: '600',
-      fontSize: 16,
-      textAlign: 'center',
-    },
-    genreText: {
-      color: '#8a8a8a',
-      fontWeight: '600',
-      fontSize: 16,
-      textAlign: 'center',
-    },
-    movieDescription: {
-      color: '#8a8a8a',
-      marginHorizontal: 16,
-      letterSpacing: 0.5,
-    },
-  });
+  container: {
+    flex: 1,
+    backgroundColor: '#121212',
+  },
+  backButtonContainer: {
+    position: 'absolute',
+    zIndex: 20,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    marginTop: topMargin,
+  },
+  movieTitle: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 24,
+    fontWeight: 'bold',
+    letterSpacing: 1.2,
+  },
+  movieDetails: {
+    color: '#8a8a8a',
+    fontWeight: '600',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  genreText: {
+    color: '#8a8a8a',
+    fontWeight: '600',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  movieDescription: {
+    color: '#8a8a8a',
+    marginHorizontal: 16,
+    letterSpacing: 0.5,
+  },
+});

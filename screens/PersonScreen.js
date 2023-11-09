@@ -7,6 +7,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import MovieList from '../components/movieList';
 import Loading from '../components/loading';
 import { fallbackPersonImage, fetchPersonDetails, fetchPersonMovies, image185, image342 } from '../api/moviedb';
+import { theme } from '../theme';
 
 const verticalMargin = 24;
 const { width, height } = Dimensions.get('window');
@@ -51,7 +52,7 @@ export default function PersonScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)}>
-          <HeartIcon size={35} color={isFavourite ? 'red' : 'white'} />
+          <HeartIcon size={35} color={isFavourite ? theme.background : 'white'} />
         </TouchableOpacity>
       </SafeAreaView>
 

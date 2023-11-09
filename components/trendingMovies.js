@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableWithoutFeedback, Dimensions, ScrollView, St
 import { useNavigation } from '@react-navigation/native';
 import { image500 } from '../api/moviedb';
 
-const {width, height} =  Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 export default function TrendingMovies({ title, data }) {
     const navigation = useNavigation();
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     seeAllText: {
-        color: 'blue',
+        // color: 'blue',
     },
     scrollViewContainer: {
         paddingHorizontal: 15,
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         marginRight: 10, // Spacing between items
     },
     movieTitle: {
-        color: 'gray',
+        color: 'white',
         fontSize: 20,
     },
 });
