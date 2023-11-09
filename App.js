@@ -8,6 +8,8 @@ import HomeScreen from './screens/HomeScreen';
 import PremiumScreen from './screens/PremiumScreen';
 import DetailScreen from './screens/DetailScreen';
 import AccountScreen from './screens/AccountScreen';
+import SearchScreen from './screens/SearchScreen';
+import PersonScreen from './screens/PersonScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -32,6 +34,8 @@ const HomeStack = () => {
     <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}} />
         <Stack.Screen name="DetailScreen" component={DetailScreen} options={{headerShown:false}} />
+        <Stack.Screen name="Search" options={{headerShown: false}} component={SearchScreen} />
+        <Stack.Screen name="Person" options={{headerShown: false}} component={PersonScreen} />
     </Stack.Navigator>
   );
 };
@@ -41,7 +45,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Home" component={HomeStack}
-          options={homeScreenOptions(true, 'home')} />
+          options={homeScreenOptions(false, 'home')} />
         <Tab.Screen name="Premium" component={PremiumScreen}
           options={homeScreenOptions(true, 'star')} />
         <Tab.Screen name="Account" component={AccountScreen}

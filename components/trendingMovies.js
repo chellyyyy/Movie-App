@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableWithoutFeedback, Dimensions, ScrollView, St
 import { useNavigation } from '@react-navigation/native';
 import { image500 } from '../api/moviedb';
 
-var { width, height } = Dimensions.get('window');
+const {width, height} =  Dimensions.get('window');
 
 export default function TrendingMovies({ title, data }) {
     const navigation = useNavigation();
@@ -17,9 +17,7 @@ export default function TrendingMovies({ title, data }) {
             <Text style={styles.titleText}>{title}</Text>
             <ScrollView horizontal={true} style={styles.scrollViewContainer}>
                 {data.map((item, index) => (
-                    <MovieCard key={index} 
-                        onPress={handleClick} item={item}
-                    />
+                    <MovieCard key={index} handleClick={handleClick} item={item} />
                 ))}
             </ScrollView>
         </View>

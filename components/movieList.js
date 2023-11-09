@@ -4,7 +4,7 @@ import { View, Text, ScrollView, TouchableWithoutFeedback, Image, Dimensions, To
 import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image185, image342, poster342 } from '../api/moviedb';
 
-const { width, height } = Dimensions.get('window');
+const {width, height} =  Dimensions.get('window');
 
 export default function MovieList({ title, hideSeeAll, data }) {
     const navigation = useNavigation();
@@ -27,7 +27,7 @@ export default function MovieList({ title, hideSeeAll, data }) {
             >
                 {data.map((item, index) => {
                     return (
-                        <TouchableWithoutFeedback key={index} onPress={() => navigation.push('Movie', item)}>
+                        <TouchableWithoutFeedback key={index} onPress={() => navigation.push('DetailScreen', item)}>
                             <View style={styles.movieItemContainer}>
                                 <Image
                                     source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}

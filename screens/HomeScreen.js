@@ -1,14 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { ScrollView, View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import { fetchTrendingMovies, fetchUpcomingMovies, fetchTopRatedMovies, image500 } from '../api/moviedb';
+import { View, Text, TouchableOpacity, ScrollView, Platform, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import TrendingMovies from '../components/trendingMovies';
 import MovieList from '../components/movieList';
+import { StatusBar } from 'expo-status-bar';
+import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
+import { useNavigation } from '@react-navigation/native';
+import Loading from '../components/loading';
+// import { styles } from '../theme';
 
-const HomeScreen = ({ navigation }) => {
+export default function HomeScreen() {
+
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation();
+
 
   useEffect(() => {
     getTrendingMovies();
@@ -18,60 +27,71 @@ const HomeScreen = ({ navigation }) => {
 
   const getTrendingMovies = async () => {
     const data = await fetchTrendingMovies();
-    console.log('got trending', data.results.length)
+    console.log('got trending', data.results.length);
     if (data && data.results) setTrending(data.results);
-    setLoading(false)
+    setLoading(false);
   }
   const getUpcomingMovies = async () => {
     const data = await fetchUpcomingMovies();
-    console.log('got upcoming', data.results.length)
+    console.log('got upcoming', data.results.length);
     if (data && data.results) setUpcoming(data.results);
   }
   const getTopRatedMovies = async () => {
     const data = await fetchTopRatedMovies();
-    console.log('got top rated', data.results.length)
+    console.log('got top rated', data.results.length);
     if (data && data.results) setTopRated(data.results);
   }
 
-  // Hàm để cắt tên phim nếu quá dài và thêm dấu '...'
-  // const truncateText = (text, length) => {
-  //   if (text.length > length) {
-  //     return text.slice(0, length) + '...';
-  //   } else {
-  //     return text;
-  //   }
-  // };
-
   return (
-    <ScrollView>
-      {trending.length > 0 && <TrendingMovies title="Trending" data={trending} />}
-      {/* <MovieList title="Upcoming" data={upcoming} /> */}
-      { upcoming.length>0 && <MovieList title="Upcoming" data={upcoming} /> }
-      {/* <MovieList title="Top Rated" data={topRated} /> */}
-      { topRated.length>0 && <MovieList title="Top Rated" data={topRated} /> }
-    </ScrollView>
-  );
+    <View style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <StatusBar style="light" />
+        <View style={styles.header}>
+          <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" />
+          <Text style={styles.title}>
+            <Text style={styles.text}>M</Text>ovies
+          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+            <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+      {loading ? (
+        <Loading />
+      ) : (
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
+          {trending.length > 0 && <TrendingMovies data={trending} />}
+          {upcoming.length > 0 && <MovieList title="Upcoming" data={upcoming} />}
+          {topRated.length > 0 && <MovieList title="Top Rated" data={topRated} />}
+        </ScrollView>
+      )}
+    </View>
+  )
 }
 
-// const styles = StyleSheet.create({
-//   movieHeader: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     margin: 10,
-//   },
-//   movieItem: {
-//     marginRight: 10,
-//     alignItems: 'center',
-//   },
-//   posterImage: {
-//     width: 150,
-//     height: 225,
-//     borderRadius: 10,
-//   },
-//   movieTitle: {
-//     marginTop: 5,
-//     fontSize: 14,
-//   },
-// });
-
-export default HomeScreen;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#4A5568',
+  },
+  safeArea: {
+    marginBottom: 3,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: 16,
+  },
+  title: {
+    color: 'white',
+    fontSize: 30,
+    fontWeight: 'bold',
+  },
+  text: {
+    ...StyleSheet, // Add your text styles here
+  },
+  scrollContainer: {
+    paddingBottom: 10,
+  },
+});
