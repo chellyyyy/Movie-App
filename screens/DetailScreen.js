@@ -9,10 +9,10 @@ import Cast from '../components/cast';
 import MovieList from '../components/movieList';
 import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from '../api/moviedb';
 import Loading from '../components/loading';
-import { Mainstyles, theme } from '../theme';
+import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 
-const topMargin = 24;
+const topMargin = 20;
 const { width, height } = Dimensions.get('window');
 
 export default function MovieScreen() {
@@ -61,12 +61,12 @@ export default function MovieScreen() {
       {/* back button and movie poster */}
       <View style={{ width: '100%' }}>
         <SafeAreaView style={styles.backButtonContainer}>
-          <TouchableOpacity style={[Mainstyles.background, { borderRadius: 10, padding: 1 }]} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={[Buttonstyles.background, { borderRadius: 10, padding: 1 }]} onPress={() => navigation.goBack()}>
             <ChevronLeftIcon size={28} strokeWidth={2.5} color="white" />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)}>
-            <HeartIcon size={35} color={isFavourite ? theme.background : 'white'} />
+            <HeartIcon size={35} color={isFavourite ? theme.mainColor : 'white'} />
           </TouchableOpacity>
         </SafeAreaView>
         {loading ? (
@@ -75,7 +75,7 @@ export default function MovieScreen() {
           <View>
             <Image source={{ uri: image500(movie.poster_path) || fallbackMoviePoster }} style={{ width: width, height: height * 0.55 }} />
             <LinearGradient
-              colors={['transparent', 'rgba(23, 23, 23, 0.8)', 'rgba(23, 23, 23, 1)']}
+              colors={['transparent', 'rgba(12, 12, 12, 0.8)', 'rgba(12, 12, 12, 1)']}
               style={{ width: width, height: height * 0.40, position: 'absolute', bottom: 0 }}
               start={{ x: 0.5, y: 0 }}
               end={{ x: 0.5, y: 1 }}
@@ -103,7 +103,7 @@ export default function MovieScreen() {
             let showDot = index + 1 !== movie.genres.length;
             return (
               <Text key={index} style={styles.genreText}>
-                {genre?.name} {showDot ? '•' : null}
+                {genre?.name} {showDot ? '• ' : null}
               </Text>
             );
           })}
@@ -112,14 +112,6 @@ export default function MovieScreen() {
         {/* description */}
         <Text style={styles.movieDescription}>{movie?.overview}</Text>
       </View>
-
-      {/* button view */}
-      <TouchableOpacity
-        style={[Mainstyles.background, styles.movieButton]}
-        onPress={() => navigation.navigate('View', { id: item.id })}
-      >
-        <Text style={styles.movieButtonText}>Play Now </Text>
-      </TouchableOpacity>
 
       {/* cast */}
       {movie?.id && cast.length > 0 && <Cast navigation={navigation} cast={cast} />}
@@ -134,7 +126,7 @@ export default function MovieScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    // backgroundColor: '#121212',
   },
   backButtonContainer: {
     position: 'absolute',
@@ -167,6 +159,7 @@ const styles = StyleSheet.create({
   },
   movieDescription: {
     color: '#8a8a8a',
+    textAlign: 'justify',
     marginHorizontal: 16,
     letterSpacing: 0.5,
   },

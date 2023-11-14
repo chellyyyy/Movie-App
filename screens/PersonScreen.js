@@ -7,9 +7,9 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import MovieList from '../components/movieList';
 import Loading from '../components/loading';
 import { fallbackPersonImage, fetchPersonDetails, fetchPersonMovies, image185, image342 } from '../api/moviedb';
-import { theme } from '../theme';
+import { Mainstyles, Buttonstyles, theme } from '../theme';
 
-const verticalMargin = 24;
+const verticalMargin = 20;
 const { width, height } = Dimensions.get('window');
 
 export default function PersonScreen() {
@@ -47,12 +47,12 @@ export default function PersonScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       {/* back button */}
       <SafeAreaView style={styles.backIconContainer}>
-        <TouchableOpacity style={{ padding: 10 }} onPress={() => navigation.goBack()}>
+        <TouchableOpacity style={[Buttonstyles.background, { borderRadius: 10, padding: 1 }]} onPress={() => navigation.goBack()}>
           <ChevronLeftIcon width={28} height={28} color="white" />
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)}>
-          <HeartIcon size={35} color={isFavourite ? theme.background : 'white'} />
+          <HeartIcon size={35} color={isFavourite ? theme.mainColor : 'white'} />
         </TouchableOpacity>
       </SafeAreaView>
 
@@ -111,7 +111,7 @@ export default function PersonScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#121212',
+    // backgroundColor: '#121212',
   },
   contentContainer: {
     paddingBottom: 20,
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
   },
   biographyContent: {
     color: '#808080',
+    textAlign: 'justify',
     marginTop: 8,
   },
 });

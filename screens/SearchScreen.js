@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image185, searchMovies } from '../api/moviedb';
 import { debounce } from 'lodash';
 import Loading from '../components/loading';
+import { Mainstyles } from '../theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -60,7 +61,7 @@ export default function SearchScreen() {
             <View style={styles.resultsContainer}>
               {
                 results.map((item, index) => (
-                  <TouchableWithoutFeedback key={index} onPress={() => navigation.push('DetailScreen', item)}>
+                  <TouchableWithoutFeedback key={index} onPress={() => navigation.push('Detail', item)}>
                     <View style={styles.resultItem}>
                       <Image
                         source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}
@@ -91,7 +92,6 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4A5568',
   },
   inputContainer: {
     margin: 16,

@@ -8,7 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
-import { Mainstyles } from '../theme';
+import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 export default function HomeScreen() {
 
@@ -44,12 +44,12 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={[styles.safeArea, {backgroundColor:theme.subBackground}]}>
         <StatusBar style="light" />
         <View style={styles.header}>
-          <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" />
+          {/* <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" /> */}
           <Text style={styles.title}>
-            <Text style={Mainstyles.text}>M</Text>ovies
+            <Text style={Buttonstyles.text}>M</Text>ovit
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Search')}>
             <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
@@ -72,10 +72,9 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4A5568',
   },
   safeArea: {
-    marginBottom: 3,
+    paddingVertical: 12,
   },
   header: {
     flexDirection: 'row',

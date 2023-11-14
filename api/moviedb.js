@@ -10,6 +10,7 @@ const upcomingMoviesEndpoint = `${apiBaseUrl}/movie/upcoming?api_key=${apiKey}`;
 const topRatedMoviesEndpoint = `${apiBaseUrl}/movie/top_rated?api_key=${apiKey}`;
 const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
 
+
 // endpoints with dynamic params
 
 // movie
@@ -17,13 +18,9 @@ const movieDetailsEndpoint = id => `${apiBaseUrl}/movie/${id}?api_key=${apiKey}`
 const movieCreditsEndpoint = id => `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}`;
 const similarMoviesEndpoint = id => `${apiBaseUrl}/movie/${id}/similar?api_key=${apiKey}`;
 
-// video
-const movieVideoEndpoint = id => `${apiBaseUrl}/movie/${id}/videos?api_key=${apiKey}`;
-
 // person
 const personDetailsEndpoint = id => `${apiBaseUrl}/person/${id}?api_key=${apiKey}`;
 const personMoviesEndpoint = id => `${apiBaseUrl}/person/${id}/movie_credits?api_key=${apiKey}`;
-
 
 // functions to get images of different widths, (show images using these to improve the loading times)
 export const image500 = posterPath => posterPath ? 'https://image.tmdb.org/t/p/w500' + posterPath : null;
@@ -82,23 +79,7 @@ export const fetchPersonMovies = (personId) => {
     return apiCall(personMoviesEndpoint(personId));
 }
 
-// Movie Video screen apis
-export const fetchMovieVideo = async (id) => {
-    const videoEndpoint = movieVideoEndpoint(id);
-
-    try {
-        const data = await apiCall(videoEndpoint);
-        // Lấy URI của video từ dữ liệu phản hồi
-        const videoUri = data.results && data.results.length > 0 ? data.results[0].key : null;
-        return videoUri ? `https://www.youtube.com/watch?v=${videoUri}` : null;
-    } catch (error) {
-        console.log('error: ', error);
-        return null;
-    }
-};
-
 // search screen apis
 export const searchMovies = (params) => {
     return apiCall(searchMoviesEndpoint, params);
 }
-
