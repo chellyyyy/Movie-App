@@ -3,19 +3,23 @@ import { View, Text, ScrollView, TouchableWithoutFeedback, Image, Dimensions, To
 import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image185, image342, poster342 } from '../api/moviedb';
 import { Mainstyles } from '../theme';
-import PreviewScreen from './moviePreview';
 
 const { width, height } = Dimensions.get('window');
 
 export default function MovieList({ title, hideSeeAll, data }) {
     const navigation = useNavigation();
+    const handleSeeAllPress = () => {
+        if (!hideSeeAll) {
+            navigation.navigate("List", { title, data });
+        }
+    };
 
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
                 <Text style={styles.titleText}>{title} Movies</Text>
                 {!hideSeeAll && (
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={handleSeeAllPress}>
                         <Text style={Mainstyles.text}>See All</Text>
                     </TouchableOpacity>
                 )}

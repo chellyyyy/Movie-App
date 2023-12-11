@@ -1,5 +1,5 @@
-import { View, Text, TouchableOpacity, ScrollView, Platform, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import TrendingMovies from '../components/trendingMovies';
@@ -11,13 +11,11 @@ import Loading from '../components/loading';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 export default function HomeScreen() {
-
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
-
 
   useEffect(() => {
     getTrendingMovies();
@@ -30,24 +28,25 @@ export default function HomeScreen() {
     console.log('got trending', data.results.length);
     if (data && data.results) setTrending(data.results);
     setLoading(false);
-  }
+  };
+
   const getUpcomingMovies = async () => {
     const data = await fetchUpcomingMovies();
     console.log('got upcoming', data.results.length);
     if (data && data.results) setUpcoming(data.results);
-  }
+  };
+
   const getTopRatedMovies = async () => {
     const data = await fetchTopRatedMovies();
     console.log('got top rated', data.results.length);
     if (data && data.results) setTopRated(data.results);
-  }
+  };
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={[styles.safeArea, {backgroundColor:theme.subBackground}]}>
+      <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.subBackground }]}>
         <StatusBar style="light" />
         <View style={styles.header}>
-          {/* <Bars3CenterLeftIcon size={30} strokeWidth={2} color="white" /> */}
           <Text style={styles.title}>
             <Text style={Buttonstyles.text}>M</Text>ovit
           </Text>
@@ -66,7 +65,7 @@ export default function HomeScreen() {
         </ScrollView>
       )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   text: {
-    ...StyleSheet, // Add your text styles here
+    ...StyleSheet,
   },
   scrollContainer: {
     paddingBottom: 10,
