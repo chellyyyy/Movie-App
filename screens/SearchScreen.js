@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image185, searchMovies } from '../api/moviedb';
 import { debounce } from 'lodash';
 import Loading from '../components/loading';
+import PreviewScreen from '../components/moviePreview';
 import { Mainstyles } from '../theme';
 
 const { width, height } = Dimensions.get('window');
@@ -56,26 +57,7 @@ export default function SearchScreen() {
         <Loading />
       ) :
         results.length > 0 ? (
-          <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.resultText}>Results ({results.length})</Text>
-            <View style={styles.resultsContainer}>
-              {
-                results.map((item, index) => (
-                  <TouchableWithoutFeedback key={index} onPress={() => navigation.push('Detail', item)}>
-                    <View style={styles.resultItem}>
-                      <Image
-                        source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}
-                        style={styles.image}
-                      />
-                      <Text style={styles.title}>
-                        {item.title.length > 22 ? item.title.slice(0, 22) + '...' : item.title}
-                      </Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                ))
-              }
-            </View>
-          </ScrollView>
+          <PreviewScreen results={results} />
         ) : (
           <View style={styles.noResultsContainer}>
             <Image

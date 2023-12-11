@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableWithoutFeedback, Image, Dimensions, To
 import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image185, image342, poster342 } from '../api/moviedb';
 import { Mainstyles } from '../theme';
+import PreviewScreen from './moviePreview';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,7 +16,7 @@ export default function MovieList({ title, hideSeeAll, data }) {
                 <Text style={styles.titleText}>{title} Movies</Text>
                 {!hideSeeAll && (
                     <TouchableOpacity>
-                        <Text style={Mainstyles.text}>Xem Thêm</Text>
+                        <Text style={Mainstyles.text}>See All</Text>
                     </TouchableOpacity>
                 )}
             </View>
