@@ -188,5 +188,6 @@ const styles = StyleSheet.create({
   movieButtonText: {
     color: 'white',
     fontSize: 16,
+    fontWeight: 'bold',
   },
 });
