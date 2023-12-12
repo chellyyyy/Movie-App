@@ -5,8 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icons from 'react-native-vector-icons/Ionicons';
 import { theme } from '../theme';
 
-import HomeStack from './HomeStack';
-import PremiumScreen from '../screens/PremiumScreen';
+import HomeScreen from '../screens/HomeScreen';
+import CategoriesScreen from '../screens/CategoriesScreen';
 import AccountScreen from '../screens/AccountScreen';
 
 const Bottom = createBottomTabNavigator();
@@ -46,10 +46,10 @@ const BottomTab = () => {
                 },
             }}
         >
-            <Bottom.Screen name="Home" component={HomeStack}
+            <Bottom.Screen name="Home" component={HomeScreen}
                 options={homeScreenOptions(false, 'home')} />
-            <Bottom.Screen name="Premium" component={PremiumScreen}
-                options={homeScreenOptions(true, 'star')} />
+            <Bottom.Screen name="Categories" component={CategoriesScreen}
+                options={homeScreenOptions(true, 'grid')} />
             <Bottom.Screen name="Account" component={AccountScreen}
                 options={homeScreenOptions(true, 'person')} />
         </Bottom.Navigator>

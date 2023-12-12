@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     safeArea: {
-        paddingVertical: 12,
+        paddingVertical: 10,
         flexDirection: 'row',
         alignItems: 'center',
         zIndex: 10,

@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   safeArea: {
-    paddingVertical: 12,
+    paddingVertical: 10,
   },
   header: {
     flexDirection: 'row',

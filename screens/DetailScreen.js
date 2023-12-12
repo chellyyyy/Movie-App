@@ -10,6 +10,7 @@ import MovieList from '../components/movieList';
 import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from '../api/moviedb';
 import Loading from '../components/loading';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 
 const topMargin = 20;
@@ -111,6 +112,17 @@ export default function MovieScreen() {
 
         {/* description */}
         <Text style={styles.movieDescription}>{movie?.overview}</Text>
+
+        {/* Button "Play Now" */}
+        <TouchableOpacity
+          style={[styles.movieButton, Buttonstyles.background]}
+          // onPress={() => navigation.navigate("Video")}
+          onPress={() => navigation.navigate("Video", { videoKey: movie?.videos?.results[0]?.key })}
+        >
+          <IonIcon name={"play"} size={25} color={'white'} />
+          <Text style={styles.movieButtonText}>Play Now</Text>
+        </TouchableOpacity>
+
       </View>
 
       {/* cast */}
@@ -165,9 +177,13 @@ const styles = StyleSheet.create({
   },
   movieButton: {
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 5,
     borderRadius: 10,
     padding: 10,
-    margin: 10,
+    marginTop: 20,
+    marginHorizontal: 100,
   },
   movieButtonText: {
     color: 'white',

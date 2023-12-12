@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get('window');
 export default function Loading() {
   return (
     <View style={[styles.container, styles.loadingContainer]}>
-      <Progress.CircleSnail thickness={12} size={160} color={theme.background} />
+      <Progress.CircleSnail thickness={12} size={160} color={theme.mainColor} />
     </View>
   );
 }

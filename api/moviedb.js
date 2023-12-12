@@ -83,3 +83,9 @@ export const fetchPersonMovies = (personId) => {
 export const searchMovies = (params) => {
     return apiCall(searchMoviesEndpoint, params);
 }
+
+// Categories screen api
+export const fetchCategoryMovies = (category) => {
+    const categoryEndpoint = `${apiBaseUrl}/movie/${category}?api_key=${apiKey}`;
+    return apiCall(categoryEndpoint);
+}
