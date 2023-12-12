@@ -117,7 +117,7 @@ export default function MovieScreen() {
       {movie?.id && cast.length > 0 && <Cast navigation={navigation} cast={cast} />}
 
       {/* similar movies section */}
-      {movie?.id && similarMovies.length > 0 && <MovieList title={'Similar Movies'} hideSeeAll={true} data={similarMovies} />}
+      {movie?.id && similarMovies.length > 0 && <MovieList title={'Similar'} hideSeeAll={true} data={similarMovies} />}
     </ScrollView>
   );
 }

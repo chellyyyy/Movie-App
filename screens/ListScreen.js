@@ -3,14 +3,11 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
-import Loading from '../components/loading';
-import PreviewScreen from '../components/moviePreview';
+import MoviePreview from '../components/moviePreview';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
-import { fetchMovieDetails } from '../api/moviedb';
 
 const ListScreen = ({ route }) => {
     const { title, data } = route.params;
-    const [loading, setLoading] = useState(true);
     const navigation = useNavigation();
 
     return (
@@ -21,15 +18,11 @@ const ListScreen = ({ route }) => {
                 </TouchableOpacity>
                 <View style={styles.header}>
                     <Text style={styles.title}>
-                        {title} <Text style={Buttonstyles.text}>M</Text>ovit
+                        {title} <Text style={Mainstyles.text}>M</Text>ovies
                     </Text>
                 </View>
             </SafeAreaView>
-            {loading ? (
-                <Loading />
-            ) : (
-                <PreviewScreen results={data} />
-            )}
+            <MoviePreview results={data} />
         </View>
     );
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableWithoutFeedback, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image185, image342, poster342 } from '../api/moviedb';
-import { Mainstyles } from '../theme';
+import { Mainstyles, theme } from '../theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -17,7 +17,7 @@ export default function MovieList({ title, hideSeeAll, data }) {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                <Text style={styles.titleText}>{title} Movies</Text>
+                <Text style={styles.titleText}>{title} <Text style={{color: theme.mainColor}}>M</Text>ovies</Text>
                 {!hideSeeAll && (
                     <TouchableOpacity onPress={handleSeeAllPress}>
                         <Text style={Mainstyles.text}>See All</Text>

@@ -77,16 +77,16 @@ export default function PersonScreen() {
           </View>
 
           <View style={styles.infoContainer}>
-            <View style={{ borderRightColor: '#808080', borderRightWidth: 1, paddingHorizontal: 8, alignItems: 'center' }}>
+            <View style={styles.infoItem}>
               <Text style={styles.infoText}>Gender</Text>
               <Text style={styles.subInfoText}>{person?.gender === 1 ? 'Female' : 'Male'}</Text>
             </View>
-            <View style={{ borderRightColor: '#808080', borderRightWidth: 1, paddingHorizontal: 8, alignItems: 'center' }}>
+            <View style={styles.infoItem}>
               <Text style={styles.infoText}>Birthday</Text>
               <Text style={styles.subInfoText}>{person?.birthday}</Text>
             </View>
-            <View style={{ borderRightColor: '#808080', borderRightWidth: 1, paddingHorizontal: 8, alignItems: 'center' }}>
-              <Text style={styles.infoText}>known for</Text>
+            <View style={styles.infoItem}>
+              <Text style={styles.infoText}>Known for</Text>
               <Text style={styles.subInfoText}>{person?.known_for_department}</Text>
             </View>
             <View style={{ paddingHorizontal: 8, alignItems: 'center' }}>
@@ -101,7 +101,7 @@ export default function PersonScreen() {
           </View>
 
           {/* person movies */}
-          {person?.id && personMovies.length > 0 && <MovieList title="Movies" hideSeeAll data={personMovies} />}
+          {person?.id && personMovies.length > 0 && <MovieList title="Participated in" hideSeeAll data={personMovies} />}
         </View>
       )}
     </ScrollView>
@@ -156,10 +156,17 @@ const styles = StyleSheet.create({
     margin: 16,
     padding: 16,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    // justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#2b2b2b',
     borderRadius: 999,
+  },
+  infoItem: {
+    borderRightColor: '#808080',
+    borderRightWidth: 1,
+    paddingHorizontal: 15,
+    alignItems: 'center',
   },
   infoText: {
     fontWeight: '600',
