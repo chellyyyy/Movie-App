@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Dimensions, TouchableOpacity, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { StatusBar } from 'expo-status-bar';
 import { fetchGenres, navigateToListScreen, configureAxios } from '../api/moviedb';
 import Loading from '../components/loading';
+import Header from '../components/header';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
+
+const { width, height } = Dimensions.get('window');
 
 const GenreScreen = () => {
     const navigation = useNavigation();
@@ -32,19 +35,9 @@ const GenreScreen = () => {
 
     return (
         <View style={styles.container}>
-            <SafeAreaView style={[styles.safeArea, Mainstyles.headerBackground]}>
-                <StatusBar style="light" />
-                <View style={styles.header}>
-                    <Text style={styles.title}>
-                        <Text style={Mainstyles.mainText}>M</Text>ovies Genre
-                    </Text>
-                    <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-                        <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
-                    </TouchableOpacity>
-                </View>
-            </SafeAreaView>
+            <Header title="Genre" />
 
-            <View style={styles.genreContainer}>
+            <ScrollView contentContainerStyle={styles.genreContainer}>
                 {genres.map((genre) => (
                     <TouchableOpacity
                         key={genre.id}
@@ -54,7 +47,7 @@ const GenreScreen = () => {
                         <Text style={styles.genreText}>{genre.name}</Text>
                     </TouchableOpacity>
                 ))}
-            </View>
+            </ScrollView>
         </View>
     );
 };
@@ -68,34 +61,16 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // paddingVertical: 20,
     },
-    safeArea: {
-        paddingVertical: 10,
-    },
-    header: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginHorizontal: 16,
-    },
-    title: {
-        color: 'white',
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
-    heading: {
-        color: '#fff',
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-    },
     genreContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
     },
     genreItem: {
+        alignItems: 'center',
         padding: 10,
         margin: 10,
+        width: width/2.5,
         borderWidth: 2,
         borderRadius: 10,
         borderColor: theme.mainColor,
@@ -104,6 +79,7 @@ const styles = StyleSheet.create({
     genreText: {
         color: '#fff',
         fontWeight: 'bold',
+        fontSize: 16,
     },
 });
 

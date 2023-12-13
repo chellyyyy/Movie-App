@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeftIcon } from 'react-native-heroicons/outline';
+import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
 import MoviePreview from '../components/moviePreview';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
@@ -21,6 +21,9 @@ const ListScreen = ({ route }) => {
                         {title} <Text style={Mainstyles.mainText}>M</Text>ovies
                     </Text>
                 </View>
+                {/* <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                    <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
+                </TouchableOpacity> */}
             </SafeAreaView>
             <MoviePreview results={data} />
         </View>

@@ -47,7 +47,7 @@ export default function SearchScreen() {
           placeholderTextColor={'lightgray'}
           style={styles.input}
         />
-        <TouchableOpacity onPress={() => navigation.navigate('Home')} style={styles.iconContainer}>
+        <TouchableOpacity onPress={() => navigation.goBack()} style={styles.iconContainer}>
           <XMarkIcon size={25} color="white" />
         </TouchableOpacity>
       </View>

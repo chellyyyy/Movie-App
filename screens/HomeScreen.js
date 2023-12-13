@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import TrendingMovies from '../components/trendingMovies';
 import MovieList from '../components/movieList';
+import Header from '../components/header';
 import { StatusBar } from 'expo-status-bar';
 import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
 import { useNavigation } from '@react-navigation/native';
@@ -44,17 +45,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={[styles.safeArea, Mainstyles.headerBackground]}>
-        <StatusBar style="light" />
-        <View style={styles.header}>
-          <Text style={styles.title}>
-            <Text style={Mainstyles.mainText}>M</Text>ovit
-          </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-            <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+      <Header />
       {loading ? (
         <Loading />
       ) : (
