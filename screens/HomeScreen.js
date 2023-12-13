@@ -44,11 +44,11 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.subBackground }]}>
+      <SafeAreaView style={[styles.safeArea, Mainstyles.headerBackground]}>
         <StatusBar style="light" />
         <View style={styles.header}>
           <Text style={styles.title}>
-            <Text style={Buttonstyles.text}>M</Text>ovit
+            <Text style={Mainstyles.mainText}>M</Text>ovit
           </Text>
           <TouchableOpacity onPress={() => navigation.navigate('Search')}>
             <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
@@ -71,6 +71,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: theme.background,
   },
   safeArea: {
     paddingVertical: 10,

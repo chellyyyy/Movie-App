@@ -9,6 +9,8 @@ export const Buttonstyles = {
 }
 
 export const Mainstyles = {
-    text: { color: theme.mainColor },
-    background: { backgroundColor: theme.background }
+    mainText: { color: theme.mainColor },
+    text: { color: 'white' },
+    background: { backgroundColor: theme.background },
+    headerBackground: { backgroundColor: theme.subBackground }
 }

@@ -6,7 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import { fallbackMoviePoster, image185, searchMovies } from '../api/moviedb';
 import { debounce } from 'lodash';
 import Loading from '../components/loading';
-import PreviewScreen from '../components/moviePreview';
+import MoviePreview from '../components/moviePreview';
 import { Mainstyles } from '../theme';
 
 const { width, height } = Dimensions.get('window');
@@ -57,7 +57,7 @@ export default function SearchScreen() {
         <Loading />
       ) :
         results.length > 0 ? (
-          <PreviewScreen results={results} />
+          <MoviePreview results={results} hideResults={'false'} />
         ) : (
           <View style={styles.noResultsContainer}>
             <Image

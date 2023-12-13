@@ -7,7 +7,7 @@ import { Mainstyles } from '../theme';
 
 const { width, height } = Dimensions.get('window');
 
-const PreviewScreenItem = ({ item, index }) => {
+const MoviePreviewItem = ({ item, index }) => {
     const navigation = useNavigation();
 
     return (
@@ -25,15 +25,16 @@ const PreviewScreenItem = ({ item, index }) => {
     );
 };
 
-const PreviewScreens = ({ results }) => {
-
+const MoviePreview = ({ results, hideResults }) => {
     return (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
-            <Text style={styles.resultText}>Results ({results.length})</Text>
+            {hideResults && (
+                <Text style={styles.resultText}>Results ({results.length})</Text>
+            )}
             <View style={styles.resultsContainer}>
                 {
                     results.map((item, index) => (
-                        <PreviewScreenItem item={item} index={index} />
+                        <MoviePreviewItem key={index} item={item} />
                     ))
                 }
             </View>
@@ -107,4 +108,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default PreviewScreens;
+export default MoviePreview;

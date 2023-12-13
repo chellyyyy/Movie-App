@@ -12,13 +12,13 @@ const ListScreen = ({ route }) => {
 
     return (
         <View style={styles.container}>
-            <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.subBackground }]}>
+            <SafeAreaView style={[styles.safeArea, Mainstyles.headerBackground]}>
                 <TouchableOpacity style={[Buttonstyles.background, { borderRadius: 10, padding: 1, marginLeft: 16 }]} onPress={() => navigation.goBack()}>
                     <ChevronLeftIcon width={28} height={28} color="white" />
                 </TouchableOpacity>
                 <View style={styles.header}>
                     <Text style={styles.title}>
-                        {title} <Text style={Mainstyles.text}>M</Text>ovies
+                        {title} <Text style={Mainstyles.mainText}>M</Text>ovies
                     </Text>
                 </View>
             </SafeAreaView>

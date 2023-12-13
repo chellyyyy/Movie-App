@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
+import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import { StatusBar } from 'expo-status-bar';
 import { fetchGenres, navigateToListScreen, configureAxios } from '../api/moviedb';
 import Loading from '../components/loading';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 const GenreScreen = () => {
-  const navigation = useNavigation();
+    const navigation = useNavigation();
     const [genres, setGenres] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -29,30 +31,56 @@ const GenreScreen = () => {
     }
 
     return (
-      <ScrollView contentContainerStyle={styles.container}>
-          <Text style={styles.heading}><Text style={Buttonstyles.text}>M</Text>ovie Genres</Text>
-          <View style={styles.genreContainer}>
-              {genres.map((genre) => (
-                  <TouchableOpacity
-                      key={genre.id}
-                      style={styles.genreItem}
-                      onPress={() => navigateToListScreen(genre.id, genre.name, navigation)}
-                  >
-                      <Text style={styles.genreText}>{genre.name}</Text>
-                  </TouchableOpacity>
-              ))}
-          </View>
-      </ScrollView>
+        <View style={styles.container}>
+            <SafeAreaView style={[styles.safeArea, Mainstyles.headerBackground]}>
+                <StatusBar style="light" />
+                <View style={styles.header}>
+                    <Text style={styles.title}>
+                        <Text style={Mainstyles.mainText}>M</Text>ovies Genre
+                    </Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                        <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
+                    </TouchableOpacity>
+                </View>
+            </SafeAreaView>
+
+            <View style={styles.genreContainer}>
+                {genres.map((genre) => (
+                    <TouchableOpacity
+                        key={genre.id}
+                        style={styles.genreItem}
+                        onPress={() => navigateToListScreen(genre.id, genre.name, navigation)}
+                    >
+                        <Text style={styles.genreText}>{genre.name}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
-        justifyContent: 'center',
+        flex: 1,
+        backgroundColor: theme.background,
+        // flexGrow: 1,
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // paddingVertical: 20,
+    },
+    safeArea: {
+        paddingVertical: 10,
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        paddingVertical: 20,
-        backgroundColor: theme.backgroundColor,
+        marginHorizontal: 16,
+    },
+    title: {
+        color: 'white',
+        fontSize: 30,
+        fontWeight: 'bold',
     },
     heading: {
         color: '#fff',
