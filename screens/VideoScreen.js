@@ -189,10 +189,10 @@ const VideoScreen = () => {
               onValueChange={handleQualityChange}
             >
               {renderPickerItems([
-                { label: '2160p', value: 'auto' },
-                { label: '1080p', value: '1000' },
-                { label: '720p', value: '500' },
-                { label: '360p', value: '200' },
+                { label: '360p', value: 'auto' },
+                { label: '720p', value: '200' },
+                { label: '1080p', value: '500' },
+                { label: '2K', value: '1000' },
               ])}
             </Picker>
 
