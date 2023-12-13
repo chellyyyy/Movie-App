@@ -6,7 +6,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import { theme } from '../theme';
 
 import HomeScreen from '../screens/HomeScreen';
-import CategoriesScreen from '../screens/CategoriesScreen';
+import GenresScreen from '../screens/GenresScreen';
 import AccountScreen from '../screens/AccountScreen';
 
 const Bottom = createBottomTabNavigator();
@@ -48,8 +48,8 @@ const BottomTab = () => {
         >
             <Bottom.Screen name="Home" component={HomeScreen}
                 options={homeScreenOptions(false, 'home')} />
-            <Bottom.Screen name="Categories" component={CategoriesScreen}
-                options={homeScreenOptions(true, 'grid')} />
+            <Bottom.Screen name="Genres" component={GenresScreen}
+                options={homeScreenOptions(false, 'grid')} />
             <Bottom.Screen name="Account" component={AccountScreen}
                 options={homeScreenOptions(true, 'person')} />
         </Bottom.Navigator>

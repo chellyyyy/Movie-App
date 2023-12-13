@@ -10,7 +10,6 @@ const upcomingMoviesEndpoint = `${apiBaseUrl}/movie/upcoming?api_key=${apiKey}`;
 const topRatedMoviesEndpoint = `${apiBaseUrl}/movie/top_rated?api_key=${apiKey}`;
 const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
 
-
 // endpoints with dynamic params
 
 // movie
@@ -82,4 +81,46 @@ export const fetchPersonMovies = (personId) => {
 // search screen apis
 export const searchMovies = (params) => {
     return apiCall(searchMoviesEndpoint, params);
+}
+
+
+// Genres api
+export function configureAxios() {
+    axios.defaults.baseURL = apiBaseUrl
+}
+
+// export function fetchGenres() {
+//     const url = `/genre/movie/list?api_key=${apiKey}`
+//     return axios.get(url)
+// }
+
+export function fetchGenres() {
+    const url = `/genre/movie/list?api_key=${apiKey}`;
+    return axios.get(url)
+        .then(response => response.data)
+        .catch(error => {
+            console.error('Error fetching genres:', error);
+            throw error;
+        });
+}
+
+export function fetchMoviesForGenreId(genreId, page) {
+    const url = `/discover/movie?with_genres=${genreId}&page=${page}&api_key=${apiKey}`;
+    return apiCall(url);
+}
+
+export function postMovie(data) {
+    const url = `/genre/movie/list?api_key=${apiKey}`
+    return axios.get(url)
+}
+
+export function navigateToListScreen(genreId, genreName, navigation) {
+    fetchMoviesForGenreId(genreId, 1)
+        .then((response) => {
+            const results = response.results || [];
+            navigation.navigate('List', { title: genreName, data: results });
+        })
+        .catch((error) => {
+            console.error('Error fetching movies for genre:', error);
+        });
 }
