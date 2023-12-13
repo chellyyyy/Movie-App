@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 20,
+        backgroundColor: theme.backgroundColor,
     },
     heading: {
         color: '#fff',

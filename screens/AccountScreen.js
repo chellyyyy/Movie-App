@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 const AccountScreen = () => {
   const [name, setName] = useState('Your Name');
@@ -45,6 +46,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 16,
+    backgroundColor: theme.backgroundColor,
   },
   avatar: {
     width: 100,

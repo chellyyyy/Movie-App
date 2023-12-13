@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
-import { View, StyleSheet, TouchableOpacity, Text, Modal, Picker } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Modal, Picker, Button } from 'react-native';
 import { Video, ResizeMode } from 'expo-av';
 import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
@@ -195,7 +195,12 @@ const VideoScreen = () => {
                 { label: '2K', value: '1000' },
               ])}
             </Picker>
-
+            
+            {/* <Button
+              style={styles.modalCloseButton}
+              title="Close"
+              onPress={() => setShowSettings(false)}
+            /> */}
             <TouchableOpacity style={styles.modalCloseButton} onPress={() => setShowSettings(false)}>
               <Text style={styles.modalCloseButtonText}>Close</Text>
             </TouchableOpacity>
