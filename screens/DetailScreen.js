@@ -61,12 +61,12 @@ export default function MovieScreen() {
     <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.container}>
       {/* back button and movie poster */}
       <View style={{ width: '100%' }}>
-        <SafeAreaView style={styles.backButtonContainer}>
-          <TouchableOpacity style={[Buttonstyles.background, { borderRadius: 10, padding: 1 }]} onPress={() => navigation.goBack()}>
+        <SafeAreaView style={styles.buttonContainer}>
+          <TouchableOpacity style={[Buttonstyles.background, styles.buttonContainerItem]} onPress={() => navigation.goBack()}>
             <ChevronLeftIcon size={28} strokeWidth={2.5} color="white" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)}>
+          <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={[styles.buttonContainerItem, {backgroundColor: 'rgba(0, 0, 0, 0.7)'}]} >
             <HeartIcon size={35} color={isFavourite ? theme.mainColor : 'white'} />
           </TouchableOpacity>
         </SafeAreaView>
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // backgroundColor: '#121212',
   },
-  backButtonContainer: {
+  buttonContainer: {
     position: 'absolute',
     zIndex: 20,
     width: '100%',
@@ -149,6 +149,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 16,
     marginTop: topMargin,
+  },
+  buttonContainerItem: {
+    borderRadius: 10, 
+    padding: 1,
   },
   movieTitle: {
     color: 'white',
