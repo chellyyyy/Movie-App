@@ -17,6 +17,21 @@ const MoviePreviewItem = ({ item, index }) => {
                     source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}
                     style={styles.image}
                 />
+                <View style={styles.voteContainer}>
+                    {(item.vote_average || 0) > 7 ? (
+                        <Text style={[styles.voteText, { color: 'green' }]}>
+                            {(item.vote_average || 0).toFixed(1)}
+                        </Text>
+                    ) : (item.vote_average || 0) > 5.5 ? (
+                        <Text style={[styles.voteText, { color: 'orange' }]}>
+                            {(item.vote_average || 0).toFixed(1)}
+                        </Text>
+                    ) : (
+                        <Text style={[styles.voteText, { color: 'red' }]}>
+                            {(item.vote_average || 0).toFixed(1)}
+                        </Text>
+                    )}
+                </View>
                 <Text style={styles.title}>
                     {item.title.length > 22 ? item.title.slice(0, 22) + '...' : item.title}
                 </Text>
@@ -93,6 +108,7 @@ const styles = StyleSheet.create({
         width: width * 0.44,
         height: height * 0.3,
         borderRadius: 12,
+        position: 'relative',
     },
     title: {
         color: '#d3d3d3',
@@ -105,6 +121,20 @@ const styles = StyleSheet.create({
     noResultsImage: {
         height: 250,
         width: 250,
+    },
+    voteContainer: {
+        position: 'absolute',
+        top: 5,
+        left: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        padding: 5,
+        borderRadius: 10,
+    },
+    voteText: {
+        fontWeight: 'bold',
+        color: 'white',
     },
 });
 

@@ -32,6 +32,21 @@ const MovieCard = ({ item, handleClick }) => {
                     source={{ uri: image500(item.poster_path) }}
                     style={styles.movieImage}
                 />
+                <View style={styles.voteContainer}>
+                    {(item.vote_average || 0) > 7 ? (
+                        <Text style={[styles.voteText, { color: 'green' }]}>
+                            {(item.vote_average || 0).toFixed(1)}
+                        </Text>
+                    ) : (item.vote_average || 0) > 5.5 ? (
+                        <Text style={[styles.voteText, { color: 'orange' }]}>
+                            {(item.vote_average || 0).toFixed(1)}
+                        </Text>
+                    ) : (
+                        <Text style={[styles.voteText, { color: 'red' }]}>
+                            {(item.vote_average || 0).toFixed(1)}
+                        </Text>
+                    )}
+                </View>
                 <Text style={styles.movieTitle}>
                     {item.title.length > 20 ? item.title.slice(0, 14) + '...' : item.title}
                 </Text>
@@ -68,15 +83,31 @@ const styles = StyleSheet.create({
         marginRight: 10,
         marginVertical: 5,
         alignItems: 'center',
+        position: 'relative',
     },
     movieImage: {
         width: width * 0.6,
         height: height * 0.4,
-        borderRadius: 20, // Rounded corners
-        marginRight: 10, // Spacing between items
+        borderRadius: 20,
+        marginRight: 10,
     },
     movieTitle: {
         color: 'white',
         fontSize: 20,
+    },
+    voteContainer: {
+        position: 'absolute',
+        top: 5,
+        left: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        padding: 5,
+        borderRadius: 10,
+    },
+    voteText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: 'white',
     },
 });

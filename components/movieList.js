@@ -38,6 +38,21 @@ export default function MovieList({ title, hideSeeAll, data }) {
                                     source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}
                                     style={styles.movieImage}
                                 />
+                                <View style={styles.voteContainer}>
+                                    {(item.vote_average || 0) > 7 ? (
+                                        <Text style={[styles.voteText, { color: 'green' }]}>
+                                            {(item.vote_average || 0).toFixed(1)}
+                                        </Text>
+                                    ) : (item.vote_average || 0) > 5.5 ? (
+                                        <Text style={[styles.voteText, { color: 'orange' }]}>
+                                            {(item.vote_average || 0).toFixed(1)}
+                                        </Text>
+                                    ) : (
+                                        <Text style={[styles.voteText, { color: 'red' }]}>
+                                            {(item.vote_average || 0).toFixed(1)}
+                                        </Text>
+                                    )}
+                                </View>
                                 <Text style={styles.movieTitle}>
                                     {item.title.length > 15 ? item.title.slice(0, 14) + '...' : item.title}
                                 </Text>
@@ -78,6 +93,7 @@ const styles = StyleSheet.create({
         marginRight: 5,
         marginVertical: 5,
         alignItems: 'center',
+        position: 'relative',
     },
     movieImage: {
         width: width * 0.33,
@@ -87,5 +103,19 @@ const styles = StyleSheet.create({
     movieTitle: {
         color: 'white',
         // marginLeft: 4,
+    },
+    voteContainer: {
+        position: 'absolute',
+        top: 5,
+        left: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        padding: 5,
+        borderRadius: 10,
+    },
+    voteText: {
+        fontWeight: 'bold',
+        color: 'white',
     },
 });
