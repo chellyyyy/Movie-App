@@ -2,24 +2,43 @@ import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
+import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { StatusBar } from 'expo-status-bar';
-import { Mainstyles } from '../theme';
+import { Mainstyles, theme } from '../theme';
 
-const Header = ({ title }) => {
+const HeaderMovit = ({ title }) => {
     const navigation = useNavigation();
 
     return (
-        <SafeAreaView style={[styles.safeArea, Mainstyles.headerBackground]}>
-            <StatusBar style="light" />
+        <SafeAreaView style={styles.safeArea}>
             <View style={styles.header}>
                 <Text style={styles.title}>
                     {title} <Text style={Mainstyles.mainText}>M</Text>ovit
                 </Text>
+            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
+            </TouchableOpacity>
+        </SafeAreaView>
+    );
+};
+
+const Header = ({ title, hideSearch }) => {
+    const navigation = useNavigation();
+
+    return (
+        <SafeAreaView style={styles.safeArea}>
+            <View style={styles.header}>
+                <TouchableOpacity style={styles.iconButton} onPress={() => navigation.goBack()}>
+                    <ChevronLeftIcon width={28} height={28} color="white" />
+                </TouchableOpacity>
+                <Text style={styles.title}>{title}</Text>
+            </View>
+            {!hideSearch && (
                 <TouchableOpacity onPress={() => navigation.navigate('Search')}>
                     <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
                 </TouchableOpacity>
-            </View>
+            )}
         </SafeAreaView>
     );
 };
@@ -27,18 +46,28 @@ const Header = ({ title }) => {
 const styles = StyleSheet.create({
     safeArea: {
         paddingVertical: 10,
+        paddingHorizontal: 16,
+        backgroundColor: theme.subBackground,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     header: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginHorizontal: 16,
+        gap: 16,
     },
     title: {
         color: 'white',
         fontSize: 30,
         fontWeight: 'bold',
     },
+    iconButton: {
+        borderRadius: 10,
+        padding: 1,
+        backgroundColor: theme.mainColor,
+    },
 });
 
-export default Header;
+export { HeaderMovit, Header };

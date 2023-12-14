@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import TrendingMovies from '../components/trendingMovies';
 import MovieList from '../components/movieList';
-import Header from '../components/header';
+import { HeaderMovit } from '../components/header';
 import { StatusBar } from 'expo-status-bar';
 import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
 import { useNavigation } from '@react-navigation/native';
@@ -45,7 +45,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <HeaderMovit />
       {loading ? (
         <Loading />
       ) : (

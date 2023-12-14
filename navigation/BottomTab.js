@@ -7,7 +7,6 @@ import { theme } from '../theme';
 
 import HomeScreen from '../screens/HomeScreen';
 import GenresScreen from '../screens/GenresScreen';
-// import ProfieDrawer from './ProfieDrawer';
 import AccountScreen from '../screens/AccountScreen';
 
 const Bottom = createBottomTabNavigator();

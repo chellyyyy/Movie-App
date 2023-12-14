@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
   imageContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    shadowColor: 'gray',
-    shadowRadius: 40,
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 1,
+    // shadowColor: 'gray',
+    // shadowRadius: 40,
+    // shadowOffset: { width: 0, height: 5 },
+    // shadowOpacity: 1,
   },
   personImage: {
     alignItems: 'center',

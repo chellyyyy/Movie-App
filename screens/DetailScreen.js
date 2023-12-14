@@ -66,7 +66,7 @@ export default function MovieScreen() {
             <ChevronLeftIcon size={28} strokeWidth={2.5} color="white" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={[styles.buttonContainerItem, {backgroundColor: 'rgba(0, 0, 0, 0.7)'}]} >
+          <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={[styles.buttonContainerItem, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} >
             <HeartIcon size={35} color={isFavourite ? theme.mainColor : 'white'} />
           </TouchableOpacity>
         </SafeAreaView>
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     marginTop: topMargin,
   },
   buttonContainerItem: {
-    borderRadius: 10, 
+    borderRadius: 10,
     padding: 1,
   },
   movieTitle: {

@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
 import MoviePreview from '../components/moviePreview';
+import { Header } from '../components/header';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 const ListScreen = ({ route }) => {
@@ -12,20 +13,10 @@ const ListScreen = ({ route }) => {
 
     return (
         <View style={styles.container}>
-            <SafeAreaView style={[styles.safeArea, Mainstyles.headerBackground]}>
-                <TouchableOpacity style={[Buttonstyles.background, { borderRadius: 10, padding: 1, marginLeft: 16 }]} onPress={() => navigation.goBack()}>
-                    <ChevronLeftIcon width={28} height={28} color="white" />
-                </TouchableOpacity>
-                <View style={styles.header}>
-                    <Text style={styles.title}>
-                        {title} <Text style={Mainstyles.mainText}>M</Text>ovies
-                    </Text>
-                </View>
-                {/* <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-                    <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
-                </TouchableOpacity> */}
-            </SafeAreaView>
-            <MoviePreview results={data} />
+            <Header title={title} />
+            <View style={{ marginTop: 16 }}>
+                <MoviePreview results={data} />
+            </View>
         </View>
     );
 };

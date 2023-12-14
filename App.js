@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { theme } from './theme';
-import HomeStack from './navigation/HomeStack';
+import StackNavigator from './navigation/StackNavigator';
 
 const myTheme = {
   ...DefaultTheme,
@@ -14,7 +14,7 @@ const myTheme = {
 export default function App() {
   return (
     <NavigationContainer theme={myTheme}>
-      <HomeStack />
+      <StackNavigator />
     </NavigationContainer>
   );
 }

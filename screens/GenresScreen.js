@@ -5,7 +5,7 @@ import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { StatusBar } from 'expo-status-bar';
 import { fetchGenres, navigateToListScreen, configureAxios } from '../api/moviedb';
 import Loading from '../components/loading';
-import Header from '../components/header';
+import { HeaderMovit } from '../components/header';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 const { width, height } = Dimensions.get('window');
@@ -35,7 +35,7 @@ const GenreScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Header title="Genre" />
+            <HeaderMovit title="Genre" />
 
             <ScrollView contentContainerStyle={styles.genreContainer}>
                 {genres.map((genre) => (
@@ -65,12 +65,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
+        margin: 6,
     },
     genreItem: {
         alignItems: 'center',
         padding: 10,
         margin: 10,
-        width: width/2.5,
+        width: width / 2.5,
         borderWidth: 2,
         borderRadius: 10,
         borderColor: theme.mainColor,
