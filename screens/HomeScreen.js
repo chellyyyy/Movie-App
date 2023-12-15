@@ -50,7 +50,7 @@ export default function HomeScreen() {
         <Loading />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
-          {trending.length > 0 && <TrendingMovies data={trending} />}
+          {trending.length > 0 && <TrendingMovies title="Trending" data={trending} />}
           {upcoming.length > 0 && <MovieList title="Upcoming" data={upcoming} />}
           {topRated.length > 0 && <MovieList title="Top Rated" data={topRated} />}
         </ScrollView>

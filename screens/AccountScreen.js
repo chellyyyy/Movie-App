@@ -4,6 +4,7 @@ import { View, ScrollView, Text, StyleSheet, Image, TextInput, Button, Touchable
 import { navigateToListScreen } from '../api/moviedb';
 import { Ionicons } from '@expo/vector-icons';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
+import { HeaderMovit } from '../components/header';
 
 const AccordionHeader = ({ title, icon, hideIcon }) => {
   return (
@@ -45,44 +46,47 @@ const AccountScreen = () => {
   const avatarSource = avatar ? { uri: avatar } : { uri: 'https://i.pinimg.com/736x/c9/bc/a5/c9bca57cf02ef46be89630414a89b5f5.jpg', };
 
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
+      <HeaderMovit title="Account" />
+      <ScrollView style={{padding: 16}}>
 
-      <View style={styles.userAccordion}>
-        <View style={styles.titleAccordion}>
-          <Image source={avatarSource} style={styles.avatar} />
-          <Text style={styles.titleText}>{name}</Text>
+        <View style={styles.userAccordion}>
+          <View style={styles.titleAccordion}>
+            <Image source={avatarSource} style={styles.avatar} />
+            <Text style={styles.titleText}>{name}</Text>
+          </View>
+          <View style={{ borderRadius: 30, overflow: 'hidden' }}>
+            <Button
+              title="Log out"
+              color={theme.mainColor}
+              onPress={() => Alert.alert('Simple Button pressed')}
+            />
+          </View>
+
+          <AccordionItem title="View Profile" icon="person" />
+          <AccordionItem title="Change password" icon="lock-closed" />
         </View>
-        <View style={{ borderRadius: 30, overflow: 'hidden' }}>
-          <Button
-            title="Log out"
-            color={theme.mainColor}
-            onPress={() => Alert.alert('Simple Button pressed')}
-          />
+
+        <View style={styles.userAccordion}>
+          <AccordionHeader title="Personal list" icon="heart-circle" />
+
+          <AccordionItem title="View history" icon="document-text" />
+          <AccordionItem title="Favorite movies" icon="film" />
+          <AccordionItem title="Favorite actors" icon="people" />
         </View>
 
-        <AccordionItem title="View Profile" icon="person" />
-        <AccordionItem title="Change password" icon="lock-closed" />
-      </View>
+        <View style={styles.userAccordion}>
+          <AccordionHeader title="Settings" icon="settings" />
 
-      <View style={styles.userAccordion}>
-        <AccordionHeader title="Personal list" icon="heart-circle" />
+          <AccordionItem title="Version: 1.0.0" icon="alert-circle" hideIcon={'false'} />
+          <AccordionItem title="languages" icon="globe" onPress={() => navigation.navigate('Languages')} />
+          <AccordionItem title="information" icon="information-circle" />
+          <AccordionItem title="terms of use" icon="reader" onPress={() => navigation.navigate('Use')} />
+          <AccordionItem title="Privacy Policy" icon="shield-checkmark" onPress={() => navigation.navigate('Privacy')} />
+        </View>
 
-        <AccordionItem title="View history" icon="document-text" />
-        <AccordionItem title="Favorite movies" icon="film" />
-        <AccordionItem title="Favorite actors" icon="people" />
-      </View>
-
-      <View style={styles.userAccordion}>
-        <AccordionHeader title="Settings" icon="settings" />
-
-        <AccordionItem title="Version: 1.0.0" icon="alert-circle" hideIcon={'false'} />
-        <AccordionItem title="languages" icon="globe" onPress={() => navigation.navigate('Languages')} />
-        <AccordionItem title="information" icon="information-circle" />
-        <AccordionItem title="terms of use" icon="reader" onPress={() => navigation.navigate('Use')} />
-        <AccordionItem title="Privacy Policy" icon="shield-checkmark" onPress={() => navigation.navigate('Privacy')} />
-      </View>
-
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -90,7 +94,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // alignItems: 'center',
-    padding: 16,
     backgroundColor: theme.background,
   },
   userAccordion: {

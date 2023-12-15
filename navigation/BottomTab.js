@@ -51,7 +51,7 @@ const BottomTab = () => {
             <Bottom.Screen name="Genres" component={GenresScreen}
                 options={homeScreenOptions(false, 'grid')} />
             <Bottom.Screen name="Account" component={AccountScreen}
-                options={homeScreenOptions(true, 'person')} />
+                options={homeScreenOptions(false, 'person')} />
         </Bottom.Navigator>
     );
 };

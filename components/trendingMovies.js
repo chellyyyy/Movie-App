@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableWithoutFeedback, Dimensions, ScrollView, StyleSheet } from 'react-native'; // Import StyleSheet
 import { useNavigation } from '@react-navigation/native';
 import { image500 } from '../api/moviedb';
+import { Mainstyles, theme } from '../theme';
 
 const { width, height } = Dimensions.get('window');
 
@@ -14,7 +15,7 @@ export default function TrendingMovies({ title, data }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>{title}</Text>
+            <Text style={styles.titleText}>{title} <Text style={Mainstyles.mainText}>M</Text>ovies</Text>
             <ScrollView horizontal={true} style={styles.scrollViewContainer}>
                 {data.map((item, index) => (
                     <MovieCard key={index} handleClick={handleClick} item={item} />
@@ -67,7 +68,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 4,
     },
     titleText: {
-        // color: 'white', 
+        color: 'white', 
         fontSize: 30,
         fontWeight: 'bold',
         marginLeft: 10,
