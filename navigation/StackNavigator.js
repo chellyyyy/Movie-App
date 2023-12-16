@@ -20,6 +20,9 @@ import UseScreen from '../screens/Account/UseScreen';
 import PrivacyScreen from '../screens/Account/PrivacyScreen';
 import ContactScreen from '../screens/Account/ContactScreen';
 
+import LoginScreen from '../screens/Login';
+import RegisterScreen from '../screens/Register';
+
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -34,6 +37,9 @@ const StackNavigator = () => {
             <Stack.Screen name="Person" component={PersonScreen} options={{ headerShown: false }} />
 
             {/* Profile */}
+            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+
             <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Password" component={PasswordScreen} options={{ headerShown: false }} />
 
