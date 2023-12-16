@@ -7,7 +7,7 @@ import { theme } from '../theme';
 import BottomTab from './BottomTab';
 import ListScreen from '../screens/ListScreen';
 import DetailScreen from '../screens/DetailScreen';
-import PlayerScreen from '../screens/PlayerScreen';
+import { PlayerScreen, TrailerScreen } from '../screens/PlayerScreen';
 import SearchScreen from '../screens/SearchScreen';
 import PersonScreen from '../screens/PersonScreen';
 
@@ -29,6 +29,7 @@ const StackNavigator = () => {
             <Stack.Screen name="List" component={ListScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Detail" component={DetailScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Player" component={PlayerScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Trailer" component={TrailerScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Person" component={PersonScreen} options={{ headerShown: false }} />
 
