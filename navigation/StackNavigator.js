@@ -11,9 +11,14 @@ import VideoScreen from '../screens/VideoScreen';
 import SearchScreen from '../screens/SearchScreen';
 import PersonScreen from '../screens/PersonScreen';
 
-import LanguagesScreen from '../screens/Settings/LanguagesScreen';
-import UseScreen from '../screens/Settings/UseScreen';
-import PrivacyScreen from '../screens/Settings/PrivacyScreen';
+import ProfileScreen from '../screens/Account/ProfileScreen';
+import PasswordScreen from '../screens/Account/PasswordScreen';
+import CastsScreen from '../screens/Account/CastsScreen';
+import LanguagesScreen from '../screens/Account/LanguagesScreen';
+import InformationScreen from '../screens/Account/InformationScreen';
+import UseScreen from '../screens/Account/UseScreen';
+import PrivacyScreen from '../screens/Account/PrivacyScreen';
+import ContactScreen from '../screens/Account/ContactScreen';
 
 const Stack = createStackNavigator();
 
@@ -27,10 +32,21 @@ const StackNavigator = () => {
             <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Person" component={PersonScreen} options={{ headerShown: false }} />
 
+            {/* Profile */}
+            <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Password" component={PasswordScreen} options={{ headerShown: false }} />
+
+            {/* Personal */}
+            <Stack.Screen name="Casts" component={CastsScreen} options={{ headerShown: false }} />
+
             {/* Settings */}
             <Stack.Screen name="Languages" component={LanguagesScreen} options={{ headerShown: false }} />
+
+            {/* Support */}
+            <Stack.Screen name="Information" component={InformationScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Use" component={UseScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Privacy" component={PrivacyScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Contact" component={ContactScreen} options={{ headerShown: false }} />
         </Stack.Navigator>
     );
 };

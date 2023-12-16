@@ -1,22 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Text, StyleSheet, Image, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
-import { navigateToListScreen } from '../api/moviedb';
 import { Ionicons } from '@expo/vector-icons';
+import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import { HeaderMovit } from '../components/header';
 
-const AccordionHeader = ({ title, icon, hideIcon }) => {
+const AccordionHeader = ({ title, icon, onPress, isOpen }) => {
   return (
-    <View style={styles.userAccordionHeader}>
+    <TouchableOpacity style={styles.userAccordionHeader} onPress={onPress} >
       <View style={styles.titleAccordion}>
         <Ionicons name={icon} size={30} color={'white'} />
         <Text style={styles.titleText}>{title}</Text>
       </View>
-      {hideIcon && (
-        <Ionicons name='caret-forward' size={20} color={'white'} />
-      )}
-    </View>
+      <Ionicons name={isOpen ? 'caret-down' : 'caret-forward'} size={20} color={'white'} />
+    </TouchableOpacity>
   );
 };
 
@@ -45,10 +43,35 @@ const AccountScreen = () => {
 
   const avatarSource = avatar ? { uri: avatar } : { uri: 'https://i.pinimg.com/736x/c9/bc/a5/c9bca57cf02ef46be89630414a89b5f5.jpg', };
 
+  const [isPersonal, togglePersonal] = useState(false);
+  const [isSettings, toggleSettings] = useState(false);
+  const [isSupport, toggleSupport] = useState(false);
+
+  const [watchLater, setWatchLater] = useState([]);
+  const [favoriteFilms, setFavoriteFilms] = useState([]);
+  const [favoriteCast, setFavoriteCast] = useState([]);
+
+  useEffect(() => {
+    getWatchLater();
+    getFavoriteFilms();
+  }, []);
+
+  const getWatchLater = async () => {
+    const data = await fetchUpcomingMovies();
+    console.log('got upcoming', data.results.length);
+    if (data && data.results) setWatchLater(data.results);
+  };
+
+  const getFavoriteFilms = async () => {
+    const data = await fetchTopRatedMovies();
+    console.log('got top rated', data.results.length);
+    if (data && data.results) setFavoriteFilms(data.results);
+  };
+
   return (
     <View style={styles.container}>
-      <HeaderMovit title="Account" />
-      <ScrollView style={{padding: 16}}>
+      <HeaderMovit title="Account" hideSearch={'true'} />
+      <ScrollView style={{ padding: 16 }}>
 
         <View style={styles.userAccordion}>
           <View style={styles.titleAccordion}>
@@ -62,27 +85,56 @@ const AccountScreen = () => {
               onPress={() => Alert.alert('Simple Button pressed')}
             />
           </View>
-
-          <AccordionItem title="View Profile" icon="person" />
-          <AccordionItem title="Change password" icon="lock-closed" />
+          <AccordionItem title="Edit Profile" icon="person" onPress={() => navigation.navigate('Profile')} />
+          <AccordionItem title="Change password" icon="lock-closed" onPress={() => navigation.navigate('Password')} />
         </View>
 
         <View style={styles.userAccordion}>
-          <AccordionHeader title="Personal list" icon="heart-circle" />
-
-          <AccordionItem title="View history" icon="document-text" />
-          <AccordionItem title="Favorite movies" icon="film" />
-          <AccordionItem title="Favorite actors" icon="people" />
+          <AccordionHeader title="Personal list" icon="heart-circle"
+            onPress={() => togglePersonal(!isPersonal)} isOpen={isPersonal}
+          />
+          {isPersonal && (
+            <>
+              <AccordionItem title="Watch Later" icon="add"
+                onPress={() => navigation.navigate("List", { title: "Watch Later", data: watchLater })}
+              />
+              <AccordionItem title="Favorite films" icon="film"
+                onPress={() => navigation.navigate("List", { title: "Favorite Films", data: favoriteFilms })}
+              />
+              <AccordionItem title="Favorite Casts" icon="people"
+                onPress={() => navigation.navigate("Casts", { title: "Favorite Casts" })}
+                // onPress={() => navigation.navigate("Cast", { title: "Favorite Casts", cast: cast })}
+              />
+            </>
+          )}
         </View>
 
         <View style={styles.userAccordion}>
-          <AccordionHeader title="Settings" icon="settings" />
+          <AccordionHeader title="Settings" icon="settings"
+            onPress={() => toggleSettings(!isSettings)} isOpen={isSettings}
+          />
+          {isSettings && (
+            <>
+              <AccordionItem title="Version: 1.0.0" icon="alert-circle" hideIcon={'false'} />
+              <AccordionItem title="languages" icon="globe" onPress={() => navigation.navigate('Languages')} />
+              <AccordionItem title="thumbnail view" icon="images" hideIcon={'false'} />
+              <AccordionItem title="plays in the background" icon="volume-high" hideIcon={'false'} />
+            </>
+          )}
+        </View>
 
-          <AccordionItem title="Version: 1.0.0" icon="alert-circle" hideIcon={'false'} />
-          <AccordionItem title="languages" icon="globe" onPress={() => navigation.navigate('Languages')} />
-          <AccordionItem title="information" icon="information-circle" />
-          <AccordionItem title="terms of use" icon="reader" onPress={() => navigation.navigate('Use')} />
-          <AccordionItem title="Privacy Policy" icon="shield-checkmark" onPress={() => navigation.navigate('Privacy')} />
+        <View style={styles.userAccordion}>
+          <AccordionHeader title="Support" icon="information-circle"
+            onPress={() => toggleSupport(!isSupport)} isOpen={isSupport}
+          />
+          {isSupport && (
+            <>
+              <AccordionItem title="Information" icon="document-text" onPress={() => navigation.navigate('Information')} />
+              <AccordionItem title="terms of use" icon="reader" onPress={() => navigation.navigate('Use')} />
+              <AccordionItem title="Privacy Policy" icon="shield-checkmark" onPress={() => navigation.navigate('Privacy')} />
+              <AccordionItem title="Contact" icon="headset" onPress={() => navigation.navigate('Contact')} />
+            </>
+          )}
         </View>
 
       </ScrollView>

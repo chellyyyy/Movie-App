@@ -14,9 +14,7 @@ const ListScreen = ({ route }) => {
     return (
         <View style={styles.container}>
             <Header title={title} />
-            <View style={{ marginTop: 16 }}>
-                <MoviePreview results={data} />
-            </View>
+            <MoviePreview results={data} />
         </View>
     );
 };

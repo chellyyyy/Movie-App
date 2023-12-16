@@ -23,6 +23,7 @@ export default function MovieScreen() {
   const [cast, setCast] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [isFavourite, toggleFavourite] = useState(false);
+  const [isWatchLater, toggleWatchLater] = useState(false);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -66,9 +67,11 @@ export default function MovieScreen() {
             <ChevronLeftIcon size={28} strokeWidth={2.5} color="white" />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} style={[styles.buttonContainerItem, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]} >
-            <HeartIcon size={35} color={isFavourite ? theme.mainColor : 'white'} />
-          </TouchableOpacity>
+          <View style={[styles.buttonContainerItem, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]}>
+            <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} >
+              <HeartIcon size={35} color={isFavourite ? theme.mainColor : 'white'} />
+            </TouchableOpacity>
+          </View>
         </SafeAreaView>
         {loading ? (
           <Loading />
@@ -110,13 +113,20 @@ export default function MovieScreen() {
           })}
         </View>
 
+        {/* watch later */}
+        <View style={styles.buttonWatchLater}>
+          <TouchableOpacity onPress={() => toggleWatchLater(!isWatchLater)} >
+            <IonIcon name={isWatchLater ? 'checkmark' : 'add'} size={35} color={'white'} />
+          </TouchableOpacity>
+          <Text style={styles.movieDescription}>Watch Later</Text>
+        </View>
+
         {/* description */}
         <Text style={styles.movieDescription}>{movie?.overview}</Text>
 
         {/* Button "Play Now" */}
         <TouchableOpacity
           style={[styles.movieButton, Buttonstyles.background]}
-          // onPress={() => navigation.navigate("Video")}
           onPress={() => navigation.navigate("Video", { videoKey: movie?.videos?.results[0]?.key })}
         >
           <IonIcon name={"play"} size={25} color={'white'} />
@@ -153,6 +163,14 @@ const styles = StyleSheet.create({
   buttonContainerItem: {
     borderRadius: 10,
     padding: 1,
+  },
+  buttonWatchLater: {
+    // justifyContent: 'center',
+    // alignContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    padding: 1,
+    marginBottom: 10,
   },
   movieTitle: {
     color: 'white',

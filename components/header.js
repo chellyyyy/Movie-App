@@ -6,7 +6,7 @@ import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/out
 import { StatusBar } from 'expo-status-bar';
 import { Mainstyles, theme } from '../theme';
 
-const HeaderMovit = ({ title }) => {
+const HeaderMovit = ({ title, hideSearch }) => {
     const navigation = useNavigation();
 
     return (
@@ -16,9 +16,11 @@ const HeaderMovit = ({ title }) => {
                     {title} <Text style={Mainstyles.mainText}>M</Text>ovit
                 </Text>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('Search')}>
-                <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
-            </TouchableOpacity>
+            {!hideSearch && (
+                <TouchableOpacity onPress={() => navigation.navigate('Search')}>
+                    <MagnifyingGlassIcon size={30} strokeWidth={2} color="white" />
+                </TouchableOpacity>
+            )}
         </SafeAreaView>
     );
 };
