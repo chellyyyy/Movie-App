@@ -22,25 +22,25 @@ const ProfileScreen = () => {
         <InputProfile
           title='User Name'
           value={name}
-          handleChangeText={(text) => setName(text)}
+          onChangeText={(text) => setName(text)}
         />
 
         <InputProfile
           title='Email'
           value={email}
-          handleChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
         />
 
         <InputProfile
           title='Age'
           value={age}
-          handleChangeText={(text) => setAge(text)}
+          onChangeText={(text) => setAge(text)}
         />
 
         <InputProfile
           title='Address'
           value={address}
-          handleChangeText={(text) => setAddress(text)}
+          onChangeText={(text) => setAddress(text)}
         />
 
         <TouchableOpacity style={styles.saveButton} onPress={handleSaveProfile}>

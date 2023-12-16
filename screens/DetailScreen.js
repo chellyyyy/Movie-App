@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, Platform, StyleSheet } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, Platform, StyleSheet, Linking } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
@@ -7,11 +7,10 @@ import { HeartIcon } from 'react-native-heroicons/solid';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Cast from '../components/cast';
 import MovieList from '../components/movieList';
-import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, image500 } from '../api/moviedb';
+import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, fetchVideoMovies, image500 } from '../api/moviedb';
 import Loading from '../components/loading';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import IonIcon from 'react-native-vector-icons/Ionicons';
-
 
 const topMargin = 20;
 const { width, height } = Dimensions.get('window');
@@ -22,6 +21,7 @@ export default function MovieScreen() {
   const [movie, setMovie] = useState({});
   const [cast, setCast] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
+  const [videoMovies, setVideoMovies] = useState([]);
   const [isFavourite, toggleFavourite] = useState(false);
   const [isWatchLater, toggleWatchLater] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -31,6 +31,7 @@ export default function MovieScreen() {
     getMovieDetials(item.id);
     getMovieCredits(item.id);
     getSimilarMovies(item.id);
+    getVideoMovies(item.id);
   }, [item]);
 
   const getMovieDetials = async (id) => {
@@ -57,6 +58,20 @@ export default function MovieScreen() {
       setSimilarMovies(data.results);
     }
   };
+
+  const getVideoMovies = async (id) => {
+    const data = await fetchVideoMovies(id);
+    console.log('got video trailer movies');
+    if (data && data.results) {
+      setVideoMovies(data.results);
+    }
+  };
+
+  const handleWatchTrailerClick = () => {
+    const trailerUrl = `https://www.youtube.com/watch?v=${videoMovies[0].key}`;
+    Linking.openURL(trailerUrl);
+  };
+
 
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.container}>
@@ -124,14 +139,25 @@ export default function MovieScreen() {
         {/* description */}
         <Text style={styles.movieDescription}>{movie?.overview}</Text>
 
-        {/* Button "Play Now" */}
+        {/* Button "Watch Movie" */}
         <TouchableOpacity
           style={[styles.movieButton, Buttonstyles.background]}
-          onPress={() => navigation.navigate("Video", { videoKey: movie?.videos?.results[0]?.key })}
+          onPress={() => navigation.navigate("Player", { id: movie.id, title: movie.title })}
         >
-          <IonIcon name={"play"} size={25} color={'white'} />
-          <Text style={styles.movieButtonText}>Play Now</Text>
+          <IonIcon name="play" size={25} color="white" />
+          <Text style={styles.movieButtonText}>Watch Movie</Text>
         </TouchableOpacity>
+
+        {/* Button "Watch Trailer" */}
+        {videoMovies.length > 0 && (
+          <TouchableOpacity
+            style={styles.movieButton}
+            onPress={handleWatchTrailerClick}
+          >
+            <IonIcon name="film-outline" size={25} color="white" />
+            <Text style={styles.movieButtonText}>Watch Trailer</Text>
+          </TouchableOpacity>
+        )}
 
       </View>
 
@@ -203,6 +229,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     gap: 5,
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: theme.mainColor,
     padding: 10,
     marginTop: 20,
     marginHorizontal: 100,

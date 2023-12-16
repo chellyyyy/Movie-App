@@ -16,6 +16,7 @@ const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
 const movieDetailsEndpoint = id => `${apiBaseUrl}/movie/${id}?api_key=${apiKey}`;
 const movieCreditsEndpoint = id => `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}`;
 const similarMoviesEndpoint = id => `${apiBaseUrl}/movie/${id}/similar?api_key=${apiKey}`;
+const videoMoviesEndpoint = id => `${apiBaseUrl}/movie/${id}/videos?api_key=${apiKey}`;
 
 // person
 const personDetailsEndpoint = id => `${apiBaseUrl}/person/${id}?api_key=${apiKey}`;
@@ -68,6 +69,9 @@ export const fetchMovieCredits = (movieId) => {
 }
 export const fetchSimilarMovies = (movieId) => {
     return apiCall(similarMoviesEndpoint(movieId));
+}
+export const fetchVideoMovies = (movieId) => {
+    return apiCall(videoMoviesEndpoint(movieId));
 }
 
 // person screen apis
@@ -123,4 +127,15 @@ export function navigateToListScreen(genreId, genreName, navigation) {
         .catch((error) => {
             console.error('Error fetching movies for genre:', error);
         });
+}
+
+// Stream Video
+export const getSmashystreamUrl = (tmdbID) => {
+    return `https://embed.smashystream.com/playere.php?tmdb=${tmdbID}`
+}
+export const getSuperembedUrl = (tmdbID) => {
+    return `https://multiembed.mov/directstream.php?video_id=${tmdbID}&tmdb=1`
+}
+export const get2embedUrl = (tmdbID) => {
+    return `https://www.2embed.cc/embed/${tmdbID}`
 }

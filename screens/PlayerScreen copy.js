@@ -7,7 +7,7 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 
-const VideoScreen = () => {
+const PlayerScreen = () => {
   const video = useRef(null);
   const navigation = useNavigation();
   const [status, setStatus] = useState({});
@@ -274,4 +274,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default VideoScreen;
+export default PlayerScreen;

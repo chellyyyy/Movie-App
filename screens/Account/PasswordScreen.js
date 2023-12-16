@@ -8,7 +8,6 @@ import { InputPassword } from '../../components/input';
 const PasswordScreen = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleSavePassword = () => {
     if (newPassword === confirmPassword) {
@@ -23,17 +22,17 @@ const PasswordScreen = () => {
     <View style={styles.container}>
       <Header title="Change Password" hideSearch={true} />
       <View style={styles.content}>
-        
+
         <InputPassword
           title='New Password'
           value={newPassword}
-          handleChangeText={(text) => setNewPassword(text)}
+          onChangeText={(text) => setNewPassword(text)}
         />
 
         <InputPassword
           title='Confirm Password'
           value={confirmPassword}
-          handleChangeText={(text) => setConfirmPassword(text)}
+          onChangeText={(text) => setConfirmPassword(text)}
         />
 
         <TouchableOpacity style={styles.saveButton} onPress={handleSavePassword}>
