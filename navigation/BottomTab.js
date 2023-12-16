@@ -52,10 +52,10 @@ const BottomTab = () => {
                 options={homeScreenOptions(false, 'home')} />
             <Bottom.Screen name="Genres" component={GenresScreen}
                 options={homeScreenOptions(false, 'grid')} />
-            <Bottom.Screen name="Login" component={LoginScreen}
-                options={homeScreenOptions(false, 'person')} />
-            {/* <Bottom.Screen name="Account" component={AccountScreen}
+            {/* <Bottom.Screen name="Login" component={LoginScreen}
                 options={homeScreenOptions(false, 'person')} /> */}
+            <Bottom.Screen name="Account" component={AccountScreen}
+                options={homeScreenOptions(false, 'person')} />
         </Bottom.Navigator>
     );
 };

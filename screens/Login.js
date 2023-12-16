@@ -37,6 +37,7 @@ const LoginScreen = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
+        placeholderTextColor={'gray'}
         placeholder="Username"
         onChangeText={(text) => setUsername(text)}
         value={username}
@@ -44,6 +45,7 @@ const LoginScreen = ({ navigation }) => {
 
       <TextInput
         style={styles.input}
+        placeholderTextColor={'gray'}
         placeholder="Password"
         onChangeText={(text) => setPassword(text)}
         value={password}
@@ -68,11 +70,13 @@ const styles = StyleSheet.create({
       alignItems: 'center',
     },
     title: {
+      color: 'white',
       fontSize: 24,
       fontWeight: 'bold',
       marginBottom: 20,
     },
     input: {
+      color: 'white',
       width: '80%',
       height: 40,
       borderColor: 'gray',
