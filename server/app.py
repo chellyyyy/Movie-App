@@ -4,11 +4,10 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
-# Cấu hình SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # Tắt cảnh báo theo dõi thay đổi
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
@@ -19,7 +18,6 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
 
-# Đăng ký user mới
 @app.route('/api/register', methods=['POST'])
 def register():
     data = request.get_json()
@@ -37,7 +35,6 @@ def register():
 
     return jsonify({'message': 'User registered successfully'})
 
-# Đăng nhập
 @app.route('/api/login', methods=['POST'])
 def login():
     data = request.get_json()
