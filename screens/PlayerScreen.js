@@ -18,12 +18,10 @@ const PlayerScreen = () => {
       </TouchableOpacity>
 
       {/* Video Player */}
-      <Video
-        source={{ uri: getSmashystreamUrl(params.id) }}
-        resizeMode={ResizeMode.CONTAIN}
-        shouldPlay
-        useNativeControls
-        style={styles.fullScreenVideo}
+      <iframe
+        allowFullScreen
+        style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+        source={{ uri: get2embedUrl(params.id) }}
       />
     </View>
   );
