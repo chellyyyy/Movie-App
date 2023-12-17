@@ -7,7 +7,7 @@ import { theme } from '../theme';
 import BottomTab from './BottomTab';
 import ListScreen from '../screens/ListScreen';
 import DetailScreen from '../screens/DetailScreen';
-import { PlayerScreen, TrailerScreen } from '../screens/PlayerScreen';
+import { PlayerScreen, TrailerScreen } from '../screens/VideoScreen';
 import SearchScreen from '../screens/SearchScreen';
 import PersonScreen from '../screens/PersonScreen';
 
