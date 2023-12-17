@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, Dimensions, TouchableOpacity, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import { MagnifyingGlassIcon } from 'react-native-heroicons/outline';
@@ -7,11 +7,13 @@ import { fetchGenres, navigateToListScreen, configureAxios } from '../api/movied
 import Loading from '../components/loading';
 import { HeaderMovit } from '../components/header';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
+import { AuthContext } from '../AuthContext';
 
 const { width, height } = Dimensions.get('window');
 
 const GenreScreen = () => {
     const navigation = useNavigation();
+    // const { loading, fetchGenre, activegenre, setActiveGenre, genres, setMovies, page, setPage, filteredGenre } = useContext(AuthContext);
     const [genres, setGenres] = useState([]);
     const [loading, setLoading] = useState(true);
 

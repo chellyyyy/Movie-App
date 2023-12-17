@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback, ScrollView, StyleSheet } from 'react-native';
 import { Dimensions } from 'react-native';
 import { fallbackMoviePoster, image185 } from '../api/moviedb';
 import { useNavigation } from '@react-navigation/native';
 import { Mainstyles } from '../theme';
+import { AuthContext } from '../AuthContext';
 
 const { width, height } = Dimensions.get('window');
 
@@ -41,8 +42,28 @@ const MoviePreviewItem = ({ item, index }) => {
 };
 
 const MoviePreview = ({ results, hideResults }) => {
+    const {
+        loading,
+        page, setPage, totalPage,
+    } = useContext(AuthContext);
+
+    useEffect(() => {
+        setPage(1)
+    }, []);
+
+    const handleEndReached = () => {
+        if (page < totalPage) {
+            setPage(page + 1);
+        }
+    };
+
     return (
-        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.scrollContainer}
+            onEndReached={handleEndReached}
+            onEndReachedThreshold={0.1} // Đặt ngưỡng để xác định khi nào cuộc cuộc đến cuối trang
+        >
             {hideResults && (
                 <Text style={styles.resultText}>Results ({results.length})</Text>
             )}

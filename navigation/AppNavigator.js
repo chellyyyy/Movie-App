@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { theme } from '../theme';
 import StackNavigator from './StackNavigator';
 import AuthStack from './AuthStack';
-import { AuthContext, AuthProvider } from '../Contextpage';
+import { AuthContext, AuthProvider } from '../AuthContext';
 
 const Stack = createStackNavigator();
 

@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import { AuthProvider } from './Contextpage';
+import { MovieProvider } from './AuthContext';
 import AppNavigator from './navigation/AppNavigator';
 
 const App = () => {
 
   return (
-    <AuthProvider>
+    <MovieProvider>
       <AppNavigator />
-    </AuthProvider>
+    </MovieProvider>
   );
 };
 

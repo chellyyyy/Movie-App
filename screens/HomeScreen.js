@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Bars3CenterLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
@@ -6,42 +6,41 @@ import TrendingMovies from '../components/trendingMovies';
 import MovieList from '../components/movieList';
 import { HeaderMovit } from '../components/header';
 import { StatusBar } from 'expo-status-bar';
-import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
+// import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
+import { AuthContext } from '../AuthContext';
 
 export default function HomeScreen() {
-  const [trending, setTrending] = useState([]);
-  const [upcoming, setUpcoming] = useState([]);
-  const [topRated, setTopRated] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
+  const {
+    loading,
+    page, setPage, totalPage,
+    fetchTrending, fetchUpcoming, fetchTopRated,
+    trending, upcoming, topRated
+  } = useContext(AuthContext);
 
   useEffect(() => {
-    getTrendingMovies();
-    getUpcomingMovies();
-    getTopRatedMovies();
+    setPage(1)
   }, []);
 
-  const getTrendingMovies = async () => {
-    const data = await fetchTrendingMovies();
-    console.log('got trending', data.results.length);
-    if (data && data.results) setTrending(data.results);
-    setLoading(false);
-  };
+  useEffect(() => {
+    if (page > 0) {
+      fetchTrending();
+    }
+  }, [page])
 
-  const getUpcomingMovies = async () => {
-    const data = await fetchUpcomingMovies();
-    console.log('got upcoming', data.results.length);
-    if (data && data.results) setUpcoming(data.results);
-  };
+  useEffect(() => {
+    if (page > 0) {
+      fetchUpcoming();
+    }
+  }, [page])
 
-  const getTopRatedMovies = async () => {
-    const data = await fetchTopRatedMovies();
-    console.log('got top rated', data.results.length);
-    if (data && data.results) setTopRated(data.results);
-  };
+  useEffect(() => {
+    if (page > 0) {
+      fetchTopRated();
+    }
+  }, [page])
 
   return (
     <View style={styles.container}>

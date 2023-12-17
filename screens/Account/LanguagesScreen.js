@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { Header } from '../../components/header';
 import { theme } from '../../theme';
+import { AuthContext } from '../../AuthContext';
 
 const LanguagesScreen = () => {
+    const { language, setLanguage } = useContext(AuthContext);
 
     return (
         <View style={styles.container}>
@@ -13,20 +15,22 @@ const LanguagesScreen = () => {
                 title='English'
                 checkedIcon='dot-circle-o'
                 uncheckedIcon='circle-o'
-                checked={true}
+                checked={language === 'en'}
+                onPress={() => setLanguage('en')}
                 checkedColor={theme.mainColor}
                 textStyle={{ color: 'white' }}
                 containerStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
             />
-            {/* <CheckBox
-                title='Vietname'
+            <CheckBox
+                title='Vietnamese'
                 checkedIcon='dot-circle-o'
                 uncheckedIcon='circle-o'
-                checked={false}
+                checked={language === 'vi'}
+                onPress={() => setLanguage('vi')}
                 checkedColor={theme.mainColor}
                 textStyle={{ color: 'white' }}
                 containerStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
-            /> */}
+            />
         </View>
     );
 };
