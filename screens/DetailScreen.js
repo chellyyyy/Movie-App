@@ -24,7 +24,7 @@ export default function MovieScreen() {
   const [videoMovies, setVideoMovies] = useState([]);
   const [isFavourite, toggleFavourite] = useState(false);
   const [isWatchLater, toggleWatchLater] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
@@ -66,12 +66,6 @@ export default function MovieScreen() {
       setVideoMovies(data.results);
     }
   };
-
-  const handleWatchTrailerClick = () => {
-    const trailerUrl = `https://www.youtube.com/watch?v=${videoMovies[0].key}`;
-    Linking.openURL(trailerUrl);
-  };
-
 
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.container}>
@@ -142,7 +136,7 @@ export default function MovieScreen() {
         {/* Button "Watch Movie" */}
         <TouchableOpacity
           style={[styles.movieButton, Buttonstyles.background]}
-          onPress={() => navigation.navigate("Player", { id: movie.id, title: movie.title })}
+          onPress={() => navigation.navigate("Player", { id: movie.id })}
         >
           <IonIcon name="play" size={25} color="white" />
           <Text style={styles.movieButtonText}>Watch Movie</Text>
@@ -152,7 +146,7 @@ export default function MovieScreen() {
         {videoMovies.length > 0 && (
           <TouchableOpacity
             style={styles.movieButton}
-            onPress={handleWatchTrailerClick}
+            onPress={() => navigation.navigate("Trailer", { id: videoMovies[0].key })}
           >
             <IonIcon name="film-outline" size={25} color="white" />
             <Text style={styles.movieButtonText}>Watch Trailer</Text>

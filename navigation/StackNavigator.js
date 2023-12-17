@@ -7,7 +7,7 @@ import { theme } from '../theme';
 import BottomTab from './BottomTab';
 import ListScreen from '../screens/ListScreen';
 import DetailScreen from '../screens/DetailScreen';
-import PlayerScreen from '../screens/PlayerScreen';
+import { PlayerScreen, TrailerScreen } from '../screens/PlayerScreen';
 import SearchScreen from '../screens/SearchScreen';
 import PersonScreen from '../screens/PersonScreen';
 
@@ -20,6 +20,9 @@ import UseScreen from '../screens/Account/UseScreen';
 import PrivacyScreen from '../screens/Account/PrivacyScreen';
 import ContactScreen from '../screens/Account/ContactScreen';
 
+import LoginScreen from '../screens/Login';
+import RegisterScreen from '../screens/Register';
+
 const Stack = createStackNavigator();
 
 const StackNavigator = () => {
@@ -29,10 +32,14 @@ const StackNavigator = () => {
             <Stack.Screen name="List" component={ListScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Detail" component={DetailScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Player" component={PlayerScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Trailer" component={TrailerScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Person" component={PersonScreen} options={{ headerShown: false }} />
 
             {/* Profile */}
+            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+
             <Stack.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Password" component={PasswordScreen} options={{ headerShown: false }} />
 

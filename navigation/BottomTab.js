@@ -9,6 +9,8 @@ import HomeScreen from '../screens/HomeScreen';
 import GenresScreen from '../screens/GenresScreen';
 import AccountScreen from '../screens/AccountScreen';
 
+import LoginScreen from '../screens/Login';
+
 const Bottom = createBottomTabNavigator();
 
 const TabIcon = ({ name, focused }) => {
@@ -50,6 +52,8 @@ const BottomTab = () => {
                 options={homeScreenOptions(false, 'home')} />
             <Bottom.Screen name="Genres" component={GenresScreen}
                 options={homeScreenOptions(false, 'grid')} />
+            {/* <Bottom.Screen name="Login" component={LoginScreen}
+                options={homeScreenOptions(false, 'person')} /> */}
             <Bottom.Screen name="Account" component={AccountScreen}
                 options={homeScreenOptions(false, 'person')} />
         </Bottom.Navigator>
