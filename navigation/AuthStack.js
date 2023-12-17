@@ -7,6 +7,8 @@ import Introducing from '../screens/Intro/Introducing';
 import LoginScreen from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 
+import HomeScreen from '../screens/HomeScreen';
+
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
@@ -17,6 +19,8 @@ const AuthStack = () => {
 
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Register" component={RegisterScreen} options={{ headerShown: false }} />
+
+            {/* <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} /> */}
         </Stack.Navigator>
     );
 };
