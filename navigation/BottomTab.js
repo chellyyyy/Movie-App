@@ -9,7 +9,7 @@ import HomeScreen from '../screens/HomeScreen';
 import GenresScreen from '../screens/GenresScreen';
 import AccountScreen from '../screens/AccountScreen';
 
-import LoginScreen from '../screens/Login';
+import LoginScreen from '../screens/LoginScreen';
 
 const Bottom = createBottomTabNavigator();
 

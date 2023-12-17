@@ -3,36 +3,41 @@ import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-nativ
 import { Ionicons } from '@expo/vector-icons';
 import { theme } from '../theme';
 
-const InputProfile = ({ title, value, onChangeText }) => {
+const InputProfile = ({ title, value, placeholder, onChangeText, keyboardType }) => {
     return (
         <View>
-            <Text style={styles.heading}>{title}:</Text>
+            <Text style={styles.heading}>{title}</Text>
             <View style={styles.content}>
                 <TextInput
                     style={styles.input}
                     value={value}
                     onChangeText={onChangeText}
+                    placeholderTextColor={theme.grayColor}
+                    placeholder={placeholder}
+                    keyboardType={keyboardType}
                 />
             </View>
         </View>
     );
 };
 
-const InputPassword = ({ title, value, onChangeText }) => {
+const InputPassword = ({ title, value, placeholder, onChangeText }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     return (
         <View>
-            <Text style={styles.heading}>{title}:</Text>
+            <Text style={styles.heading}>{title}</Text>
             <View style={styles.content}>
                 <TextInput
                     style={styles.input}
                     value={value}
                     onChangeText={onChangeText}
+                    placeholderTextColor={theme.grayColor}
+                    placeholder={placeholder}
                     secureTextEntry={!showPassword}
                 />
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                    <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={24} color={theme.grayColor} />
+                    <Ionicons name={showPassword ? 'eye' : 'eye-off'} size={16} color={theme.grayColor} />
                 </TouchableOpacity>
             </View>
         </View>

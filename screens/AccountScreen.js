@@ -83,6 +83,7 @@ const AccountScreen = () => {
               title="Log out"
               color={theme.mainColor}
               onPress={() => Alert.alert('Simple Button pressed')}
+              // onPress={logoutUser}
             />
           </View>
           <AccordionItem title="Edit Profile" icon="person" onPress={() => navigation.navigate('Profile')} />

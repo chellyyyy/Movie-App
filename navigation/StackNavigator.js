@@ -20,8 +20,8 @@ import UseScreen from '../screens/Account/UseScreen';
 import PrivacyScreen from '../screens/Account/PrivacyScreen';
 import ContactScreen from '../screens/Account/ContactScreen';
 
-import LoginScreen from '../screens/Login';
-import RegisterScreen from '../screens/Register';
+import LoginScreen from '../screens/LoginScreen';
+import RegisterScreen from '../screens/RegisterScreen';
 
 const Stack = createStackNavigator();
 

@@ -1,20 +1,14 @@
-import React from 'react';
-import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
-import { theme } from './theme';
-import StackNavigator from './navigation/StackNavigator';
+import React, { useContext } from 'react';
+import { AuthProvider } from './Contextpage';
+import AppNavigator from './navigation/AppNavigator';
 
-const myTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    background: theme.background,
-  },
+const App = () => {
+
+  return (
+    <AuthProvider>
+      <AppNavigator />
+    </AuthProvider>
+  );
 };
 
-export default function App() {
-  return (
-    <NavigationContainer theme={myTheme}>
-      <StackNavigator />
-    </NavigationContainer>
-  );
-}
+export default App;
