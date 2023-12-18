@@ -24,3 +24,4 @@ Movit-Movies được xây dựng bằng các công nghệ sau:
 
 - React Native
 - [API TMDB](https://developers.themoviedb.org/)
+- Flask
