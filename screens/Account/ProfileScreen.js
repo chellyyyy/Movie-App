@@ -1,17 +1,78 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Header } from '../../components/header';
 import { theme } from '../../theme';
 import { InputProfile } from '../../components/input';
+import { AuthContext } from '../../AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 const ProfileScreen = () => {
-  const [name, setName] = useState('Your Name');
-  const [email, setEmail] = useState('Your Email');
-  const [age, setAge] = useState('Your Age');
-  const [address, setAddress] = useState('Your Address');
+  const navigation = useNavigation();
+  // const { user, updateUser } = useContext(AuthContext);
+  // const [username, setUsername] = useState('Your Name');
+  // const [email, setEmail] = useState('Your Email');
+  // const [age, setAge] = useState('Your Age');
+  // const [address, setAddress] = useState('Your Address');
 
-  const handleSaveProfile = () => {
-    Alert.alert('Success', 'Profile saved successfully!');
+
+  const {
+    realName, setRealname,
+    user, updateUser,
+    username, setUsername,
+    email, setEmail,
+    age, setAge,
+    address, setAddress
+  } = useContext(AuthContext);
+
+
+  
+
+  const handleSaveProfile = async () => {
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/update_profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          age,
+          address,
+          realName
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Cập nhật thông tin người dùng trong Context
+        updateUser({
+          ...user,
+          email,
+          age,
+          address,
+          realName
+        });
+
+        Alert.alert(
+          'Success',
+          'Profile saved successfully!',
+          [
+            {
+              text: 'OK',
+              onPress: () => navigation.navigate('Account'),
+            },
+          ],
+          { cancelable: false }
+        );
+      } else {
+        Alert.alert('Error', data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      Alert.alert('Error', 'An error occurred while updating the profile.');
+    }
   };
 
   return (
@@ -20,9 +81,9 @@ const ProfileScreen = () => {
       <View style={styles.content}>
 
         <InputProfile
-          title='User Name'
-          value={name}
-          onChangeText={(text) => setName(text)}
+          title='Your Name'
+          value={realName}
+          onChangeText={(text) => setRealname(text)}
         />
 
         <InputProfile

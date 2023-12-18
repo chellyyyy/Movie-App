@@ -11,6 +11,7 @@ import { PlayerScreen, TrailerScreen } from '../screens/VideoScreen';
 import SearchScreen from '../screens/SearchScreen';
 import PersonScreen from '../screens/PersonScreen';
 
+import AccountScreen from '../screens/AccountScreen';
 import ProfileScreen from '../screens/Account/ProfileScreen';
 import PasswordScreen from '../screens/Account/PasswordScreen';
 import CastsScreen from '../screens/Account/CastsScreen';
@@ -35,6 +36,7 @@ const StackNavigator = () => {
             <Stack.Screen name="Trailer" component={TrailerScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Person" component={PersonScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Account" component={AccountScreen} options={{ headerShown: false }} />
 
             {/* Profile */}
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />

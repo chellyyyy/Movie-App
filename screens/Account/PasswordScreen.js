@@ -1,20 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Header } from '../../components/header';
 import { theme } from '../../theme';
 import { Ionicons } from '@expo/vector-icons';
 import { InputPassword } from '../../components/input';
+import { AuthContext } from '../../AuthContext';
+import { useNavigation } from '@react-navigation/native';
 
 const PasswordScreen = () => {
+  const navigation = useNavigation();
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const {
+    username, password,
+    isAuthenticated, setIsAuthenticated
+  } = useContext(AuthContext)
 
-  const handleSavePassword = () => {
-    if (newPassword === confirmPassword) {
-      // Gọi API ở đây
-      Alert.alert('Success', 'Password changed successfully!');
-    } else {
-      Alert.alert('Error', 'Passwords do not match. Please try again.');
+  const handleSavePassword = async () => {
+    try {
+      
+      const response = await fetch('http://10.0.2.2:5000/api/update_password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          current_password: password,
+          new_password: newPassword,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert(
+          'Success',
+          'Please login again.',
+          [
+            {
+              text: 'OK',
+              onPress: () => setIsAuthenticated(false),
+            },
+          ],
+          { cancelable: false }
+        );
+      } else {
+        Alert.alert('Error', data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Text, StyleSheet, Image, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import { HeaderMovit } from '../components/header';
+import { AuthContext } from '../AuthContext';
 
 const AccordionHeader = ({ title, icon, onPress, isOpen }) => {
   return (
@@ -36,10 +37,20 @@ const AccordionItem = ({ title, icon, onPress, hideIcon }) => {
 
 const AccountScreen = () => {
   const navigation = useNavigation();
-  const [name, setName] = useState('Your Name');
+  // const [name, setName] = useState('Your Name');
   const [avatar, setAvatar] = useState('');
-  const [password, setPassword] = useState('Your Password');
-  const [email, setEmail] = useState('Your Email');
+  // const [password, setPassword] = useState('Your Password');
+  // const [email, setEmail] = useState('Your Email');
+  const {
+    username, setUsername,
+    realName, setRealname,
+    email, setEmail,
+    age, setAge,
+    address, setAddress,
+    password, setPassword,
+    confirmPassword, setConfirmPassword,
+    handleLogout,
+  } = useContext(AuthContext);
 
   const avatarSource = avatar ? { uri: avatar } : { uri: 'https://i.pinimg.com/736x/c9/bc/a5/c9bca57cf02ef46be89630414a89b5f5.jpg', };
 
@@ -50,6 +61,31 @@ const AccountScreen = () => {
   const [watchLater, setWatchLater] = useState([]);
   const [favoriteFilms, setFavoriteFilms] = useState([]);
   const [favoriteCast, setFavoriteCast] = useState([]);
+
+  const getInfo = async () => {
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/get_user_info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+  
+      const data = await response.json();
+      
+      setEmail(data.email)
+      setAge(data.age)
+      setAddress(data.address)
+
+      console.log('User Info:', data);
+  
+    } catch (error) {
+      console.error('Error:', error);
+    }
+
+    navigation.navigate('Profile')
+  };
 
   useEffect(() => {
     getWatchLater();
@@ -76,17 +112,17 @@ const AccountScreen = () => {
         <View style={styles.userAccordion}>
           <View style={styles.titleAccordion}>
             <Image source={avatarSource} style={styles.avatar} />
-            <Text style={styles.titleText}>{name}</Text>
+            <Text style={styles.titleText}>{realName}</Text>
           </View>
           <View style={{ borderRadius: 30, overflow: 'hidden' }}>
             <Button
               title="Log out"
               color={theme.mainColor}
-              onPress={() => Alert.alert('Simple Button pressed')}
-              // onPress={logoutUser}
+              // onPress={() => Alert.alert('Simple Button pressed')}
+              onPress={handleLogout}
             />
           </View>
-          <AccordionItem title="Edit Profile" icon="person" onPress={() => navigation.navigate('Profile')} />
+          <AccordionItem title="Edit Profile" icon="person" onPress={getInfo} />
           <AccordionItem title="Change password" icon="lock-closed" onPress={() => navigation.navigate('Password')} />
         </View>
 

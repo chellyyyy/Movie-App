@@ -10,10 +10,13 @@ const MovieProvider = ({ children }) => {
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
+  const [realName, setRealname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-
+  const [age, setAge] = useState('');
+  const [address, setAddress] = useState('');
+  const [user, updateUser] = useState('');
   // const [header, setHeader] = useState("Trending");
   const [totalPage, setTotalPage] = useState(null)
   const [movies, setMovies] = useState([]);
@@ -69,7 +72,7 @@ const MovieProvider = ({ children }) => {
         return;
       }
 
-      const response = await fetch('http://localhost:5000/api/register', {
+      const response = await fetch('http://10.0.2.2:5000/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -175,12 +178,18 @@ const MovieProvider = ({ children }) => {
 
   const contextValue = {
     isAuthenticated, setIsAuthenticated,
+
+    //thong tin user
     username, setUsername,
+    realName, setRealname,
     email, setEmail,
     password, setPassword,
     confirmPassword, setConfirmPassword,   
+    age, setAge,
+    address, setAddress,
     handleLogin, handleRegister, handleLogout,
-
+    user, updateUser,
+    //thong tin phim
     genres, fetchGenre,
     setGenres,
     filteredGenre,
