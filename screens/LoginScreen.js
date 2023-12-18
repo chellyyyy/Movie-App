@@ -1,38 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { AuthContext } from '../AuthContext';
 import { InputProfile, InputPassword } from '../components/input';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
 
 const LoginScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch('http://10.0.2.2:5000/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
+  const {
+    username, setUsername,
+    password, setPassword,
+    handleLogin,
+  } = useContext(AuthContext);
 
-      const data = await response.json();
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
 
-      if (response.ok) {
-        console.log(data.message);
-        navigation.navigate('Home');
-      } else {
-        console.error(data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await fetch('http://10.0.2.2:5000/api/login', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         username,
+  //         password,
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (response.ok) {
+  //       console.log(data.message);
+  //       navigation.navigate('Home');
+  //     } else {
+  //       console.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
 
   return (
     <View style={{ flex: 1 }}>

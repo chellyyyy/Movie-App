@@ -2,7 +2,7 @@
 Movit-Movies là một app xem phim cho phép người dùng tìm kiếm phim theo tiêu đề, sắp xếp theo thể loại, xem các bộ phim đang thịnh hành và sắp ra mắt, cũng như đánh dấu các bộ phim yêu thích. Ứng dụng được thiết kế để thân thiện với người dùng và mang lại trải nghiệm trực quan hấp dẫn.
 <hr/>
 
-![Logo](assets/logo.png)
+![Logo](assets/icon.png)
 
 <hr/>
 

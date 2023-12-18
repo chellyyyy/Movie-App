@@ -23,10 +23,10 @@ const SplashScreen = () => {
       }),
     ]).start();
 
-    // Sử dụng setTimeout để chuyển hướng sau 5 giây
+    // Sử dụng setTimeout để chuyển hướng sau 3 giây
     const timeoutId = setTimeout(() => {
       navigation.navigate('Introducing');
-    }, 5000);
+    }, 3000);
 
     return () => {
       clearTimeout(timeoutId);

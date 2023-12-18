@@ -21,17 +21,17 @@ export default function AppNavigator() {
     // const isAuthenticated = useState('true');
 
     return (
-        <NavigationContainer theme={myTheme}>
-            <Stack.Navigator>
-                {isAuthenticated
-                    ? (
-                        <Stack.Screen name="StackNavigator" component={StackNavigator} options={{ headerShown: false }} />
-                    )
-                    : (
-                        <Stack.Screen name="AuthStack" component={AuthStack} options={{ headerShown: false }} />
-                    )
-                }
-            </Stack.Navigator>
-        </NavigationContainer>
+        
+        <Stack.Navigator>
+            {isAuthenticated
+                ? (
+                    <Stack.Screen name="StackNavigator" component={StackNavigator} options={{ headerShown: false }} />
+                )
+                : (
+                    <Stack.Screen name="AuthStack" component={AuthStack} options={{ headerShown: false }} />
+                )
+            }
+        </Stack.Navigator>
+        
     );
 }

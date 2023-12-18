@@ -6,9 +6,13 @@ import { apiKey } from './api/moviedb';
 const AuthContext = createContext();
 
 const MovieProvider = ({ children }) => {
+  const navigation = useNavigation();
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   // const [header, setHeader] = useState("Trending");
   const [totalPage, setTotalPage] = useState(null)
@@ -24,7 +28,6 @@ const MovieProvider = ({ children }) => {
   const [backgenre, setBackGenre] = useState(false);
   const [language, setLanguage] = useState('en');
   // const [user, setUser] = useAuthState(auth)
-  // const navigate = useNavigation();
 
   useEffect(() => {
     if (page < 1) {
@@ -32,19 +35,82 @@ const MovieProvider = ({ children }) => {
     }
   }, [page]);
 
-  const loginUser = (enteredEmail, enteredPassword) => {
-    if (enteredEmail === 'A' && enteredPassword === 'A') {
-      setIsAuthenticated(true);
-    } else {
-      setIsAuthenticated(false);
-      Alert.alert("Incorrect email or password.");
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data.message);
+        setIsAuthenticated(true);
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
-  const logoutUser = () => {
+  const handleRegister = async () => {
+
+    try {
+      if (!username || !email || !password || password !== confirmPassword) {
+        console.error('Invalid input. Please check your information.');
+        return;
+      }
+
+      const response = await fetch('http://localhost:5000/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+      
+
+      if (response.ok) {
+        console.log(data.message);
+        navigation.navigate('Login');
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  // const loginUser = (enteredEmail, enteredPassword) => {
+  //   if (enteredEmail === 'A' && enteredPassword === 'A') {
+  //     setIsAuthenticated(true);
+  //   } else {
+  //     setIsAuthenticated(false);
+  //     Alert.alert("Incorrect email or password.");
+  //   }
+  // };
+
+  const handleLogout = () => {
     setIsAuthenticated(false);
   };
 
+
+  // Movies ============================================================================
+  
   const filteredGenre = async () => {
     const data = await fetch(
       `https://api.themoviedb.org/3/discover/movie?with_genres=${activegenre}&api_key=${apiKey}&page=${page}`
@@ -109,9 +175,11 @@ const MovieProvider = ({ children }) => {
 
   const contextValue = {
     isAuthenticated, setIsAuthenticated,
+    username, setUsername,
     email, setEmail,
     password, setPassword,
-    loginUser, logoutUser,
+    confirmPassword, setConfirmPassword,   
+    handleLogin, handleRegister, handleLogout,
 
     genres, fetchGenre,
     setGenres,

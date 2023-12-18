@@ -1,47 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { InputProfile, InputPassword } from '../components/input';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
+import { AuthContext } from '../AuthContext';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
 import { color } from 'react-native-elements/dist/helpers';
 
 const RegisterScreen = ({ navigation }) => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleRegister = async () => {
-    try {
-      if (!username || !email || !password || password !== confirmPassword) {
-        console.error('Invalid input. Please check your information.');
-        return;
-      }
+  const {
+    username, setUsername,
+    email, setEmail,
+    password, setPassword,
+    confirmPassword, setConfirmPassword,
+    handleRegister,
+  } = useContext(AuthContext);
 
-      const response = await fetch('http://10.0.2.2:5000/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
-      });
+  // const [username, setUsername] = useState('');
+  // const [email, setEmail] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
 
-      const data = await response.json();
+  // const handleRegister = async () => {
+  //   try {
+  //     if (!username || !email || !password || password !== confirmPassword) {
+  //       console.error('Invalid input. Please check your information.');
+  //       return;
+  //     }
 
-      if (response.ok) {
-        console.log(data.message);
-        navigation.navigate('Login');
-      } else {
-        console.error(data.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
+  //     const response = await fetch('http://10.0.2.2:5000/api/register', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({
+  //         username,
+  //         email,
+  //         password,
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (response.ok) {
+  //       console.log(data.message);
+  //       navigation.navigate('Login');
+  //     } else {
+  //       console.error(data.message);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error:', error);
+  //   }
+  // };
 
   return (
     <View style={{ flex: 1 }}>
