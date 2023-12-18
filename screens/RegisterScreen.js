@@ -161,8 +161,6 @@ const styles = StyleSheet.create({
   note: {
     color: 'white',
     textAlign: 'center',
-    position: 'absolute',
-    bottom: 0,
   },
 });
 
