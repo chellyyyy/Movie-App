@@ -26,6 +26,8 @@ export default function MovieScreen() {
   const [isWatchLater, toggleWatchLater] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const [isDescriptions, toggleDescriptions] = useState(false);
+
   useEffect(() => {
     setLoading(true);
     getMovieDetials(item.id);
@@ -77,9 +79,9 @@ export default function MovieScreen() {
           </TouchableOpacity>
 
           <View style={[styles.buttonContainerItem, { backgroundColor: 'rgba(0, 0, 0, 0.5)' }]}>
-            <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} >
+            {/* <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)} >
               <HeartIcon size={35} color={isFavourite ? theme.mainColor : 'white'} />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </SafeAreaView>
         {loading ? (
@@ -99,64 +101,92 @@ export default function MovieScreen() {
 
       {/* movie details */}
 
-      <View style={{ marginTop: -(height * 0.09), marginVertical: 12 }}>
+      <View style={{ marginTop: -(height * 0.09), marginVertical: 12, marginHorizontal: 20 }}>
         {/* title */}
         <Text style={styles.movieTitle}>{movie?.title}</Text>
 
         {/* status, release year, runtime */}
         {movie?.id ? (
-          <Text style={styles.movieDetails}>
-            {movie?.status} • {movie?.release_date?.split('-')[0] || 'N/A'} • {movie?.runtime} min
-          </Text>
+          <View style={styles.subHeading}>
+              {(movie.vote_average || 0) > 7 ? (
+                  <Text style={[styles.voteText, { color: 'green', borderColor: 'green' }]}>
+                      {(movie.vote_average || 0).toFixed(1)}
+                  </Text>
+              ) : (movie.vote_average || 0) > 5.5 ? (
+                  <Text style={[styles.voteText, { color: 'orange', borderColor: 'orange' }]}>
+                      {(movie.vote_average || 0).toFixed(1)}
+                  </Text>
+              ) : (
+                  <Text style={[styles.voteText, { color: 'red', borderColor: 'red' }]}>
+                      {(movie.vote_average || 0).toFixed(1)}
+                  </Text>
+              )}
+            <Text style={styles.movieDetails}>
+              {movie?.status} | {movie?.release_date?.split('-')[0] || 'N/A'} | {movie?.runtime} min
+            </Text>
+          </View>
         ) : null}
 
         {/* genres  */}
-        <View style={{ flexDirection: 'row', justifyContent: 'center', marginHorizontal: 16, marginVertical: 8 }}>
+        <View style={{ flexDirection: 'row', marginVertical: 8 }}>
           {movie?.genres?.map((genre, index) => {
             let showDot = index + 1 !== movie.genres.length;
             return (
               <Text key={index} style={styles.genreText}>
-                {genre?.name} {showDot ? '• ' : null}
+                {genre?.name} {showDot ? '| ' : null}
               </Text>
             );
           })}
         </View>
 
-        {/* watch later */}
-        <View style={styles.buttonWatchLater}>
-          <TouchableOpacity onPress={() => toggleWatchLater(!isWatchLater)} >
-            <IonIcon name={isWatchLater ? 'checkmark' : 'add'} size={35} color={'white'} />
-          </TouchableOpacity>
-          <Text style={styles.movieDescription}>Watch Later</Text>
-        </View>
-
         {/* description */}
-        <Text style={styles.movieDescription}>{movie?.overview}</Text>
-
-        {/* Button "Watch Movie" */}
-        <TouchableOpacity
-          style={[styles.movieButton, Buttonstyles.background]}
-          onPress={() => navigation.navigate("Player", { id: movie.id })}
+        <TouchableOpacity 
+          style={styles.movieDescriptions}
+          onPress={() => toggleDescriptions(!isDescriptions)}
         >
-          <IonIcon name="play" size={25} color="white" />
-          <Text style={styles.movieButtonText}>Watch Movie</Text>
+          <Text style={styles.subTitle}>Descriptions</Text>
+          <IonIcon name={isDescriptions ? 'caret-down' : 'caret-forward'} size={20} color={'white'} />
         </TouchableOpacity>
-
-        {/* Button "Watch Trailer" */}
-        {videoMovies.length > 0 && (
-          <TouchableOpacity
-            style={styles.movieButton}
-            onPress={() => navigation.navigate("Trailer", { id: videoMovies[0].key })}
-          >
-            <IonIcon name="film-outline" size={25} color="white" />
-            <Text style={styles.movieButtonText}>Watch Trailer</Text>
-          </TouchableOpacity>
+        {isDescriptions && (
+          <Text style={[styles.movieDescription, {marginBottom: 10,}]}>{movie?.overview}</Text>
         )}
 
-      </View>
+        {/* cast */}
+        {movie?.id && cast.length > 0 && <Cast navigation={navigation} cast={cast} />}
 
-      {/* cast */}
-      {movie?.id && cast.length > 0 && <Cast navigation={navigation} cast={cast} />}
+        <View style={styles.buttonsVideo}>
+
+          {/* Button "Watch Movie" */}
+          <TouchableOpacity
+            style={[styles.movieButton, Buttonstyles.background]}
+            onPress={() => navigation.navigate("Player", { id: movie.id })}
+          >
+            <IonIcon name="play" size={25} color="white" />
+            <Text style={styles.movieButtonText}>Movie</Text>
+          </TouchableOpacity>
+
+          {/* Button "Watch Trailer" */}
+          {videoMovies.length > 0 && (
+            <TouchableOpacity
+              style={styles.movieButton}
+              onPress={() => navigation.navigate("Trailer", { id: videoMovies[0].key })}
+            >
+              <IonIcon name="film-outline" size={25} color="white" />
+              <Text style={styles.movieButtonText}>Trailer</Text>
+            </TouchableOpacity>
+          )}
+
+          {/* watch later */}
+          <View style={styles.buttonWatchLater}>
+            <TouchableOpacity onPress={() => toggleWatchLater(!isWatchLater)} >
+              <IonIcon name={isWatchLater ? 'checkmark' : 'add'} size={35} color={'white'} />
+            </TouchableOpacity>
+            <Text style={styles.movieDescription}>Later</Text>
+          </View>
+
+        </View>
+
+      </View>
 
       {/* similar movies section */}
       {movie?.id && similarMovies.length > 0 && <MovieList title={'Similar'} hideSeeAll={true} data={similarMovies} />}
@@ -190,14 +220,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     padding: 1,
-    marginBottom: 10,
+    // marginBottom: 10,
   },
   movieTitle: {
     color: 'white',
-    textAlign: 'center',
-    fontSize: 24,
+    // textAlign: 'center',
+    fontSize: 30,
     fontWeight: 'bold',
     letterSpacing: 1.2,
+  },
+  subHeading: {
+    marginTop: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 5,
+  },
+  voteText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+    borderWidth: 2,
+    borderRadius: 5,
+    padding: 3,
   },
   movieDetails: {
     color: '#8a8a8a',
@@ -205,17 +249,36 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
   },
+  movieDescriptions: {
+    flexDirection: 'row',
+    // gap: 10,
+    marginVertical: 10,
+    justifyContent: 'space-between',
+  },
   genreText: {
-    color: '#8a8a8a',
+    color: theme.grayColor,
     fontWeight: '600',
-    fontSize: 16,
-    textAlign: 'center',
+    fontSize: 20,
+    fontStyle: 'italic',
+    // textAlign: 'center',
+  },
+  subTitle: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 20,
+    // textAlign: 'center',
   },
   movieDescription: {
     color: '#8a8a8a',
     textAlign: 'justify',
-    marginHorizontal: 16,
+    // marginHorizontal: 16,
     letterSpacing: 0.5,
+  },
+  buttonsVideo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+    gap: 10,
   },
   movieButton: {
     alignItems: 'center',
@@ -225,9 +288,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: theme.mainColor,
-    padding: 10,
-    marginTop: 20,
-    marginHorizontal: 100,
+    paddingHorizontal: 30,
+    // marginTop: 20,
+    // marginHorizontal: 100,
   },
   movieButtonText: {
     color: 'white',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, TouchableWithoutFeedback, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { fallbackMoviePoster, image185, image342, poster342 } from '../api/moviedb';
 import { Mainstyles, theme } from '../theme';
 
@@ -20,7 +21,7 @@ export default function MovieList({ title, hideSeeAll, data }) {
                 <Text style={styles.titleText}>{title} <Text style={Mainstyles.mainText}>M</Text>ovies</Text>
                 {!hideSeeAll && (
                     <TouchableOpacity onPress={handleSeeAllPress}>
-                        <Text style={Mainstyles.text}>See All</Text>
+                        <Text style={[Mainstyles.text,{fontStyle:'italic', marginRight: 16}]}>See All</Text>
                     </TouchableOpacity>
                 )}
             </View>
@@ -34,21 +35,29 @@ export default function MovieList({ title, hideSeeAll, data }) {
                     return (
                         <TouchableWithoutFeedback key={index} onPress={() => navigation.push('Detail', item)}>
                             <View style={styles.movieItemContainer}>
-                                <Image
-                                    source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}
-                                    style={styles.movieImage}
-                                />
+                                <View>
+                                    <Image
+                                        source={{ uri: image185(item.poster_path) || fallbackMoviePoster }}
+                                        style={styles.movieImage}
+                                    />
+                                    <LinearGradient
+                                        colors={['transparent', 'rgba(12, 12, 12, 0.8)', 'rgba(12, 12, 12, 1)']}
+                                        style={{ width: width, height: height * 0.1, position: 'absolute', bottom: 0 }}
+                                        start={{ x: 0.5, y: 0 }}
+                                        end={{ x: 0.5, y: 1 }}
+                                    />
+                                </View>
                                 <View style={styles.voteContainer}>
                                     {(item.vote_average || 0) > 7 ? (
-                                        <Text style={[styles.voteText, { color: 'green' }]}>
+                                        <Text style={[styles.voteText, { color: 'green', borderColor: 'green' }]}>
                                             {(item.vote_average || 0).toFixed(1)}
                                         </Text>
                                     ) : (item.vote_average || 0) > 5.5 ? (
-                                        <Text style={[styles.voteText, { color: 'orange' }]}>
+                                        <Text style={[styles.voteText, { color: 'orange', borderColor: 'orange' }]}>
                                             {(item.vote_average || 0).toFixed(1)}
                                         </Text>
                                     ) : (
-                                        <Text style={[styles.voteText, { color: 'red' }]}>
+                                        <Text style={[styles.voteText, { color: 'red', borderColor: 'red' }]}>
                                             {(item.vote_average || 0).toFixed(1)}
                                         </Text>
                                     )}
@@ -80,7 +89,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold',
-        margin: 10,
+        margin: 16,
     },
     seeAllText: {
         // color: 'blue',
@@ -101,6 +110,8 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     movieTitle: {
+        position: 'absolute',
+        bottom: 0,
         color: 'white',
         // marginLeft: 4,
     },
@@ -111,11 +122,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        padding: 5,
+        padding: 2,
         borderRadius: 10,
     },
     voteText: {
-        fontWeight: 'bold',
+        // fontWeight: 'bold',
         color: 'white',
+        padding: 3,
+        borderRadius: 8,
+        borderWidth: 1,
     },
 });

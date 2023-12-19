@@ -135,9 +135,9 @@ const AccountScreen = () => {
               <AccordionItem title="Watch Later" icon="add"
                 onPress={() => navigation.navigate("List", { title: "Watch Later", data: watchLater })}
               />
-              <AccordionItem title="Favorite films" icon="film"
+              {/* <AccordionItem title="Favorite films" icon="film"
                 onPress={() => navigation.navigate("List", { title: "Favorite Films", data: favoriteFilms })}
-              />
+              /> */}
               <AccordionItem title="Favorite Casts" icon="people"
                 onPress={() => navigation.navigate("Casts", { title: "Favorite Casts" })}
                 // onPress={() => navigation.navigate("Cast", { title: "Favorite Casts", cast: cast })}

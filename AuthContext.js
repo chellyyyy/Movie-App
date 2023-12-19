@@ -126,7 +126,7 @@ const MovieProvider = ({ children }) => {
 
   const fetchSearch = async (query) => {
     const data = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=${language}&query=${query}&page=1&include_adult=false`
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=${language}&query=${query}&page=${page}&include_adult=false`
     );
     const searchmovies = await data.json();
     setSearchedMovies(searchmovies.results);

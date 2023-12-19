@@ -1,8 +1,10 @@
-import React from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, Dimensions, ScrollView, StyleSheet } from 'react-native'; // Import StyleSheet
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, Image, TouchableWithoutFeedback, Dimensions, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'; // Import StyleSheet
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { image500 } from '../api/moviedb';
 import { Mainstyles, theme } from '../theme';
+import IonIcon from 'react-native-vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -26,24 +28,34 @@ export default function TrendingMovies({ title, data }) {
 }
 
 const MovieCard = ({ item, handleClick }) => {
+    const [isWatchLater, toggleWatchLater] = useState(false);
+    
     return (
         <TouchableWithoutFeedback onPress={() => handleClick(item)}>
             <View style={styles.movieItemContainer}>
-                <Image
-                    source={{ uri: image500(item.poster_path) }}
-                    style={styles.movieImage}
-                />
+                <View>
+                    <Image
+                        source={{ uri: image500(item.poster_path) }}
+                        style={styles.movieImage}
+                    />
+                    <LinearGradient
+                        colors={['transparent', 'rgba(12, 12, 12, 0.8)', 'rgba(12, 12, 12, 1)']}
+                        style={{ width: width, height: height * 0.30, position: 'absolute', bottom: 0 }}
+                        start={{ x: 0.5, y: 0 }}
+                        end={{ x: 0.5, y: 1 }}
+                    />
+                </View>
                 <View style={styles.voteContainer}>
                     {(item.vote_average || 0) > 7 ? (
-                        <Text style={[styles.voteText, { color: 'green' }]}>
+                        <Text style={[styles.voteText, { color: 'green', borderColor: 'green' }]}>
                             {(item.vote_average || 0).toFixed(1)}
                         </Text>
                     ) : (item.vote_average || 0) > 5.5 ? (
-                        <Text style={[styles.voteText, { color: 'orange' }]}>
+                        <Text style={[styles.voteText, { color: 'orange', borderColor: 'orange' }]}>
                             {(item.vote_average || 0).toFixed(1)}
                         </Text>
                     ) : (
-                        <Text style={[styles.voteText, { color: 'red' }]}>
+                        <Text style={[styles.voteText, { color: 'red', borderColor: 'red' }]}>
                             {(item.vote_average || 0).toFixed(1)}
                         </Text>
                     )}
@@ -94,7 +106,9 @@ const styles = StyleSheet.create({
     },
     movieTitle: {
         color: 'white',
-        fontSize: 20,
+        fontSize: 25,
+        position: 'absolute',
+        bottom: 0,
     },
     voteContainer: {
         position: 'absolute',
@@ -103,12 +117,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.7)',
-        padding: 5,
+        padding: 3,
         borderRadius: 10,
+        // borderWidth: 2,
     },
     voteText: {
         fontSize: 20,
         fontWeight: 'bold',
         color: 'white',
+        padding: 3,
+        borderRadius: 8,
+        borderWidth: 2,
     },
 });

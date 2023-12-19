@@ -5,7 +5,7 @@ import { fallbackPersonImage, image185 } from '../api/moviedb';
 export default function Cast({ cast, navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Top Cast</Text>
+      <Text style={styles.text}>Cast</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
         {cast &&
           cast.map((person, index) => (
@@ -32,13 +32,14 @@ export default function Cast({ cast, navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 24,
-    marginLeft: 16,
+    marginTop: 10,
+    // marginLeft: 16,
   },
   text: {
     color: 'white',
     fontSize: 18,
     marginBottom: 20,
+    fontWeight: 'bold',
   },
   scrollContainer: {
     paddingHorizontal: 15,

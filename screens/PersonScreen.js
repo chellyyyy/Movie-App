@@ -60,42 +60,44 @@ export default function PersonScreen() {
       {loading ? (
         <Loading />
       ) : (
-        <View>
+        <View style={{marginHorizontal: 20}}>
           <View style={styles.imageContainer}>
             <View style={styles.personImage}>
-              <Image source={{ uri: image342(person?.profile_path) || fallbackPersonImage }} style={{ height: 200, width: 200 }} />
+              <Image source={{ uri: image342(person?.profile_path) || fallbackPersonImage }} style={{ height: 150, width: 150 }} />
             </View>
+
+            <View style={{ flex: 1 }}>
+              <Text style={styles.personName}>
+                {person?.name}
+              </Text>
+              <Text style={styles.personDetails}>
+                {person?.place_of_birth}
+              </Text>
+            </View>
+
           </View>
 
-          <View style={{ marginTop: 24 }}>
-            <Text style={styles.personName}>
-              {person?.name}
-            </Text>
-            <Text style={styles.personDetails}>
-              {person?.place_of_birth}
-            </Text>
-          </View>
 
           <View style={styles.infoContainer}>
             <View style={styles.infoItem}>
-              <Text style={styles.infoText}>Gender</Text>
-              <Text style={styles.subInfoText}>{person?.gender === 1 ? 'Female' : 'Male'}</Text>
+              <Text style={styles.subInfoText}>Gender</Text>
+              <Text style={styles.infoText}>{person?.gender === 1 ? 'Female' : 'Male'}</Text>
             </View>
             <View style={styles.infoItem}>
-              <Text style={styles.infoText}>Birthday</Text>
-              <Text style={styles.subInfoText}>{person?.birthday}</Text>
+              <Text style={styles.subInfoText}>Birthday</Text>
+              <Text style={styles.infoText}>{person?.birthday}</Text>
             </View>
             <View style={styles.infoItem}>
-              <Text style={styles.infoText}>Known for</Text>
-              <Text style={styles.subInfoText}>{person?.known_for_department}</Text>
+              <Text style={styles.subInfoText}>Known for</Text>
+              <Text style={styles.infoText}>{person?.known_for_department}</Text>
             </View>
-            <View style={{ paddingHorizontal: 8, alignItems: 'center' }}>
-              <Text style={styles.infoText}>Popularity</Text>
-              <Text style={styles.subInfoText}>{person?.popularity?.toFixed(2)}%</Text>
+            <View style={styles.infoItem}>
+              <Text style={styles.subInfoText}>Popularity</Text>
+              <Text style={styles.infoText}>{person?.popularity?.toFixed(2)}%</Text>
             </View>
           </View>
 
-          <View style={{ marginVertical: 24, marginHorizontal: 16, padding: 16 }}>
+          <View style={{ marginVertical: 24, }}>
             <Text style={styles.biographyText}>Biography</Text>
             <Text style={styles.biographyContent}>{person?.biography ? person.biography : 'N/A'}</Text>
           </View>
@@ -126,7 +128,9 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    // justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: 30,
     // shadowColor: 'gray',
     // shadowRadius: 40,
     // shadowOffset: { width: 0, height: 5 },
@@ -135,8 +139,8 @@ const styles = StyleSheet.create({
   personImage: {
     alignItems: 'center',
     overflow: 'hidden',
-    height: 200,
-    width: 200,
+    // height: 150,
+    // width: 150,
     borderColor: '#808080',
     borderWidth: 2,
     borderRadius: 100,
@@ -145,27 +149,31 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: 'white',
-    textAlign: 'center',
+    // textAlign: 'center',
   },
   personDetails: {
     fontSize: 16,
     color: '#808080',
-    textAlign: 'center',
+    // textAlign: 'center',
   },
   infoContainer: {
-    margin: 16,
-    padding: 16,
+    marginVertical: 16,
+    // margin: 16,
+    // padding: 16,
     flexDirection: 'row',
-    justifyContent: 'center',
-    // justifyContent: 'space-between',
+    // justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#2b2b2b',
-    borderRadius: 999,
+    // backgroundColor: '#2b2b2b',
+    // borderRadius: 999,
   },
   infoItem: {
-    borderRightColor: '#808080',
-    borderRightWidth: 1,
-    paddingHorizontal: 15,
+    // borderRightColor: '#808080',
+    // borderRightWidth: 1,
+    borderWidth: 2,
+    borderColor: theme.mainColor,
+    borderRadius: 13,
+    padding: 13,
     alignItems: 'center',
   },
   infoText: {
@@ -178,7 +186,9 @@ const styles = StyleSheet.create({
   },
   biographyText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 16,
   },
   biographyContent: {
     color: '#808080',
