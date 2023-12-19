@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 
+
 app = Flask(__name__)
 CORS(app)
 
@@ -174,6 +175,24 @@ def get_user_info():
     else:
         return jsonify({'message': 'User not found'}), 400
 
+@app.route('/api/get_watchlist', methods=['POST'])
+def get_watchlist():
+    data = request.get_json()
+    username = data.get('username')
+
+    if username:
+        # Lấy danh sách movie_id từ watchlist của user
+        user = get_user_by_username(username)
+        if user:
+            watchlist_entries = Watchlist.query.filter_by(user_id=user.id).all()
+            watchlist = [entry.movie_id for entry in watchlist_entries]
+
+            return jsonify({'watchlist': watchlist})
+        else:
+            return jsonify({'message': 'User not found'}), 404
+    else:
+        return jsonify({'message': 'Username not provided'}), 400
+    
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

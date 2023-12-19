@@ -17,8 +17,8 @@ const myTheme = {
 };
 
 export default function AppNavigator() {
-    // const { isAuthenticated } = useContext(AuthContext);
-    const isAuthenticated = useState('true');
+    const { isAuthenticated } = useContext(AuthContext);
+    // const isAuthenticated = useState('true');
 
     return (
         

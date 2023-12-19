@@ -31,6 +31,8 @@ const MovieProvider = ({ children }) => {
   const [backgenre, setBackGenre] = useState(false);
   const [language, setLanguage] = useState('en');
   // const [user, setUser] = useAuthState(auth)
+  const [laterList, setLaterlist] = useState('');
+  const [watchLater, setWatchLater] = useState([]);
 
   useEffect(() => {
     if (page < 1) {
@@ -40,29 +42,35 @@ const MovieProvider = ({ children }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://10.0.2.2:5000/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username,
-          password,
-        }),
-      });
+        const response = await fetch('http://10.0.2.2:5000/api/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                password,
+            }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      if (response.ok) {
-        console.log(data.message);
-        setIsAuthenticated(true);
-      } else {
-        console.error(data.message);
-      }
+        if (response.ok) {
+            console.log(data.message);
+            setIsAuthenticated(true);
+        } else {
+            console.error(data.message);
+            if (response.status === 401) {
+                // Handle invalid username or password
+                // For example, show an error message to the user
+                console.error('Invalid username or password');
+            }
+        }
     } catch (error) {
-      console.error('Error:', error);
+        console.error('Error:', error);
     }
   };
+
 
   const handleRegister = async () => {
 
@@ -205,6 +213,8 @@ const MovieProvider = ({ children }) => {
     totalPage,
     searchedMovies, fetchSearch,
     language, setLanguage,
+    laterList, setLaterlist,
+    watchLater, setWatchLater
   };
 
   return (

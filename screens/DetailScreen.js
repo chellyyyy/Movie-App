@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, Platform, StyleSheet, Linking } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -11,9 +11,12 @@ import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilar
 import Loading from '../components/loading';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import IonIcon from 'react-native-vector-icons/Ionicons';
+import { AuthContext } from '../AuthContext';
 
 const topMargin = 20;
 const { width, height } = Dimensions.get('window');
+
+
 
 export default function MovieScreen() {
   const { params: item } = useRoute();
@@ -27,8 +30,14 @@ export default function MovieScreen() {
   const [loading, setLoading] = useState(true);
 
   const [isDescriptions, toggleDescriptions] = useState(false);
+  
+  const {
+    username,
+    laterList, setLaterlist
+  } = useContext(AuthContext)
 
   useEffect(() => {
+    checkMovieInWatchlist(username, item.id)
     setLoading(true);
     getMovieDetials(item.id);
     getMovieCredits(item.id);
@@ -39,6 +48,8 @@ export default function MovieScreen() {
   const getMovieDetials = async (id) => {
     const data = await fetchMovieDetails(id);
     console.log('got movie details');
+    
+    // console.log(data);
     setLoading(false);
     if (data) {
       setMovie({ ...movie, ...data });
@@ -66,6 +77,75 @@ export default function MovieScreen() {
     console.log('got video trailer movies');
     if (data && data.results) {
       setVideoMovies(data.results);
+    }
+  };
+
+  const addTowatchlater = async (id) => {
+    try {
+        if (!username) {
+            console.error('Error: Username is not defined.');
+            return;
+        }
+
+        const response = await fetch('http://10.0.2.2:5000/api/add_remove_watchlater', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                movie_id: id,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log(data.message);
+
+            if (data.result) {
+                console.log(`Removed movie ${id} from watchlist`);
+                // Handle removal from watchlist
+            } else {
+                console.log(`Added movie ${id} to watchlist`);
+                // Handle addition to watchlist
+            }
+        } else {
+            console.error(data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  };
+  
+  
+  
+  
+  const checkMovieInWatchlist = async (username, id) => {
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/check_movie_in_watchlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          movie_id: id,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        if (String(data.result) == 'true') {
+          toggleWatchLater(true)
+        }
+        // console.log('Result:', data.result);  // true or false
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
@@ -169,6 +249,7 @@ export default function MovieScreen() {
           {videoMovies.length > 0 && (
             <TouchableOpacity
               style={styles.movieButton}
+              // onPress={() => checkMovieInWatchlist(username, movie.id)}
               onPress={() => navigation.navigate("Trailer", { id: videoMovies[0].key })}
             >
               <IonIcon name="film-outline" size={25} color="white" />
@@ -178,7 +259,7 @@ export default function MovieScreen() {
 
           {/* watch later */}
           <View style={styles.buttonWatchLater}>
-            <TouchableOpacity onPress={() => toggleWatchLater(!isWatchLater)} >
+            <TouchableOpacity onPress={() => addTowatchlater(movie.id) && toggleWatchLater(!isWatchLater)} >
               <IonIcon name={isWatchLater ? 'checkmark' : 'add'} size={35} color={'white'} />
             </TouchableOpacity>
             <Text style={styles.movieDescription}>Later</Text>

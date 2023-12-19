@@ -29,6 +29,7 @@ const ProfileScreen = () => {
 
   const handleSaveProfile = async () => {
     try {
+      //fetch thong tin user khi an vao nut edit profile
       const response = await fetch('http://10.0.2.2:5000/api/update_profile', {
         method: 'POST',
         headers: {
@@ -94,7 +95,7 @@ const ProfileScreen = () => {
 
         <InputProfile
           title='Age'
-          value={age}
+          value={age === null ? ""  : String(age)}
           onChangeText={(text) => setAge(text)}
         />
 

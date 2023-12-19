@@ -6,7 +6,7 @@ import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '.
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import { HeaderMovit } from '../components/header';
 import { AuthContext } from '../AuthContext';
-
+import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, fetchVideoMovies, image500 } from '../api/moviedb';
 const AccordionHeader = ({ title, icon, onPress, isOpen }) => {
   return (
     <TouchableOpacity style={styles.userAccordionHeader} onPress={onPress} >
@@ -44,12 +44,13 @@ const AccountScreen = () => {
   const {
     username, setUsername,
     realName, setRealname,
+    watchLater, setWatchLater,
     email, setEmail,
     age, setAge,
     address, setAddress,
     password, setPassword,
     confirmPassword, setConfirmPassword,
-    handleLogout,
+    handleLogout
   } = useContext(AuthContext);
 
   const avatarSource = avatar ? { uri: avatar } : { uri: 'https://i.pinimg.com/736x/c9/bc/a5/c9bca57cf02ef46be89630414a89b5f5.jpg', };
@@ -58,7 +59,7 @@ const AccountScreen = () => {
   const [isSettings, toggleSettings] = useState(false);
   const [isSupport, toggleSupport] = useState(false);
 
-  const [watchLater, setWatchLater] = useState([]);
+  
   const [favoriteFilms, setFavoriteFilms] = useState([]);
   const [favoriteCast, setFavoriteCast] = useState([]);
 
@@ -92,18 +93,60 @@ const AccountScreen = () => {
     getFavoriteFilms();
   }, []);
 
-  const getWatchLater = async () => {
-    const data = await fetchUpcomingMovies();
-    console.log('got upcoming', data.results.length);
-    if (data && data.results) setWatchLater(data.results);
+  const getWatchLater = async (username) => {
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/get_watchlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+        credentials: 'include',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Unable to fetch watchlist');
+      }
+  
+      const data = await response.json();
+      const watchlist = data.watchlist;
+  
+      console.log('Watchlist:', watchlist);
+  
+      setWatchLater(watchlist);
+    } catch (error) {
+      console.error('Error fetching watchlist:', error.message);
+      throw error;
+    }
   };
+  // getWatchLater(username)
+  useEffect(() => {
+    getWatchLater(username);
+  }, [username]);
+  // const getFavoriteFilms = async () => {
+  //   const data = await fetchTopRatedMovies();
+  //   console.log('got top rated', data.results.length);
+  //   if (data && data.results) setFavoriteFilms(data.results);
+  // };
 
-  const getFavoriteFilms = async () => {
-    const data = await fetchTopRatedMovies();
-    console.log('got top rated', data.results.length);
-    if (data && data.results) setFavoriteFilms(data.results);
+  const getFavoriteFilms = async (watchLater) => {
+    try {
+      const promises = watchLater.map(async (watchLater) => {
+        const data = await fetchMovieDetails(watchLater);
+        return data.results;
+      });
+  
+      const results = await Promise.all(promises);
+      const combinedResults = results.flat();
+  
+      setFavoriteFilms(combinedResults);
+      console.log(favoriteFilms);
+    } catch (error) {
+      console.error('Error fetching favorite films:', error.message);
+    }
   };
-
+  
+  // getFavoriteFilms(watchLater)
   return (
     <View style={styles.container}>
       <HeaderMovit title="Account" hideSearch={'true'} />
@@ -133,7 +176,10 @@ const AccountScreen = () => {
           {isPersonal && (
             <>
               <AccordionItem title="Watch Later" icon="add"
-                onPress={() => navigation.navigate("List", { title: "Watch Later", data: watchLater })}
+                onPress={() => {
+                  navigation.navigate("List", { title: "Watch Later", data: favoriteFilms });
+                  getWatchLater(username);
+                }}
               />
               {/* <AccordionItem title="Favorite films" icon="film"
                 onPress={() => navigation.navigate("List", { title: "Favorite Films", data: favoriteFilms })}
