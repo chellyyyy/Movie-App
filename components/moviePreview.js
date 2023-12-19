@@ -54,6 +54,8 @@ const MoviePreview = ({ results, hideResults }) => {
     const {
         loading,
         page, setPage, totalPage,
+        upcoming, topRated,
+        fetchUpcoming, fetchTopRated,
     } = useContext(AuthContext);
 
     useEffect(() => {

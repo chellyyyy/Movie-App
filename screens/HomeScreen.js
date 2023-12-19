@@ -16,8 +16,8 @@ export default function HomeScreen() {
   const {
     loading,
     page, setPage, totalPage,
+    trending, upcoming, topRated,
     fetchTrending, fetchUpcoming, fetchTopRated,
-    trending, upcoming, topRated
   } = useContext(AuthContext);
 
   useEffect(() => {
@@ -27,17 +27,7 @@ export default function HomeScreen() {
   useEffect(() => {
     if (page > 0) {
       fetchTrending();
-    }
-  }, [page])
-
-  useEffect(() => {
-    if (page > 0) {
       fetchUpcoming();
-    }
-  }, [page])
-
-  useEffect(() => {
-    if (page > 0) {
       fetchTopRated();
     }
   }, [page])
