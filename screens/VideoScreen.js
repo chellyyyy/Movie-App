@@ -40,15 +40,9 @@ const TrailerScreen = () => {
   return (
     <View style={styles.container}>
       <GoBack />
-
+      
       {/* Video Player */}
-      <Video
-        source={{ uri: getSmashystreamUrl(params.id) }}
-        resizeMode={ResizeMode.CONTAIN}
-        shouldPlay
-        useNativeControls
-        style={styles.fullScreenVideo}
-      />
+      <WebView source={{ uri: getYoutubedUrl(params.id) }} style={styles.webView} />
     </View>
   );
 };
