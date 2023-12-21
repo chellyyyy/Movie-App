@@ -10,6 +10,7 @@ const RegisterScreen = ({ navigation }) => {
 
   const {
     username, setUsername,
+    realName, setRealname,
     email, setEmail,
     password, setPassword,
     confirmPassword, setConfirmPassword,
@@ -69,6 +70,12 @@ const RegisterScreen = ({ navigation }) => {
           placeholder="Username"
           onChangeText={(text) => setUsername(text)}
           value={username}
+        />
+
+        <InputProfile
+          placeholder="Your Name"
+          onChangeText={(text) => setRealname(text)}
+          value={realName}
         />
 
         <InputProfile

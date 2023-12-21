@@ -14,6 +14,8 @@ import PersonScreen from '../screens/PersonScreen';
 import AccountScreen from '../screens/AccountScreen';
 import ProfileScreen from '../screens/Account/ProfileScreen';
 import PasswordScreen from '../screens/Account/PasswordScreen';
+
+import BookmarkScreen from '../screens/Account/BookmarkScreen';
 import CastsScreen from '../screens/Account/CastsScreen';
 import LanguagesScreen from '../screens/Account/LanguagesScreen';
 import InformationScreen from '../screens/Account/InformationScreen';
@@ -46,6 +48,7 @@ const StackNavigator = () => {
             <Stack.Screen name="Password" component={PasswordScreen} options={{ headerShown: false }} />
 
             {/* Personal */}
+            <Stack.Screen name="Bookmark" component={BookmarkScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Casts" component={CastsScreen} options={{ headerShown: false }} />
 
             {/* Settings */}

@@ -44,7 +44,7 @@ const AccountScreen = () => {
   const {
     username, setUsername,
     realName, setRealname,
-    watchLater, setWatchLater,
+    // watchLater, setWatchLater,
     email, setEmail,
     age, setAge,
     address, setAddress,
@@ -60,7 +60,8 @@ const AccountScreen = () => {
   const [isSupport, toggleSupport] = useState(false);
 
   
-  const [favoriteFilms, setFavoriteFilms] = useState([]);
+  const [watchLater, setWatchLater] = useState([]);
+  const [historyFilms, setHistoryFilms] = useState([]);
   const [favoriteCast, setFavoriteCast] = useState([]);
 
   const getInfo = async () => {
@@ -90,7 +91,7 @@ const AccountScreen = () => {
 
   useEffect(() => {
     getWatchLater();
-    getFavoriteFilms();
+    gethistoryFilms();
   }, []);
 
   const getWatchLater = async (username) => {
@@ -123,13 +124,13 @@ const AccountScreen = () => {
   useEffect(() => {
     getWatchLater(username);
   }, [username]);
-  // const getFavoriteFilms = async () => {
+  // const gethistoryFilms = async () => {
   //   const data = await fetchTopRatedMovies();
   //   console.log('got top rated', data.results.length);
-  //   if (data && data.results) setFavoriteFilms(data.results);
+  //   if (data && data.results) setHistoryFilms(data.results);
   // };
 
-  const getFavoriteFilms = async (watchLater) => {
+  const gethistoryFilms = async (watchLater) => {
     try {
       const promises = watchLater.map(async (watchLater) => {
         const data = await fetchMovieDetails(watchLater);
@@ -139,14 +140,14 @@ const AccountScreen = () => {
       const results = await Promise.all(promises);
       const combinedResults = results.flat();
   
-      setFavoriteFilms(combinedResults);
-      console.log(favoriteFilms);
+      setHistoryFilms(combinedResults);
+      console.log(historyFilms);
     } catch (error) {
       console.error('Error fetching favorite films:', error.message);
     }
   };
   
-  // getFavoriteFilms(watchLater)
+  // gethistoryFilms(watchLater)
   return (
     <View style={styles.container}>
       <HeaderMovit title="Account" hideSearch={'true'} />
@@ -177,12 +178,12 @@ const AccountScreen = () => {
             <>
               <AccordionItem title="Watch Later" icon="add"
                 onPress={() => {
-                  navigation.navigate("List", { title: "Watch Later", data: favoriteFilms });
+                  navigation.navigate("Bookmark", { title: "Watch Later", data: watchLater });
                   getWatchLater(username);
                 }}
               />
               <AccordionItem title="History films" icon="film"
-                onPress={() => navigation.navigate("List", { title: "History Films", data: favoriteFilms })}
+                onPress={() => navigation.navigate("Bookmark", { title: "History Films", data: historyFilms })}
               />
               <AccordionItem title="Favorite Casts" icon="people"
                 onPress={() => navigation.navigate("Casts", { title: "Favorite Casts" })}

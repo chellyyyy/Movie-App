@@ -75,7 +75,7 @@ const MovieProvider = ({ children }) => {
   const handleRegister = async () => {
 
     try {
-      if (!username || !email || !password || password !== confirmPassword) {
+      if (!username || !realName || !email || !password || password !== confirmPassword) {
         console.error('Invalid input. Please check your information.');
         return;
       }
@@ -87,6 +87,7 @@ const MovieProvider = ({ children }) => {
         },
         body: JSON.stringify({
           username,
+          realName,
           email,
           password,
         }),
