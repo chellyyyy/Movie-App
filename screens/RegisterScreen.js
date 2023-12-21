@@ -95,7 +95,7 @@ const RegisterScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
-          <Text style={styles.loginText}>Already have an account? Log in</Text>
+          <Text style={styles.loginText}>Already have an account? <Text style={Mainstyles.mainText}>Log in</Text></Text>
         </TouchableOpacity>
         <Text style={styles.note}>By register, you agree to Terms of Use and Privacy Policy</Text>
       </View>
@@ -161,6 +161,7 @@ const styles = StyleSheet.create({
   note: {
     color: 'white',
     textAlign: 'center',
+    marginTop: 5,
   },
 });
 
