@@ -50,7 +50,8 @@ const AccountScreen = () => {
     address, setAddress,
     password, setPassword,
     confirmPassword, setConfirmPassword,
-    handleLogout
+    handleLogout, 
+    watchLater, setWatchLater,
   } = useContext(AuthContext);
 
   const avatarSource = avatar ? { uri: avatar } : { uri: 'https://i.pinimg.com/736x/c9/bc/a5/c9bca57cf02ef46be89630414a89b5f5.jpg', };
@@ -60,7 +61,7 @@ const AccountScreen = () => {
   const [isSupport, toggleSupport] = useState(false);
 
   
-  const [watchLater, setWatchLater] = useState([]);
+  
   const [historyFilms, setHistoryFilms] = useState([]);
   const [favoriteCast, setFavoriteCast] = useState([]);
 
@@ -89,10 +90,10 @@ const AccountScreen = () => {
     navigation.navigate('Profile')
   };
 
-  useEffect(() => {
-    getWatchLater();
-    gethistoryFilms();
-  }, []);
+  // useEffect(() => {
+  //   getWatchLater(username);
+  //   gethistoryFilms();
+  // }, []);
 
   const getWatchLater = async (username) => {
     try {

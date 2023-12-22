@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback, ScrollView, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { fetchMovieDetails, configureAxios, fallbackMoviePoster, image185 } from '../../api/moviedb';
 import MoviePreview from '../../components/moviePreview';
 import { Header } from '../../components/header';
@@ -16,6 +16,7 @@ const { width, height } = Dimensions.get('window');
 const BookmarkItem = ({ bookmarkId }) => {
     // const { title, data } = route.params;
     // const [loading, setLoading] = useState(true);
+    // const [refreshKey, setRefreshKey] = useState(0);
     const [item, setItem] = useState([]);
     const navigation = useNavigation();
 
@@ -26,7 +27,7 @@ const BookmarkItem = ({ bookmarkId }) => {
                 const response = await fetchMovieDetails(bookmarkId);
                 setItem(response);
                 // setLoading(false);
-                console.log(response);
+                // console.log(response);
             } catch (error) {
                 console.error('Error fetching detail:', error);
                 // setLoading(false);
@@ -36,6 +37,7 @@ const BookmarkItem = ({ bookmarkId }) => {
         fetchData();
     }, [bookmarkId]);
 
+    
     return (
         <TouchableWithoutFeedback key={bookmarkId} onPress={() => navigation.push('Detail', item)}>
             <View style={styles.resultItem}>
@@ -78,21 +80,30 @@ const BookmarkScreen = ({ route }) => {
     const { title, data } = route.params;
     const navigation = useNavigation();
     const {
-        loading,
+        loading, username,
         page, setPage, totalPage,
         upcoming, topRated,
         fetchUpcoming, fetchTopRated,
+        getWatchLater, watchLater
     } = useContext(AuthContext);
+
+    const [forceRender, setForceRender] = useState(0);
 
     useEffect(() => {
         setPage(1)
     }, []);
+
+    // useEffect(() => {
+    //     getWatchLater(username)
+    // }, [watchLater])
 
     const handleEndReached = () => {
         if (page < totalPage) {
             setPage(page + 1);
         }
     };
+
+    
 
     return (
         <View style={{flex: 1}}>

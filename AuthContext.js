@@ -120,6 +120,33 @@ const MovieProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
+  const getWatchLater = async (username) => {
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/get_watchlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+        credentials: 'include',
+      });
+  
+      if (!response.ok) {
+        throw new Error('Unable to fetch watchlist');
+      }
+  
+      const data = await response.json();
+      const watchlist = data.watchlist;
+  
+      console.log('Watchlist:', watchlist);
+  
+      setWatchLater(watchlist);
+    } catch (error) {
+      console.error('Error fetching watchlist:', error.message);
+      throw error;
+    }
+  };
+
 
   // Movies ============================================================================
   
@@ -215,7 +242,8 @@ const MovieProvider = ({ children }) => {
     searchedMovies, fetchSearch,
     language, setLanguage,
     laterList, setLaterlist,
-    watchLater, setWatchLater
+    watchLater, setWatchLater,
+    getWatchLater,
   };
 
   return (

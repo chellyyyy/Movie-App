@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext} from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { StatusBar } from 'expo-status-bar';
 import { Mainstyles, theme } from '../theme';
+import { AuthContext } from '../AuthContext';
 
 const HeaderMovit = ({ title, hideSearch }) => {
     const navigation = useNavigation();
@@ -25,9 +26,11 @@ const HeaderMovit = ({ title, hideSearch }) => {
     );
 };
 
-const Header = ({ title, hideSearch }) => {
+const Header = ({ title, hideSearch, onBack }) => {
     const navigation = useNavigation();
-
+    const {
+        getWatchLater, username
+    } = useContext(AuthContext);
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.header}>

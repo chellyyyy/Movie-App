@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
-import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, Platform, StyleSheet, Linking } from 'react-native';
+import { View, Text, Image, Dimensions, TouchableOpacity, ScrollView, Platform, StyleSheet, Linking, RefreshControl } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
@@ -18,7 +18,7 @@ const { width, height } = Dimensions.get('window');
 
 
 
-export default function MovieScreen() {
+export default function DetailScreen() {
   const { params: item } = useRoute();
   const navigation = useNavigation();
   const [movie, setMovie] = useState({});
@@ -33,24 +33,33 @@ export default function MovieScreen() {
   
   const {
     username,
-    laterList, setLaterlist
+    watchLater, setWatchLater,
+    laterList, setLaterlist,
+    getWatchLater,
   } = useContext(AuthContext)
 
   useEffect(() => {
     checkMovieInWatchlist(username, item.id)
-    setLoading(true);
     getMovieDetials(item.id);
     getMovieCredits(item.id);
     getSimilarMovies(item.id);
     getVideoMovies(item.id);
+    setLoading(false);
   }, [item]);
+
+  
+  // useEffect(() => {
+  //   getWatchLater(username);
+  //   getWatchLater(username);
+  //   getWatchLater(username);
+  // }, [username]);
 
   const getMovieDetials = async (id) => {
     const data = await fetchMovieDetails(id);
     console.log('got movie details');
     
     // console.log(data);
-    setLoading(false);
+    // setLoading(false);
     if (data) {
       setMovie({ ...movie, ...data });
     }
@@ -106,8 +115,10 @@ export default function MovieScreen() {
             if (data.result) {
                 console.log(`Removed movie ${id} from watchlist`);
                 // Handle removal from watchlist
+                console.log(data);
             } else {
                 console.log(`Added movie ${id} to watchlist`);
+                // console.log(data);
                 // Handle addition to watchlist
             }
         } else {
@@ -118,7 +129,32 @@ export default function MovieScreen() {
     }
   };
   
+  // const getWatchLater = async (username) => {
+  //   try {
+  //     const response = await fetch('http://10.0.2.2:5000/api/get_watchlist', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ username }),
+  //       credentials: 'include',
+  //     });
   
+  //     if (!response.ok) {
+  //       throw new Error('Unable to fetch watchlist');
+  //     }
+  
+  //     const data = await response.json();
+  //     const watchlist = data.watchlist;
+  
+  //     console.log('Watchlist:', watchlist);
+  
+  //     setWatchLater(watchlist);
+  //   } catch (error) {
+  //     console.error('Error fetching watchlist:', error.message);
+  //     throw error;
+  //   }
+  // };
   
   
   const checkMovieInWatchlist = async (username, id) => {
@@ -228,11 +264,14 @@ export default function MovieScreen() {
           <IonIcon name={isDescriptions ? 'caret-down' : 'caret-forward'} size={20} color={'white'} />
         </TouchableOpacity>
         {isDescriptions && (
-          <Text style={[styles.movieDescription, {marginBottom: 10,}]}>{movie?.overview}</Text>
+          <>
+            <Text style={[styles.movieDescription, {marginBottom: 10,}]}>{movie?.overview}</Text>
+
+            {/* cast */}
+            {movie?.id && cast.length > 0 && <Cast navigation={navigation} cast={cast} />}
+          </>
         )}
 
-        {/* cast */}
-        {movie?.id && cast.length > 0 && <Cast navigation={navigation} cast={cast} />}
 
         <View style={styles.buttonsVideo}>
 
@@ -259,7 +298,12 @@ export default function MovieScreen() {
 
           {/* watch later */}
           <View style={styles.buttonWatchLater}>
-            <TouchableOpacity onPress={() => addTowatchlater(movie.id) && toggleWatchLater(!isWatchLater)} >
+            <TouchableOpacity onPress={() => {
+              addTowatchlater(movie.id);
+              toggleWatchLater(!isWatchLater);
+              getWatchLater(username);
+              // getWatchLater(username);
+            }} >
               <IonIcon name={isWatchLater ? 'checkmark' : 'add'} size={35} color={'white'} />
             </TouchableOpacity>
             <Text style={styles.movieDescription}>Later</Text>
@@ -341,6 +385,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 20,
     fontStyle: 'italic',
+    flexWrap: 'wrap',
     // textAlign: 'center',
   },
   subTitle: {
