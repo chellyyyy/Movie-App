@@ -244,7 +244,7 @@ export default function DetailScreen() {
         ) : null}
 
         {/* genres  */}
-        <View style={{ flexDirection: 'row', marginVertical: 8 }}>
+        <View style={{ flexDirection: 'row', marginVertical: 8, flexWrap: 'wrap', }}>
           {movie?.genres?.map((genre, index) => {
             let showDot = index + 1 !== movie.genres.length;
             return (
@@ -385,7 +385,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 20,
     fontStyle: 'italic',
-    flexWrap: 'wrap',
     // textAlign: 'center',
   },
   subTitle: {
