@@ -32,7 +32,7 @@ export default function DetailScreen() {
   const [isDescriptions, toggleDescriptions] = useState(false);
   
   const {
-    username,
+    username, language,
     watchLater, setWatchLater,
     laterList, setLaterlist,
     getWatchLater,
@@ -45,7 +45,7 @@ export default function DetailScreen() {
     getSimilarMovies(item.id);
     getVideoMovies(item.id);
     setLoading(false);
-  }, [item]);
+  }, [item, language]);
 
   
   // useEffect(() => {

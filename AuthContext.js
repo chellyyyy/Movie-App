@@ -18,13 +18,13 @@ const MovieProvider = ({ children }) => {
   const [address, setAddress] = useState('');
   const [user, updateUser] = useState('');
   // const [header, setHeader] = useState("Trending");
-  const [totalPage, setTotalPage] = useState(null)
+  const [totalPage, setTotalPage] = useState(null);
+  const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [topRated, setTopRated] = useState([]);
-  const [page, setPage] = useState(1);
   const [activegenre, setActiveGenre] = useState(28);
   const [genres, setGenres] = useState([])
   const [loading, setLoading] = useState(true);
@@ -175,14 +175,18 @@ const MovieProvider = ({ children }) => {
     );
     const gen = await data.json();
     setGenres(gen.genres);
+    // setGenres(gen.genres || []);
+    // console.log(gen.genres);
+    setLoading(false);
   }
 
   const fetchTrending = async () => {
     const data = await fetch(
-      `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&page=${page}`
+      `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&language=${language}&page=${page}`
     );
     const trend = await data.json();
-    setTrending(trending.concat(trend.results));
+    setTrending(trend.results);
+    // setTrending(trending.concat(trend.results));
     setTotalPage(trend.total_pages);
     setLoading(false);
   }
@@ -192,7 +196,9 @@ const MovieProvider = ({ children }) => {
       `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=${language}&page=${page}`
     );
     const upc = await data.json();
-    setUpcoming(upcoming.concat(upc.results));
+    // console.log(language);
+    setUpcoming(upc.results);
+    // setUpcoming(upcoming.concat(upc.results));
     setTotalPage(upc.total_pages);
     setLoading(false);
   }
@@ -202,7 +208,8 @@ const MovieProvider = ({ children }) => {
       `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=${language}&page=${page}`
     );
     const upc = await data.json();
-    setTopRated(upcoming.concat(upc.results));
+    setTopRated(upc.results);
+    // setTopRated(topRated.concat(upc.results));
     setTotalPage(upc.total_pages);
     setLoading(false);
   }
@@ -225,6 +232,7 @@ const MovieProvider = ({ children }) => {
     address, setAddress,
     handleLogin, handleRegister, handleLogout,
     user, updateUser,
+
     //thong tin phim
     genres, fetchGenre,
     setGenres,

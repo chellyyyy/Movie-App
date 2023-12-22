@@ -14,7 +14,7 @@ import { AuthContext } from '../AuthContext';
 
 export default function HomeScreen() {
   const {
-    loading,
+    loading, language,
     page, setPage, totalPage,
     trending, upcoming, topRated,
     fetchTrending, fetchUpcoming, fetchTopRated,
@@ -30,7 +30,7 @@ export default function HomeScreen() {
       fetchUpcoming();
       fetchTopRated();
     }
-  }, [page])
+  }, [page, language])
 
   return (
     <View style={styles.container}>

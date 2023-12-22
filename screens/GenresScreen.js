@@ -13,23 +13,28 @@ const { width, height } = Dimensions.get('window');
 
 const GenreScreen = () => {
     const navigation = useNavigation();
-    // const { loading, fetchGenre, activegenre, setActiveGenre, genres, setMovies, page, setPage, filteredGenre } = useContext(AuthContext);
-    const [genres, setGenres] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const { loading, language, fetchGenre, activegenre, setActiveGenre, genres, setMovies, page, setPage, filteredGenre } = useContext(AuthContext);
+    // const [genres, setGenres] = useState([]);
+    // const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        configureAxios();
+        // configureAxios();
+        fetchGenre();
+    }, [language]);
 
-        fetchGenres()
-            .then((response) => {
-                setGenres(response.genres || []);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error('Error fetching genres:', error);
-                setLoading(false);
-            });
-    }, []);
+    // useEffect(() => {
+    //     configureAxios();
+
+    //     fetchGenres()
+    //         .then((response) => {
+    //             setGenres(response.genres || []);
+    //             setLoading(false);
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error fetching genres:', error);
+    //             setLoading(false);
+    //         });
+    // }, []);
 
     if (loading) {
         return <Loading />;
@@ -38,18 +43,21 @@ const GenreScreen = () => {
     return (
         <View style={styles.container}>
             <HeaderMovit title="Genre" />
-
+            {loading ? (
+                <Loading />
+            ) : (
             <ScrollView contentContainerStyle={styles.genreContainer}>
                 {genres.map((genre) => (
                     <TouchableOpacity
                         key={genre.id}
                         style={styles.genreItem}
-                        onPress={() => navigateToListScreen(genre.id, genre.name, navigation)}
+                        onPress={() => navigateToListScreen(genre.id, genre.name, language, navigation)}
                     >
                         <Text style={styles.genreText}>{genre.name}</Text>
                     </TouchableOpacity>
                 ))}
             </ScrollView>
+            )}
         </View>
     );
 };
@@ -83,6 +91,7 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 16,
+        textAlign: 'center',
     },
 });
 

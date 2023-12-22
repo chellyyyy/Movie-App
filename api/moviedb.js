@@ -30,7 +30,7 @@ export const image185 = posterPath => posterPath ? 'https://image.tmdb.org/t/p/w
 
 // fallback images 
 export const fallbackMoviePoster = 'https://img.myloview.com/stickers/white-laptop-screen-with-hd-video-technology-icon-isolated-on-grey-background-abstract-circle-random-dots-vector-illustration-400-176057922.jpg';
-export const fallbackPersonImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmUiF-YGjavA63_Au8jQj7zxnFxS_Ay9xc6pxleMqCxH92SzeNSjBTwZ0l61E4B3KTS7o&usqp=CAU';
+export const fallbackPersonImage = 'https://i.pinimg.com/736x/c9/bc/a5/c9bca57cf02ef46be89630414a89b5f5.jpg';
 
 const apiCall = async (endpoint, params) => {
     const options = {
@@ -108,8 +108,8 @@ export function fetchGenres() {
         });
 }
 
-export function fetchMoviesForGenreId(genreId, page) {
-    const url = `/discover/movie?with_genres=${genreId}&page=${page}&api_key=${apiKey}`;
+export function fetchMoviesForGenreId(genreId, language, page) {
+    const url = `/discover/movie?with_genres=${genreId}&language=${language}&page=${page}&api_key=${apiKey}`;
     return apiCall(url);
 }
 
@@ -118,8 +118,8 @@ export function postMovie(data) {
     return axios.get(url)
 }
 
-export function navigateToListScreen(genreId, genreName, navigation) {
-    fetchMoviesForGenreId(genreId, 1)
+export function navigateToListScreen(genreId, genreName, language, navigation) {
+    fetchMoviesForGenreId(genreId, language, 1)
         .then((response) => {
             const results = response.results || [];
             navigation.navigate('List', { title: genreName, data: results });
