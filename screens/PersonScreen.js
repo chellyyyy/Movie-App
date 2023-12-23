@@ -10,6 +10,7 @@ import { fallbackPersonImage, fetchPersonDetails, fetchPersonMovies, image185, i
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import { AuthContext } from '../AuthContext';
 
+
 const verticalMargin = 20;
 const { width, height } = Dimensions.get('window');
 
@@ -20,9 +21,11 @@ export default function PersonScreen() {
   const [person, setPerson] = useState({});
   const [personMovies, setPersonMovies] = useState([]);
   const [loading, setLoading] = useState(true);
+  // const [isFav, toggleFavCast] = useState(false);
 
   const {
-    language,
+    language, username,
+    favoriteCast, setFavoriteCast
     // person, fetchPersonDetails,
     // personMovies, fetchPersonMovies,
   } = useContext(AuthContext);
@@ -30,6 +33,7 @@ export default function PersonScreen() {
   useEffect(() => {
     // fetchPersonDetails(item.id);
     // fetchPersonMovies(item.id);
+    checkCastInCastlist(username, item.id)
     getPersonDetails(item.id, language);
     getPersonMovies(item.id, language);
     setLoading(false);
@@ -52,15 +56,124 @@ export default function PersonScreen() {
     }
   };
 
+  const addFavcast = async (id) => {
+    try {
+        if (!username) {
+            console.error('Error: Username is not defined.');
+            return;
+        }
+
+        const response = await fetch('http://10.0.2.2:5000/api/add_fav_cast', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                cast_id: id,
+            }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log(data.message);
+
+            if (data.result) {
+                console.log(`Removed Cast ${id} from cast list`);
+                // Handle removal from watchlist
+                console.log(data);
+            } else {
+                console.log(`Added cast ${id} to cast list`);
+                // console.log(data);
+                // Handle addition to watchlist
+            }
+        } else {
+            console.error(data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+  };
+
+  const checkCastInCastlist = async (username, id) => {
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/check_cast_in_castlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          cast_id: id,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        if (String(data.result) == 'true') {
+          toggleFavourite(true)
+        }
+        // console.log('Result:', data.result);  // true or false
+      } else {
+        console.error(data.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const getCast = async (username) => {
+    try {
+        const response = await fetch('http://10.0.2.2:5000/api/get_castlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Unable to fetch cast list');
+        }
+
+        const data = await response.json();
+        const favoriteCast = data.castlist;
+
+        console.log('Cast list:', favoriteCast);
+
+        const promises = favoriteCast.map(async (castId) => {
+            const details = await fetchPersonDetails(castId, language);
+            // console.log(details)
+            return details;
+        });
+
+        const castDetails = await Promise.all(promises);
+        // console.log(castDetails)
+        setFavoriteCast(castDetails);
+    } catch (error) {
+        console.error('Error fetching cast list:', error.message);
+        throw error;
+    }
+  };
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
       {/* back button */}
       <SafeAreaView style={styles.backIconContainer}>
-        <TouchableOpacity style={[Buttonstyles.background, { borderRadius: 10, padding: 1 }]} onPress={() => navigation.goBack()}>
+        <TouchableOpacity style={[Buttonstyles.background, { borderRadius: 10, padding: 1 }]} onPress={() => {
+          getCast(username)
+          navigation.goBack()
+        }}>
           <ChevronLeftIcon width={28} height={28} color="white" />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => toggleFavourite(!isFavourite)}>
+        <TouchableOpacity onPress={() => {
+          addFavcast(item.id)
+          toggleFavourite(!isFavourite)
+          }}>
           <HeartIcon size={35} color={isFavourite ? theme.mainColor : 'white'} />
         </TouchableOpacity>
       </SafeAreaView>

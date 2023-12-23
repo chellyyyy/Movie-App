@@ -11,7 +11,7 @@ const CastsScreen = ({ route }) => {
     const { title, data } = route.params;
     // const { title, cast } = route.params;
     const navigation = useNavigation();
-
+    // console.log(data)
     return (
         <View style={styles.container}>
             <Header title={title} />

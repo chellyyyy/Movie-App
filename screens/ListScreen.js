@@ -10,7 +10,7 @@ import { Mainstyles, Buttonstyles, theme } from '../theme';
 const ListScreen = ({ route }) => {
     const { title, data } = route.params;
     const navigation = useNavigation();
-
+    // console.log(data)
     return (
         <View style={styles.container}>
             <Header title={title} />

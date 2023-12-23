@@ -3,6 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { View, ScrollView, Text, StyleSheet, Image, TextInput, Button, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '../api/moviedb';
+import { fetchPersonDetails } from '../api/moviedb';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import { HeaderMovit } from '../components/header';
 import { AuthContext } from '../AuthContext';
@@ -53,6 +54,12 @@ const AccountScreen = () => {
     handleLogout, 
     language,
     watchLater, setWatchLater,
+    // fetchPersonDetails,
+
+
+    watchLaterList, setWatchLaterList,
+    historyFilms, setHistoryFilms,
+    favoriteCast, setFavoriteCast
   } = useContext(AuthContext);
 
   const avatarSource = avatar ? { uri: avatar } : { uri: 'https://i.pinimg.com/736x/c9/bc/a5/c9bca57cf02ef46be89630414a89b5f5.jpg', };
@@ -61,9 +68,8 @@ const AccountScreen = () => {
   const [isSettings, toggleSettings] = useState(false);
   const [isSupport, toggleSupport] = useState(false);  
   
-  const [watchLaterList, setWatchLaterList] = useState([]);
-  const [historyFilms, setHistoryFilms] = useState([]);
-  const [favoriteCast, setFavoriteCast] = useState([]);
+  
+  
 
   const getInfo = async () => {
     try {
@@ -80,6 +86,7 @@ const AccountScreen = () => {
       setEmail(data.email)
       setAge(data.age)
       setAddress(data.address)
+      setRealname(data.realname)
 
       console.log('User Info:', data);
   
@@ -128,32 +135,107 @@ const AccountScreen = () => {
         throw error;
     }
   };
+
+  const getHistory = async (username) => {
+    try {
+        const response = await fetch('http://10.0.2.2:5000/api/get_history', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Unable to fetch watch history');
+        }
+
+        const data = await response.json();
+        const watchHistory = data.watch_history;
+
+        console.log('Watch history:', watchHistory);
+
+        // Fetch details for each movie in the watchlist
+        const promises = watchHistory.map(async (movieId) => {
+            const details = await fetchMovieDetails(movieId, language);
+            return details;
+        });
+
+        const movieDetails = await Promise.all(promises);
+        setHistoryFilms(movieDetails);
+    } catch (error) {
+        console.error('Error fetching watch history:', error.message);
+        throw error;
+    }
+  };
+
+  const getCast = async (username) => {
+    try {
+        const response = await fetch('http://10.0.2.2:5000/api/get_castlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Unable to fetch cast list');
+        }
+
+        const data = await response.json();
+        const favoriteCast = data.castlist;
+
+        console.log('Cast list:', favoriteCast);
+
+        const promises = favoriteCast.map(async (castId) => {
+            const details = await fetchPersonDetails(castId, language);
+            // console.log(details)
+            return details;
+        });
+
+        const castDetails = await Promise.all(promises);
+        // console.log(castDetails)
+        setFavoriteCast(castDetails);
+    } catch (error) {
+        console.error('Error fetching cast list:', error.message);
+        throw error;
+    }
+  };
+
   // getWatchLater(username)
   useEffect(() => {
     getWatchLater(username);
+    // getWatchLater(username);
+    getHistory(username);
+    // getHistory(username);
   }, [username]);
+
+  
   // const gethistoryFilms = async () => {
   //   const data = await fetchTopRatedMovies();
   //   console.log('got top rated', data.results.length);
   //   if (data && data.results) setHistoryFilms(data.results);
   // };
 
-  const gethistoryFilms = async (watchLater) => {
-    try {
-      const promises = watchLater.map(async (watchLater) => {
-        const data = await fetchMovieDetails(watchLater);
-        return data.results;
-      });
+  // const gethistoryFilms = async (watchLater) => {
+  //   try {
+  //     const promises = watchLater.map(async (watchLater) => {
+  //       const data = await fetchMovieDetails(watchLater);
+  //       return data.results;
+  //     });
   
-      const results = await Promise.all(promises);
-      const combinedResults = results.flat();
+  //     const results = await Promise.all(promises);
+  //     const combinedResults = results.flat();
   
-      setHistoryFilms(combinedResults);
-      console.log(historyFilms);
-    } catch (error) {
-      console.error('Error fetching favorite films:', error.message);
-    }
-  };
+  //     setHistoryFilms(combinedResults);
+  //     console.log(historyFilms);
+  //   } catch (error) {
+  //     console.error('Error fetching favorite films:', error.message);
+  //   }
+  // };
   
   // gethistoryFilms(watchLater)
   return (
@@ -186,16 +268,23 @@ const AccountScreen = () => {
             <>
               <AccordionItem title="Watch Later" icon="add"
                 onPress={() => {
+                  getWatchLater(username);
                   navigation.navigate("List", { title: "Watch Later", data: watchLaterList });
                   // navigation.navigate("Bookmark", { title: "Watch Later", data: watchLater });
-                  getWatchLater(username);
                 }}
               />
               <AccordionItem title="History films" icon="film"
-                onPress={() => navigation.navigate("List", { title: "History Films", data: historyFilms })}
+                onPress={() => {
+                  getHistory(username);
+                  getHistory(username);
+                  navigation.navigate("List", { title: "History Films", data: historyFilms })
+              }}
               />
               <AccordionItem title="Favorite Casts" icon="people"
-                onPress={() => navigation.navigate("Casts", { title: "Favorite Casts" })}
+                onPress={() => {
+                  getCast(username)
+                  navigation.navigate("Casts", { title: "Favorite Casts", data: favoriteCast })
+                }}
                 // onPress={() => navigation.navigate("Cast", { title: "Favorite Casts", cast: cast })}
               />
             </>

@@ -7,7 +7,7 @@ import { HeartIcon } from 'react-native-heroicons/solid';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Cast from '../components/cast';
 import MovieList from '../components/movieList';
-import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, fetchVideoMovies, image500 } from '../api/moviedb';
+import { fallbackMoviePoster, fetchMovieCredits, fetchMovieDetails, fetchSimilarMovies, fetchVideoMovies, fetchPersonDetails, image500 } from '../api/moviedb';
 import Loading from '../components/loading';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -37,8 +37,11 @@ export default function DetailScreen() {
     // movie, fetchMovieDetials,
     // cast, fetchMovieCredits,
     // similarMovies, fetchSimilarMovies,
-    watchLater, setWatchLater,
+    watchLater, setWatchLaterList,
     laterList, setLaterlist,
+    historyFilms, setHistoryFilms,
+    favoriteCast, setFavoriteCast
+    
     // getWatchLater,
   } = useContext(AuthContext)
 
@@ -55,11 +58,122 @@ export default function DetailScreen() {
   }, [item, language]);
 
   
-  // useEffect(() => {
-  //   getWatchLater(username);
-  //   getWatchLater(username);
-  //   getWatchLater(username);
-  // }, [username]);
+  // const fetchData = async () => {
+  //   try {
+  //     await checkMovieInWatchlist(username, item.id);
+  //     await getMovieDetials(item.id, language);
+  //     await getMovieCredits(item.id, language);
+  //     await getSimilarMovies(item.id, language);
+  //     await getVideoMovies(item.id, language);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.error('An error occurred:', error);
+  //     // Handle the error appropriately
+  //   }
+  // };
+  
+  const getWatchLater = async (username) => {
+    try {
+        const response = await fetch('http://10.0.2.2:5000/api/get_watchlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Unable to fetch watchlist');
+        }
+
+        const data = await response.json();
+        const watchlist = data.watchlist;
+
+        console.log('Watchlist:', watchlist);
+
+        // Fetch details for each movie in the watchlist
+        const promises = watchlist.map(async (movieId) => {
+            const details = await fetchMovieDetails(movieId, language);
+            return details;
+        });
+
+        const movieDetails = await Promise.all(promises);
+        setWatchLaterList(movieDetails);
+    } catch (error) {
+        console.error('Error fetching watchlist:', error.message);
+        throw error;
+    }
+  };
+
+  const getHistory = async (username) => {
+    try {
+        const response = await fetch('http://10.0.2.2:5000/api/get_history', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Unable to fetch watch history');
+        }
+
+        const data = await response.json();
+        const watchHistory = data.watch_history;
+
+        console.log('Watch history:', watchHistory);
+
+        // Fetch details for each movie in the watchlist
+        const promises = watchHistory.map(async (movieId) => {
+            const details = await fetchMovieDetails(movieId, language);
+            return details;
+        });
+
+        const movieDetails = await Promise.all(promises);
+        setHistoryFilms(movieDetails);
+    } catch (error) {
+        console.error('Error fetching watch history:', error.message);
+        throw error;
+    }
+  };
+
+  const getCast = async (username) => {
+    try {
+        const response = await fetch('http://10.0.2.2:5000/api/get_castlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Unable to fetch cast list');
+        }
+
+        const data = await response.json();
+        const favoriteCast = data.castlist;
+
+        console.log('Cast list:', favoriteCast);
+
+        const promises = favoriteCast.map(async (castId) => {
+            const details = await fetchPersonDetails(castId, language);
+            // console.log(details)
+            return details;
+        });
+
+        const castDetails = await Promise.all(promises);
+        // console.log(castDetails)
+        setFavoriteCast(castDetails);
+    } catch (error) {
+        console.error('Error fetching cast list:', error.message);
+        throw error;
+    }
+  };
 
   const getMovieDetials = async (id, language) => {
     const data = await fetchMovieDetails(id, language);
@@ -136,6 +250,46 @@ export default function DetailScreen() {
     }
   };
   
+
+  const addtoWatchHistory = async (id) => {
+    try {
+      if (!username) {
+        console.error('Error: Username is not defined.');
+        return;
+      }
+  
+      const response = await fetch('http://10.0.2.2:5000/api/add_history', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username,
+          movie_id: id,
+        }),
+      });
+  
+      const data = await response.json();
+      // const responseBody = await response.text();
+      // console.log('Response Body:', responseBody);
+      if (response.ok) {
+        console.log(data.message);
+  
+        if (data.result) {
+          console.log(`Added movie ${id} to watch history`);
+          // navigation.navigate("Player", { id: movie.id });
+        }
+      } else {
+        const errorMessage = await response.text();
+        console.error('Lỗi:', errorMessage);
+        // console.log('Response Body:', responseBody);
+      }
+    } catch (error) {
+      // console.log('Response Body:', responseBody);
+      console.error('Error:', error);
+    }
+  };
+  
   // const getWatchLater = async (username) => {
   //   try {
   //     const response = await fetch('http://10.0.2.2:5000/api/get_watchlist', {
@@ -192,12 +346,19 @@ export default function DetailScreen() {
     }
   };
 
+
+
   return (
     <ScrollView contentContainerStyle={{ paddingBottom: 20 }} style={styles.container}>
       {/* back button and movie poster */}
       <View style={{ width: '100%' }}>
         <SafeAreaView style={styles.buttonContainer}>
-          <TouchableOpacity style={[Buttonstyles.background, styles.buttonContainerItem]} onPress={() => navigation.goBack()}>
+          <TouchableOpacity style={[Buttonstyles.background, styles.buttonContainerItem]} onPress={() => {
+            getWatchLater(username)
+            getHistory(username)
+            getCast(username)
+            navigation.goBack()
+            }}>
             <ChevronLeftIcon size={28} strokeWidth={2.5} color="white" />
           </TouchableOpacity>
 
@@ -285,7 +446,10 @@ export default function DetailScreen() {
           {/* Button "Watch Movie" */}
           <TouchableOpacity
             style={[styles.movieButton, Buttonstyles.background]}
-            onPress={() => navigation.navigate("Player", { id: movie.id })}
+            onPress={() => {
+              addtoWatchHistory(movie.id)
+              navigation.navigate("Player", { id: movie.id })
+            }}
           >
             <IonIcon name="play" size={25} color="white" />
             <Text style={styles.movieButtonText}>Movie</Text>

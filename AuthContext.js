@@ -30,7 +30,7 @@ const MovieProvider = ({ children }) => {
   // const [similarMovies, setSimilarMovies] = useState([]);
   // const [videoMovies, setVideoMovies] = useState([]);
 
-  // const [person, setPerson] = useState({});
+  const [person, setPerson] = useState({});
   // const [personMovies, setPersonMovies] = useState([]);
 
   const [activegenre, setActiveGenre] = useState(28);
@@ -41,6 +41,10 @@ const MovieProvider = ({ children }) => {
   // const [user, setUser] = useAuthState(auth)
   const [laterList, setLaterlist] = useState('');
   const [watchLater, setWatchLater] = useState([]);
+
+  const [watchLaterList, setWatchLaterList] = useState([]);
+  const [historyFilms, setHistoryFilms] = useState([]);
+  const [favoriteCast, setFavoriteCast] = useState([]);
 
   useEffect(() => {
     if (page < 1) {
@@ -269,15 +273,15 @@ const MovieProvider = ({ children }) => {
   }
 
   // Person ============================================================================
-  // const fetchPersonDetails = async (id) => {
-  //   const uri = await fetch(
-  //     `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=${language}`
-  //   );
-  //   const data = await uri.json();
-  //   if (data) {
-  //     setPerson(data);
-  //   }
-  // }
+  const fetchPersonDetails = async (id) => {
+    const uri = await fetch(
+      `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=${language}`
+    );
+    const data = await uri.json();
+    if (data) {
+      setPerson(data);
+    }
+  }
 
   // const fetchPersonMovies = async (id) => {
   //   const uri = await fetch(
@@ -320,7 +324,7 @@ const MovieProvider = ({ children }) => {
     // similarMovies, fetchSimilarMovies,
     // videoMovies, fetchVideoMovies,
 
-    // person, fetchPersonDetails,
+    fetchPersonDetails,
     // personMovies, fetchPersonMovies,
 
     GetFavorite,
@@ -329,6 +333,9 @@ const MovieProvider = ({ children }) => {
     language, setLanguage,
     laterList, setLaterlist,
     watchLater, setWatchLater,
+    watchLaterList, setWatchLaterList,
+    historyFilms, setHistoryFilms,
+    favoriteCast, setFavoriteCast
     // getWatchLater,
   };
 

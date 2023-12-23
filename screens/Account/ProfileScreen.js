@@ -53,7 +53,7 @@ const ProfileScreen = () => {
           email,
           age,
           address,
-          realName
+          realName,
         });
 
         Alert.alert(
