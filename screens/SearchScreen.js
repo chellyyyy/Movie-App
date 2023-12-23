@@ -1,13 +1,14 @@
-import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Dimensions, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import React, { useCallback, useState, useContext } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Dimensions, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
-import { fallbackMoviePoster, image185, searchMovies } from '../api/moviedb';
+import { fallbackMoviePoster, image185, searchMovies, searchPeople } from '../api/moviedb';
 import { debounce } from 'lodash';
 import Loading from '../components/loading';
 import MoviePreview from '../components/moviePreview';
-import { Mainstyles } from '../theme';
+import CastPreview from '../components/castPreview';
+import { Mainstyles, theme } from '../theme';
 import { AuthContext } from '../AuthContext';
 
 const { width, height } = Dimensions.get('window');
@@ -16,7 +17,9 @@ export default function SearchScreen() {
   const navigation = useNavigation();
   const { language } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState([]);
+  const [resultsMovie, setResultsMovie] = useState([]);
+  const [resultsCast, setResultsCast] = useState([]);
+  const [searchType, setSearchType] = useState('movie');
 
   const handleSearch = search => {
     if (search && search.length > 2) {
@@ -27,17 +30,36 @@ export default function SearchScreen() {
         language: language,
         page: '1'
       }).then(data => {
-        console.log('got search results');
+        console.log('got search movie results');
         setLoading(false);
-        if (data && data.results) setResults(data.results);
+        if (data && data.results) setResultsMovie(data.results);
+      });
+      
+      searchPeople({
+        query: search,
+        include_adult: false,
+        language: language,
+        page: '1'
+      }).then(data => {
+        console.log('got search cast results');
+        setLoading(false);
+        if (data && data.results) setResultsCast(data.results);
       });
     } else {
       setLoading(false);
-      setResults([]);
+      setResultsMovie([]);
+      setResultsCast([]);
     }
   }
 
   const handleTextDebounce = useCallback(debounce(handleSearch, 400), []);
+
+  const handleSearchTypeChange = newSearchType => {
+    // Clear results when switching search type
+    // setResultsMovie([]);
+    // setResultsCast([]);
+    setSearchType(newSearchType);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -45,7 +67,7 @@ export default function SearchScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           onChangeText={handleTextDebounce}
-          placeholder="Search Movie"
+          placeholder="Search Movie/Cast"
           placeholderTextColor={'lightgray'}
           style={styles.input}
         />
@@ -54,21 +76,52 @@ export default function SearchScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* search type buttons */}
+      <View style={styles.resultsContainer}>
+        <TouchableOpacity
+          style={[styles.resultItem, searchType === 'movie' && styles.selectedResult]}
+          onPress={() => handleSearchTypeChange('movie')}
+        >
+          <Text style={styles.resultText}>Movie</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.resultItem, searchType === 'cast' && styles.selectedResult]}
+          onPress={() => handleSearchTypeChange('cast')}
+        >
+          <Text style={styles.resultText}>Cast</Text>
+        </TouchableOpacity>
+      </View>
+
       {/* search results */}
       {loading ? (
         <Loading />
-      ) :
-        results.length > 0 ? (
-          <MoviePreview results={results} hideResults={'false'} />
-        ) : (
-          <View style={styles.noResultsContainer}>
-            <Image
-              source={require('../assets/images/movieTime.png')}
-              style={styles.noResultsImage}
-            />
-          </View>
-        )
-      }
+      ) : (
+        <>
+          {searchType === 'movie' ? (
+            resultsMovie.length > 0 ? (
+              <MoviePreview results={resultsMovie} hideResults={'false'} />
+            ) : (
+              <View style={styles.noResultsContainer}>
+                <Image
+                  source={require('../assets/images/movieTime.png')}
+                  style={styles.noResultsImage}
+                />
+              </View>
+            )
+          ) : (
+            resultsCast.length > 0 ? (
+              <CastPreview results={resultsCast} hideResults={'false'} />
+            ) : (
+              <View style={styles.noResultsContainer}>
+                <Image
+                  source={require('../assets/images/movieTime.png')}
+                  style={styles.noResultsImage}
+                />
+              </View>
+            )
+          )}
+        </>
+      )}
     </SafeAreaView>
   );
 }
@@ -108,15 +161,24 @@ const styles = StyleSheet.create({
   resultText: {
     color: 'white',
     fontWeight: '600',
-    marginLeft: 16,
+    // marginLeft: 16,
   },
   resultsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    flexWrap: 'wrap',
+    marginHorizontal: 16,
+    marginBottom: 16,
+    // flexWrap: 'wrap',
   },
   resultItem: {
-    marginBottom: 20,
+    borderColor: theme.mainColor,
+    borderWidth: 2,
+    borderRadius: 30,
+    paddingVertical: 10,
+    paddingHorizontal: 60,
+  },
+  selectedResult: {
+    backgroundColor: theme.mainColor,
   },
   image: {
     width: width * 0.44,
