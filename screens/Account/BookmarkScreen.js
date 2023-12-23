@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableWithoutFeedback, ScrollView, StyleSheet } f
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
-import { fetchMovieDetails, configureAxios, fallbackMoviePoster, image185 } from '../../api/moviedb';
+import { apiKey, fetchMovieDetails, configureAxios, fallbackMoviePoster, image185 } from '../../api/moviedb';
 import MoviePreview from '../../components/moviePreview';
 import { Header } from '../../components/header';
 import { Mainstyles, Buttonstyles, theme } from '../../theme';
@@ -19,24 +19,19 @@ const BookmarkItem = ({ bookmarkId }) => {
     // const [refreshKey, setRefreshKey] = useState(0);
     const [item, setItem] = useState([]);
     const navigation = useNavigation();
+    const { language } = useContext(AuthContext);
 
     useEffect(() => {
-        async function fetchData() {
-            try {
-                configureAxios();
-                const response = await fetchMovieDetails(bookmarkId);
-                setItem(response);
-                // setLoading(false);
-                // console.log(response);
-            } catch (error) {
-                console.error('Error fetching detail:', error);
-                // setLoading(false);
-            }
+        getMovieDetials(bookmarkId, language);
+    }, [bookmarkId, language]);
+
+    const getMovieDetials = async (id, language) => {
+        const data = await fetchMovieDetails(id, language);
+        console.log('got movie details');
+        if (data) {
+            setItem({ ...item, ...data });
         }
-
-        fetchData();
-    }, [bookmarkId]);
-
+    };
     
     return (
         <TouchableWithoutFeedback key={bookmarkId} onPress={() => navigation.push('Detail', item)}>

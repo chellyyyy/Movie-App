@@ -25,6 +25,7 @@ export default function DetailScreen() {
   const [cast, setCast] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [videoMovies, setVideoMovies] = useState([]);
+
   const [isFavourite, toggleFavourite] = useState(false);
   const [isWatchLater, toggleWatchLater] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -33,17 +34,23 @@ export default function DetailScreen() {
   
   const {
     username, language,
+    // movie, fetchMovieDetials,
+    // cast, fetchMovieCredits,
+    // similarMovies, fetchSimilarMovies,
     watchLater, setWatchLater,
     laterList, setLaterlist,
-    getWatchLater,
+    // getWatchLater,
   } = useContext(AuthContext)
 
   useEffect(() => {
-    checkMovieInWatchlist(username, item.id)
-    getMovieDetials(item.id);
-    getMovieCredits(item.id);
-    getSimilarMovies(item.id);
-    getVideoMovies(item.id);
+    checkMovieInWatchlist(username, item.id);
+    // fetchMovieDetials(item.id);
+    // fetchMovieCredits(item.id);
+    // fetchSimilarMovies(item.id);
+    getMovieDetials(item.id, language);
+    getMovieCredits(item.id, language);
+    getSimilarMovies(item.id, language);
+    getVideoMovies(item.id, language);
     setLoading(false);
   }, [item, language]);
 
@@ -54,8 +61,8 @@ export default function DetailScreen() {
   //   getWatchLater(username);
   // }, [username]);
 
-  const getMovieDetials = async (id) => {
-    const data = await fetchMovieDetails(id);
+  const getMovieDetials = async (id, language) => {
+    const data = await fetchMovieDetails(id, language);
     console.log('got movie details');
     
     // console.log(data);
@@ -65,24 +72,24 @@ export default function DetailScreen() {
     }
   };
 
-  const getMovieCredits = async (id) => {
-    const data = await fetchMovieCredits(id);
+  const getMovieCredits = async (id, language) => {
+    const data = await fetchMovieCredits(id, language);
     console.log('got movie credits');
     if (data && data.cast) {
       setCast(data.cast);
     }
   };
 
-  const getSimilarMovies = async (id) => {
-    const data = await fetchSimilarMovies(id);
+  const getSimilarMovies = async (id, language) => {
+    const data = await fetchSimilarMovies(id, language);
     console.log('got similar movies');
     if (data && data.results) {
       setSimilarMovies(data.results);
     }
   };
 
-  const getVideoMovies = async (id) => {
-    const data = await fetchVideoMovies(id);
+  const getVideoMovies = async (id, language) => {
+    const data = await fetchVideoMovies(id, language);
     console.log('got video trailer movies');
     if (data && data.results) {
       setVideoMovies(data.results);
@@ -301,7 +308,7 @@ export default function DetailScreen() {
             <TouchableOpacity onPress={() => {
               addTowatchlater(movie.id);
               toggleWatchLater(!isWatchLater);
-              getWatchLater(username);
+              // getWatchLater(username);
               // getWatchLater(username);
             }} >
               <IonIcon name={isWatchLater ? 'checkmark' : 'add'} size={35} color={'white'} />

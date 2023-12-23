@@ -51,6 +51,7 @@ const AccountScreen = () => {
     password, setPassword,
     confirmPassword, setConfirmPassword,
     handleLogout, 
+    language,
     watchLater, setWatchLater,
   } = useContext(AuthContext);
 
@@ -58,10 +59,9 @@ const AccountScreen = () => {
 
   const [isPersonal, togglePersonal] = useState(false);
   const [isSettings, toggleSettings] = useState(false);
-  const [isSupport, toggleSupport] = useState(false);
-
+  const [isSupport, toggleSupport] = useState(false);  
   
-  
+  const [watchLaterList, setWatchLaterList] = useState([]);
   const [historyFilms, setHistoryFilms] = useState([]);
   const [favoriteCast, setFavoriteCast] = useState([]);
 
@@ -97,28 +97,35 @@ const AccountScreen = () => {
 
   const getWatchLater = async (username) => {
     try {
-      const response = await fetch('http://10.0.2.2:5000/api/get_watchlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username }),
-        credentials: 'include',
-      });
-  
-      if (!response.ok) {
-        throw new Error('Unable to fetch watchlist');
-      }
-  
-      const data = await response.json();
-      const watchlist = data.watchlist;
-  
-      console.log('Watchlist:', watchlist);
-  
-      setWatchLater(watchlist);
+        const response = await fetch('http://10.0.2.2:5000/api/get_watchlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username }),
+            credentials: 'include',
+        });
+
+        if (!response.ok) {
+            throw new Error('Unable to fetch watchlist');
+        }
+
+        const data = await response.json();
+        const watchlist = data.watchlist;
+
+        console.log('Watchlist:', watchlist);
+
+        // Fetch details for each movie in the watchlist
+        const promises = watchlist.map(async (movieId) => {
+            const details = await fetchMovieDetails(movieId, language);
+            return details;
+        });
+
+        const movieDetails = await Promise.all(promises);
+        setWatchLaterList(movieDetails);
     } catch (error) {
-      console.error('Error fetching watchlist:', error.message);
-      throw error;
+        console.error('Error fetching watchlist:', error.message);
+        throw error;
     }
   };
   // getWatchLater(username)
@@ -179,7 +186,8 @@ const AccountScreen = () => {
             <>
               <AccordionItem title="Watch Later" icon="add"
                 onPress={() => {
-                  navigation.navigate("Bookmark", { title: "Watch Later", data: watchLater });
+                  navigation.navigate("List", { title: "Watch Later", data: watchLaterList });
+                  // navigation.navigate("Bookmark", { title: "Watch Later", data: watchLater });
                   getWatchLater(username);
                 }}
               />

@@ -25,6 +25,14 @@ const MovieProvider = ({ children }) => {
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
   const [topRated, setTopRated] = useState([]);
+  // const [movie, setMovie] = useState({});
+  // const [cast, setCast] = useState([]);
+  // const [similarMovies, setSimilarMovies] = useState([]);
+  // const [videoMovies, setVideoMovies] = useState([]);
+
+  // const [person, setPerson] = useState({});
+  // const [personMovies, setPersonMovies] = useState([]);
+
   const [activegenre, setActiveGenre] = useState(28);
   const [genres, setGenres] = useState([])
   const [loading, setLoading] = useState(true);
@@ -120,32 +128,32 @@ const MovieProvider = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  const getWatchLater = async (username) => {
-    try {
-      const response = await fetch('http://10.0.2.2:5000/api/get_watchlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username }),
-        credentials: 'include',
-      });
+  // const getWatchLater = async (username) => {
+  //   try {
+  //     const response = await fetch('http://10.0.2.2:5000/api/get_watchlist', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify({ username }),
+  //       credentials: 'include',
+  //     });
   
-      if (!response.ok) {
-        throw new Error('Unable to fetch watchlist');
-      }
+  //     if (!response.ok) {
+  //       throw new Error('Unable to fetch watchlist');
+  //     }
   
-      const data = await response.json();
-      const watchlist = data.watchlist;
+  //     const data = await response.json();
+  //     const watchlist = data.watchlist;
   
-      console.log('Watchlist:', watchlist);
+  //     console.log('Watchlist:', watchlist);
   
-      setWatchLater(watchlist);
-    } catch (error) {
-      console.error('Error fetching watchlist:', error.message);
-      throw error;
-    }
-  };
+  //     setWatchLater(watchlist);
+  //   } catch (error) {
+  //     console.error('Error fetching watchlist:', error.message);
+  //     throw error;
+  //   }
+  // };
 
 
   // Movies ============================================================================
@@ -214,10 +222,72 @@ const MovieProvider = ({ children }) => {
     setLoading(false);
   }
 
+  // const fetchMovieDetials = async (id) => {
+  //   const uri = await fetch(
+  //     `https://api.themoviedb.org/3/movie/${id}?api_key=${apiKey}&language=${language}`
+  //   );
+  //   const data = await uri.json();
+  //   if (data) {
+  //     // setMovie(data);
+  //     setMovie({ ...movie, ...data });
+  //   }
+  // }
+
+  // const fetchMovieCredits = async (id) => {
+  //   const uri = await fetch(
+  //     `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${apiKey}&language=${language}`
+  //   );
+  //   const data = await uri.json();
+  //   if (data && data.cast) {
+  //     setCast(data.cast);
+  //   }
+  // }
+
+  // const fetchSimilarMovies = async (id) => {
+  //   const uri = await fetch(
+  //     `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${apiKey}&language=${language}`
+  //   );
+  //   const data = await uri.json();
+  //   if (data && data.results) {
+  //     setSimilarMovies(data.results);
+  //   }
+  // }
+
+  // const fetchVideoMovies = async (id) => {
+  //   const uri = await fetch(
+  //     `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=${language}`
+  //   );
+  //   const data = await uri.json();
+  //   if (data && data.results) {
+  //     setVideoMovies(data.results);
+  //   }
+  // }
+
   // creat local storage
   const GetFavorite = () => {
     setLoading(false);
   }
+
+  // Person ============================================================================
+  // const fetchPersonDetails = async (id) => {
+  //   const uri = await fetch(
+  //     `https://api.themoviedb.org/3/person/${id}?api_key=${apiKey}&language=${language}`
+  //   );
+  //   const data = await uri.json();
+  //   if (data) {
+  //     setPerson(data);
+  //   }
+  // }
+
+  // const fetchPersonMovies = async (id) => {
+  //   const uri = await fetch(
+  //     `https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${apiKey}&language=${language}`
+  //   );
+  //   const data = await uri.json();
+  //   if (data && data.cast) {
+  //     setPersonMovies(data.cast);
+  //   }
+  // }
 
   const contextValue = {
     isAuthenticated, setIsAuthenticated,
@@ -245,13 +315,21 @@ const MovieProvider = ({ children }) => {
     trending, fetchTrending,
     upcoming, fetchUpcoming,
     topRated, fetchTopRated,
+    // movie, fetchMovieDetials,
+    // cast, fetchMovieCredits,
+    // similarMovies, fetchSimilarMovies,
+    // videoMovies, fetchVideoMovies,
+
+    // person, fetchPersonDetails,
+    // personMovies, fetchPersonMovies,
+
     GetFavorite,
     totalPage,
     searchedMovies, fetchSearch,
     language, setLanguage,
     laterList, setLaterlist,
     watchLater, setWatchLater,
-    getWatchLater,
+    // getWatchLater,
   };
 
   return (

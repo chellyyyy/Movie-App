@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Dimensions, StyleSheet } from 'react-native';
 import { ChevronLeftIcon } from 'react-native-heroicons/outline';
 import { HeartIcon } from 'react-native-heroicons/solid';
@@ -8,6 +8,7 @@ import MovieList from '../components/movieList';
 import Loading from '../components/loading';
 import { fallbackPersonImage, fetchPersonDetails, fetchPersonMovies, image185, image342 } from '../api/moviedb';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
+import { AuthContext } from '../AuthContext';
 
 const verticalMargin = 20;
 const { width, height } = Dimensions.get('window');
@@ -18,16 +19,24 @@ export default function PersonScreen() {
   const navigation = useNavigation();
   const [person, setPerson] = useState({});
   const [personMovies, setPersonMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const {
+    language,
+    // person, fetchPersonDetails,
+    // personMovies, fetchPersonMovies,
+  } = useContext(AuthContext);
 
   useEffect(() => {
-    setLoading(true);
-    getPersonDetails(item.id);
-    getPersonMovies(item.id);
-  }, [item]);
+    // fetchPersonDetails(item.id);
+    // fetchPersonMovies(item.id);
+    getPersonDetails(item.id, language);
+    getPersonMovies(item.id, language);
+    setLoading(false);
+  }, [item, language]);
 
-  const getPersonDetails = async (id) => {
-    const data = await fetchPersonDetails(id);
+  const getPersonDetails = async (id, language) => {
+    const data = await fetchPersonDetails(id, language);
     console.log('got person details');
     setLoading(false);
     if (data) {
@@ -35,8 +44,8 @@ export default function PersonScreen() {
     }
   };
 
-  const getPersonMovies = async (id) => {
-    const data = await fetchPersonMovies(id);
+  const getPersonMovies = async (id, language) => {
+    const data = await fetchPersonMovies(id, language);
     console.log('got person movies');
     if (data && data.cast) {
       setPersonMovies(data.cast);

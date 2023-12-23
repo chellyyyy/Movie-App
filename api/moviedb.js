@@ -13,14 +13,14 @@ const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
 // endpoints with dynamic params
 
 // movie
-const movieDetailsEndpoint = id => `${apiBaseUrl}/movie/${id}?api_key=${apiKey}`;
-const movieCreditsEndpoint = id => `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}`;
-const similarMoviesEndpoint = id => `${apiBaseUrl}/movie/${id}/similar?api_key=${apiKey}`;
-const videoMoviesEndpoint = id => `${apiBaseUrl}/movie/${id}/videos?api_key=${apiKey}`;
+const movieDetailsEndpoint = (id, language) => `${apiBaseUrl}/movie/${id}?api_key=${apiKey}&language=${language}`;
+const movieCreditsEndpoint = (id, language) => `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}&language=${language}`;
+const similarMoviesEndpoint = (id, language) => `${apiBaseUrl}/movie/${id}/similar?api_key=${apiKey}&language=${language}`;
+const videoMoviesEndpoint = (id, language) => `${apiBaseUrl}/movie/${id}/videos?api_key=${apiKey}&language=${language}`;
 
 // person
-const personDetailsEndpoint = id => `${apiBaseUrl}/person/${id}?api_key=${apiKey}`;
-const personMoviesEndpoint = id => `${apiBaseUrl}/person/${id}/movie_credits?api_key=${apiKey}`;
+const personDetailsEndpoint = (id, language) => `${apiBaseUrl}/person/${id}?api_key=${apiKey}&language=${language}`;
+const personMoviesEndpoint = (id, language) => `${apiBaseUrl}/person/${id}/movie_credits?api_key=${apiKey}&language=${language}`;
 
 // functions to get images of different widths, (show images using these to improve the loading times)
 export const image500 = posterPath => posterPath ? 'https://image.tmdb.org/t/p/w500' + posterPath : null;
@@ -61,25 +61,25 @@ export const fetchTopRatedMovies = () => {
 
 
 // movie screen apis
-export const fetchMovieDetails = (id) => {
-    return apiCall(movieDetailsEndpoint(id));
+export const fetchMovieDetails = (id, language) => {
+    return apiCall(movieDetailsEndpoint(id, language));
 }
-export const fetchMovieCredits = (movieId) => {
-    return apiCall(movieCreditsEndpoint(movieId));
+export const fetchMovieCredits = (movieId, language) => {
+    return apiCall(movieCreditsEndpoint(movieId, language));
 }
-export const fetchSimilarMovies = (movieId) => {
-    return apiCall(similarMoviesEndpoint(movieId));
+export const fetchSimilarMovies = (movieId, language) => {
+    return apiCall(similarMoviesEndpoint(movieId, language));
 }
-export const fetchVideoMovies = (movieId) => {
-    return apiCall(videoMoviesEndpoint(movieId));
+export const fetchVideoMovies = (movieId, language) => {
+    return apiCall(videoMoviesEndpoint(movieId, language));
 }
 
 // person screen apis
-export const fetchPersonDetails = (personId) => {
-    return apiCall(personDetailsEndpoint(personId));
+export const fetchPersonDetails = (personId, language) => {
+    return apiCall(personDetailsEndpoint(personId, language));
 }
-export const fetchPersonMovies = (personId) => {
-    return apiCall(personMoviesEndpoint(personId));
+export const fetchPersonMovies = (personId, language) => {
+    return apiCall(personMoviesEndpoint(personId, language));
 }
 
 // search screen apis
