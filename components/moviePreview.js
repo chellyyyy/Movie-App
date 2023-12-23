@@ -72,8 +72,8 @@ const MoviePreview = ({ results, hideResults }) => {
         <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.scrollContainer}
-            onEndReached={handleEndReached}
-            onEndReachedThreshold={0.1} // Đặt ngưỡng để xác định khi nào cuộc cuộc đến cuối trang
+            // onEndReached={handleEndReached}
+            // onEndReachedThreshold={0.1} // Đặt ngưỡng để xác định khi nào cuộc cuộc đến cuối trang
         >
             {hideResults && (
                 <Text style={styles.resultText}>Results ({results.length})</Text>

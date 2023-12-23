@@ -5,10 +5,13 @@ export const apiKey = '4e80299570f883238b5b376377d6ea42';
 
 // endpoints
 const apiBaseUrl = 'https://api.themoviedb.org/3';
-const trendingMoviesEndpoint = `${apiBaseUrl}/trending/movie/day?api_key=${apiKey}`;
-const upcomingMoviesEndpoint = `${apiBaseUrl}/movie/upcoming?api_key=${apiKey}`;
-const topRatedMoviesEndpoint = `${apiBaseUrl}/movie/top_rated?api_key=${apiKey}`;
-const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
+const trendingMoviesEndpoint = language => `${apiBaseUrl}/trending/movie/day?api_key=${apiKey}&language=${language}`;
+const nowplayingMoviesEndpoint = language => `${apiBaseUrl}/movie/now_playing?api_key=${apiKey}&language=${language}`;
+const upcomingMoviesEndpoint = language => `${apiBaseUrl}/movie/upcoming?api_key=${apiKey}&language=${language}`;
+const topRatedMoviesEndpoint = language => `${apiBaseUrl}/movie/top_rated?api_key=${apiKey}&language=${language}`;
+const popularMoviesEndpoint = language => `${apiBaseUrl}/movie/popular?api_key=${apiKey}&language=${language}`;
+const vietNamMoviesEndpoint = language => `${apiBaseUrl}/discover/movie?api_key=${apiKey}&language=${language}&with_origin_country=VN`;
+const searchMoviesEndpoint = language => `${apiBaseUrl}/search/movie?api_key=${apiKey}&language=${language}`;
 
 // endpoints with dynamic params
 
@@ -49,14 +52,23 @@ const apiCall = async (endpoint, params) => {
 }
 
 // home screen apis
-export const fetchTrendingMovies = () => {
-    return apiCall(trendingMoviesEndpoint);
+export const fetchTrendingMovies = (language) => {
+    return apiCall(trendingMoviesEndpoint(language));
 }
-export const fetchUpcomingMovies = () => {
-    return apiCall(upcomingMoviesEndpoint);
+export const fetchNowPlayingMovies = (language) => {
+    return apiCall(nowplayingMoviesEndpoint(language));
 }
-export const fetchTopRatedMovies = () => {
-    return apiCall(topRatedMoviesEndpoint);
+export const fetchUpcomingMovies = (language) => {
+    return apiCall(upcomingMoviesEndpoint(language));
+}
+export const fetchTopRatedMovies = (language) => {
+    return apiCall(topRatedMoviesEndpoint(language));
+}
+export const fetchPopularMovies = (language) => {
+    return apiCall(popularMoviesEndpoint(language));
+}
+export const fetchVietNamMovies = (language) => {
+    return apiCall(vietNamMoviesEndpoint(language));
 }
 
 

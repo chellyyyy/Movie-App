@@ -13,13 +13,13 @@ const { width, height } = Dimensions.get('window');
 
 const GenreScreen = () => {
     const navigation = useNavigation();
-    const { loading, language, fetchGenre, activegenre, setActiveGenre, genres, setMovies, page, setPage, filteredGenre } = useContext(AuthContext);
+    const { loading, language, fetchGenres, activegenre, setActiveGenre, genres, setMovies, page, setPage, filteredGenre } = useContext(AuthContext);
     // const [genres, setGenres] = useState([]);
     // const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         configureAxios();
-        fetchGenre();
+        fetchGenres();
     }, [language]);
 
     // useEffect(() => {
@@ -42,7 +42,7 @@ const GenreScreen = () => {
 
     return (
         <View style={styles.container}>
-            <HeaderMovit title="Genre" />
+            <HeaderMovit title="Genres" />
             {loading ? (
                 <Loading />
             ) : (

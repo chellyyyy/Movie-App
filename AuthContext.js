@@ -21,10 +21,10 @@ const MovieProvider = ({ children }) => {
   const [totalPage, setTotalPage] = useState(null);
   const [page, setPage] = useState(1);
   const [movies, setMovies] = useState([]);
-  const [searchedMovies, setSearchedMovies] = useState([]);
-  const [trending, setTrending] = useState([]);
-  const [upcoming, setUpcoming] = useState([]);
-  const [topRated, setTopRated] = useState([]);
+  // const [searchedMovies, setSearchedMovies] = useState([]);
+  // const [trending, setTrending] = useState([]);
+  // const [upcoming, setUpcoming] = useState([]);
+  // const [topRated, setTopRated] = useState([]);
   // const [movie, setMovie] = useState({});
   // const [cast, setCast] = useState([]);
   // const [similarMovies, setSimilarMovies] = useState([]);
@@ -158,26 +158,26 @@ const MovieProvider = ({ children }) => {
 
   // Movies ============================================================================
   
-  const filteredGenre = async () => {
-    const data = await fetch(
-      `https://api.themoviedb.org/3/discover/movie?with_genres=${activegenre}&api_key=${apiKey}&page=${page}`
-    );
-    const filteredGenre = await data.json();
-    setMovies(movies.concat(filteredGenre.results));
-    setTotalPage(filteredGenre.total_pages);
-    setLoading(false);
-  };
+  // const filteredGenre = async () => {
+  //   const data = await fetch(
+  //     `https://api.themoviedb.org/3/discover/movie?with_genres=${activegenre}&api_key=${apiKey}&page=${page}`
+  //   );
+  //   const filteredGenre = await data.json();
+  //   setMovies(movies.concat(filteredGenre.results));
+  //   setTotalPage(filteredGenre.total_pages);
+  //   setLoading(false);
+  // };
 
-  const fetchSearch = async (query) => {
-    const data = await fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=${language}&query=${query}&page=${page}&include_adult=false`
-    );
-    const searchmovies = await data.json();
-    setSearchedMovies(searchmovies.results);
-    setLoading(false);
-  }
+  // const fetchSearch = async (query) => {
+  //   const data = await fetch(
+  //     `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&language=${language}&query=${query}&page=${page}&include_adult=false`
+  //   );
+  //   const searchmovies = await data.json();
+  //   setSearchedMovies(searchmovies.results);
+  //   setLoading(false);
+  // }
 
-  const fetchGenre = async () => {
+  const fetchGenres = async () => {
     const data = await fetch(
       `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=${language}`
     );
@@ -188,39 +188,39 @@ const MovieProvider = ({ children }) => {
     setLoading(false);
   }
 
-  const fetchTrending = async () => {
-    const data = await fetch(
-      `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&language=${language}&page=${page}`
-    );
-    const trend = await data.json();
-    setTrending(trend.results);
-    // setTrending(trending.concat(trend.results));
-    setTotalPage(trend.total_pages);
-    setLoading(false);
-  }
+  // const fetchTrending = async () => {
+  //   const data = await fetch(
+  //     `https://api.themoviedb.org/3/trending/movie/day?api_key=${apiKey}&language=${language}&page=${page}`
+  //   );
+  //   const trend = await data.json();
+  //   setTrending(trend.results);
+  //   // setTrending(trending.concat(trend.results));
+  //   setTotalPage(trend.total_pages);
+  //   setLoading(false);
+  // }
 
-  const fetchUpcoming = async () => {
-    const data = await fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=${language}&page=${page}`
-    );
-    const upc = await data.json();
-    // console.log(language);
-    setUpcoming(upc.results);
-    // setUpcoming(upcoming.concat(upc.results));
-    setTotalPage(upc.total_pages);
-    setLoading(false);
-  }
+  // const fetchUpcoming = async () => {
+  //   const data = await fetch(
+  //     `https://api.themoviedb.org/3/movie/upcoming?api_key=${apiKey}&language=${language}&page=${page}`
+  //   );
+  //   const upc = await data.json();
+  //   // console.log(language);
+  //   setUpcoming(upc.results);
+  //   // setUpcoming(upcoming.concat(upc.results));
+  //   setTotalPage(upc.total_pages);
+  //   setLoading(false);
+  // }
 
-  const fetchTopRated = async () => {
-    const data = await fetch(
-      `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=${language}&page=${page}`
-    );
-    const upc = await data.json();
-    setTopRated(upc.results);
-    // setTopRated(topRated.concat(upc.results));
-    setTotalPage(upc.total_pages);
-    setLoading(false);
-  }
+  // const fetchTopRated = async () => {
+  //   const data = await fetch(
+  //     `https://api.themoviedb.org/3/movie/top_rated?api_key=${apiKey}&language=${language}&page=${page}`
+  //   );
+  //   const upc = await data.json();
+  //   setTopRated(upc.results);
+  //   // setTopRated(topRated.concat(upc.results));
+  //   setTotalPage(upc.total_pages);
+  //   setLoading(false);
+  // }
 
   // const fetchMovieDetials = async (id) => {
   //   const uri = await fetch(
@@ -304,17 +304,17 @@ const MovieProvider = ({ children }) => {
     user, updateUser,
 
     //thong tin phim
-    genres, fetchGenre,
+    genres, fetchGenres,
     setGenres,
-    filteredGenre,
+    // filteredGenre,
     movies, setMovies,
     page, setPage,
     activegenre, setActiveGenre,
     loading, setLoading,
     backgenre, setBackGenre,
-    trending, fetchTrending,
-    upcoming, fetchUpcoming,
-    topRated, fetchTopRated,
+    // trending, fetchTrending,
+    // upcoming, fetchUpcoming,
+    // topRated, fetchTopRated,
     // movie, fetchMovieDetials,
     // cast, fetchMovieCredits,
     // similarMovies, fetchSimilarMovies,
@@ -325,7 +325,7 @@ const MovieProvider = ({ children }) => {
 
     GetFavorite,
     totalPage,
-    searchedMovies, fetchSearch,
+    // searchedMovies, fetchSearch,
     language, setLanguage,
     laterList, setLaterlist,
     watchLater, setWatchLater,
