@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback, Dimensions, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'; // Import StyleSheet
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import Carousel from 'react-native-snap-carousel';
 import { image500 } from '../api/moviedb';
 import { Mainstyles, theme } from '../theme';
 import IonIcon from 'react-native-vector-icons/Ionicons';
@@ -10,19 +11,43 @@ const { width, height } = Dimensions.get('window');
 
 export default function TrendingMovies({ title, data }) {
     const navigation = useNavigation();
+    const carouselRef = useRef(null);
 
     const handleClick = (item) => {
         navigation.navigate('Detail', item);
     };
 
+    useEffect(() => {
+        const timer = setInterval(() => {
+            carouselRef.current.snapToNext();
+        }, 3000);
+
+        return () => {
+            clearInterval(timer);
+        };
+    }, []);
+
     return (
         <View style={styles.container}>
             <Text style={styles.titleText}>{title} <Text style={Mainstyles.mainText}>M</Text>ovies</Text>
-            <ScrollView horizontal={true} style={styles.scrollViewContainer}>
+            <Carousel
+                ref={carouselRef}
+                data={data}
+                renderItem={({ item }) => <MovieCard handleClick={handleClick} item={item} />}
+                firstItem={1}
+                loop={true}
+                loopClonesPerSide={data.length} // Set loopClonesPerSide to the length of your data array
+                inactiveSlideScale={0.86}
+                inactiveSlideOpacity={0.60}
+                sliderWidth={width}
+                itemWidth={width * 0.62}
+                slideStyle={{ display: 'flex', alignItems: 'center' }}
+            />
+            {/* <ScrollView horizontal={true} style={styles.scrollViewContainer}>
                 {data.map((item, index) => (
                     <MovieCard key={index} handleClick={handleClick} item={item} />
                 ))}
-            </ScrollView>
+            </ScrollView> */}
         </View>
     );
 }

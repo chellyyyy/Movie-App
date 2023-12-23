@@ -29,7 +29,7 @@ export const image185 = posterPath => posterPath ? 'https://image.tmdb.org/t/p/w
 
 
 // fallback images 
-export const fallbackMoviePoster = 'https://img.myloview.com/stickers/white-laptop-screen-with-hd-video-technology-icon-isolated-on-grey-background-abstract-circle-random-dots-vector-illustration-400-176057922.jpg';
+export const fallbackMoviePoster = 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTMDRdk9cg-m9XBnrj5LWEC_1nNA_Mqwe6jqtB2_9shoCyxq9MG';
 export const fallbackPersonImage = 'https://i.pinimg.com/736x/c9/bc/a5/c9bca57cf02ef46be89630414a89b5f5.jpg';
 
 const apiCall = async (endpoint, params) => {
