@@ -11,7 +11,8 @@ const upcomingMoviesEndpoint = language => `${apiBaseUrl}/movie/upcoming?api_key
 const topRatedMoviesEndpoint = language => `${apiBaseUrl}/movie/top_rated?api_key=${apiKey}&language=${language}`;
 const popularMoviesEndpoint = language => `${apiBaseUrl}/movie/popular?api_key=${apiKey}&language=${language}`;
 const vietNamMoviesEndpoint = language => `${apiBaseUrl}/discover/movie?api_key=${apiKey}&language=${language}&with_origin_country=VN`;
-const searchMoviesEndpoint = language => `${apiBaseUrl}/search/movie?api_key=${apiKey}&language=${language}`;
+const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
+const searchPeopleEndpoint = `${apiBaseUrl}/search/person?api_key=${apiKey}`;
 
 // endpoints with dynamic params
 
@@ -97,6 +98,9 @@ export const fetchPersonMovies = (personId, language) => {
 // search screen apis
 export const searchMovies = (params) => {
     return apiCall(searchMoviesEndpoint, params);
+}
+export const searchPeople = (params) => {
+    return apiCall(searchPeopleEndpoint, params);
 }
 
 
