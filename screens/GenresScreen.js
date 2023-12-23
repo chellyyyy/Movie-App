@@ -18,7 +18,7 @@ const GenreScreen = () => {
     // const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        // configureAxios();
+        configureAxios();
         fetchGenre();
     }, [language]);
 

@@ -37,7 +37,10 @@ const Header = ({ title, hideSearch, onBack }) => {
                 <TouchableOpacity style={styles.iconButton} onPress={() => navigation.goBack()}>
                     <ChevronLeftIcon width={28} height={28} color="white" />
                 </TouchableOpacity>
-                <Text style={styles.title}>{title}</Text>
+                <Text style={styles.title}>
+                    {/* {title} */}
+                    {title.length > 20 ? title.slice(0, 14) + '...' : title}
+                </Text>
             </View>
             {!hideSearch && (
                 <TouchableOpacity onPress={() => navigation.navigate('Search')}>
