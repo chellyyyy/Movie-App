@@ -14,7 +14,11 @@ const ListScreen = ({ route }) => {
     return (
         <View style={styles.container}>
             <Header title={title} />
-            <MoviePreview results={data} />
+            {data.length > 0 ? (
+                <MoviePreview results={data} />
+            ) : (
+                <Text style={styles.text}>{title} is empty</Text>
+            )}
         </View>
     );
 };
@@ -35,14 +39,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 16,
     },
-    title: {
-        color: 'white',
-        fontSize: 30,
-        fontWeight: 'bold',
-    },
     text: {
-        ...StyleSheet,
+        color: 'white',
+        fontSize: 16,
+        textAlign: 'center',
+        marginTop: 30,
     },
+    // text: {
+    //     ...StyleSheet,
+    // },
 });
 
 export default ListScreen;

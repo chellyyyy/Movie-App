@@ -48,19 +48,18 @@ export default function HomeScreen() {
     getTopRatedMovies();
     getPopularMovies();
     getVietNamMovies();
+    setLoading(false);
   },[language]);
 
   const getTrendingMovies = async ()=>{
     const data = await fetchTrendingMovies(language);
     console.log('got trending', data.results.length)
     if(data && data.results) setTrending(data.results);
-    setLoading(false)
   }
   const getNowPlayingMovies = async ()=>{
     const data = await fetchNowPlayingMovies(language);
     console.log('got now playing', data.results.length)
     if(data && data.results) setNowPlaying(data.results);
-    setLoading(false)
   }
   const getUpcomingMovies = async ()=>{
     const data = await fetchUpcomingMovies(language);

@@ -3,7 +3,7 @@ import React, { useCallback, useState, useContext } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
-import { fallbackMoviePoster, image185, searchMovies } from '../api/moviedb';
+import { fallbackMoviePoster, image185, searchMovies, searchPeople } from '../api/moviedb';
 import { debounce } from 'lodash';
 import Loading from '../components/loading';
 import MoviePreview from '../components/moviePreview';
@@ -16,7 +16,7 @@ export default function SearchScreen() {
   const navigation = useNavigation();
   const { language } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState([]);
+  const [resultsMovie, setResultsMovie] = useState([]);
 
   const handleSearch = search => {
     if (search && search.length > 2) {
@@ -28,12 +28,13 @@ export default function SearchScreen() {
         page: '1'
       }).then(data => {
         console.log('got search results');
+        // console.log('got search movies results:', data.results);
         setLoading(false);
-        if (data && data.results) setResults(data.results);
+        if (data && data.results) setResultsMovie(data.results);
       });
     } else {
       setLoading(false);
-      setResults([]);
+      setResultsMovie([]);
     }
   }
 
@@ -58,8 +59,8 @@ export default function SearchScreen() {
       {loading ? (
         <Loading />
       ) :
-        results.length > 0 ? (
-          <MoviePreview results={results} hideResults={'false'} />
+        resultsMovie.length > 0 ? (
+          <MoviePreview results={resultsMovie} hideResults={'false'} />
         ) : (
           <View style={styles.noResultsContainer}>
             <Image

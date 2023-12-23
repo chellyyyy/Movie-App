@@ -192,7 +192,7 @@ const AccountScreen = () => {
                 }}
               />
               <AccordionItem title="History films" icon="film"
-                onPress={() => navigation.navigate("Bookmark", { title: "History Films", data: historyFilms })}
+                onPress={() => navigation.navigate("List", { title: "History Films", data: historyFilms })}
               />
               <AccordionItem title="Favorite Casts" icon="people"
                 onPress={() => navigation.navigate("Casts", { title: "Favorite Casts" })}
