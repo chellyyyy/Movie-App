@@ -1,5 +1,5 @@
 import { View, Text, TextInput, TouchableOpacity, Image, ScrollView, Dimensions, TouchableWithoutFeedback, StyleSheet } from 'react-native';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useContext } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { XMarkIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
@@ -8,11 +8,13 @@ import { debounce } from 'lodash';
 import Loading from '../components/loading';
 import MoviePreview from '../components/moviePreview';
 import { Mainstyles } from '../theme';
+import { AuthContext } from '../AuthContext';
 
 const { width, height } = Dimensions.get('window');
 
 export default function SearchScreen() {
   const navigation = useNavigation();
+  const { language } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
 
@@ -22,7 +24,7 @@ export default function SearchScreen() {
       searchMovies({
         query: search,
         include_adult: false,
-        language: 'en-US',
+        language: language,
         page: '1'
       }).then(data => {
         console.log('got search results');
