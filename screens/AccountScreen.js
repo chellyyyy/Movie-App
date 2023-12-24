@@ -266,19 +266,19 @@ const AccountScreen = () => {
           />
           {isPersonal && (
             <>
-              <AccordionItem title="Watch Later" icon="add"
-                onPress={() => {
-                  getWatchLater(username);
-                  navigation.navigate("List", { title: "Watch Later", data: watchLaterList });
-                  // navigation.navigate("Bookmark", { title: "Watch Later", data: watchLater });
-                }}
-              />
               <AccordionItem title="History films" icon="film"
                 onPress={() => {
                   getHistory(username);
                   getHistory(username);
                   navigation.navigate("List", { title: "History Films", data: historyFilms })
               }}
+              />
+              <AccordionItem title="Watch Later" icon="add"
+                onPress={() => {
+                  getWatchLater(username);
+                  navigation.navigate("List", { title: "Watch Later", data: watchLaterList });
+                  // navigation.navigate("Bookmark", { title: "Watch Later", data: watchLater });
+                }}
               />
               <AccordionItem title="Favorite Casts" icon="people"
                 onPress={() => {
