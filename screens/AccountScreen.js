@@ -68,7 +68,7 @@ const AccountScreen = () => {
   const [isSettings, toggleSettings] = useState(false);
   const [isSupport, toggleSupport] = useState(false);  
   
-  
+  const isVietnamese = language === 'vi';
   
 
   const getInfo = async () => {
@@ -250,40 +250,40 @@ const AccountScreen = () => {
           </View>
           <View style={{ borderRadius: 30, overflow: 'hidden' }}>
             <Button
-              title="Log out"
+              title={isVietnamese ? "Đăng xuất" : "Log out"}
               color={theme.mainColor}
               // onPress={() => Alert.alert('Simple Button pressed')}
               onPress={handleLogout}
             />
           </View>
-          <AccordionItem title="Edit Profile" icon="person" onPress={getInfo} />
-          <AccordionItem title="Change password" icon="lock-closed" onPress={() => navigation.navigate('Password')} />
+          <AccordionItem title={isVietnamese ? "Chỉnh sửa hồ sơ" : "Edit Profile"} icon="person" onPress={getInfo} />
+          <AccordionItem title={isVietnamese ? "Thay đổi mật khẩu" : "Change password"} icon="lock-closed" onPress={() => navigation.navigate('Password')} />
         </View>
 
         <View style={styles.userAccordion}>
-          <AccordionHeader title="Personal list" icon="heart-circle"
+          <AccordionHeader title={isVietnamese ? "Danh sách cá nhân" : "Personal list"} icon="heart-circle"
             onPress={() => togglePersonal(!isPersonal)} isOpen={isPersonal}
           />
           {isPersonal && (
             <>
-              <AccordionItem title="History films" icon="film"
+              <AccordionItem title={isVietnamese ? "Lịch sử xem" : "History films"} icon="film"
                 onPress={() => {
                   getHistory(username);
                   getHistory(username);
-                  navigation.navigate("List", { title: "History Films", data: historyFilms })
+                  navigation.navigate("List", { title: isVietnamese ? "Lịch sử xem" : "History films", data: historyFilms })
               }}
               />
-              <AccordionItem title="Watch Later" icon="add"
+              <AccordionItem title={isVietnamese ? "Xem Sau" : "Watch Later"} icon="add"
                 onPress={() => {
                   getWatchLater(username);
-                  navigation.navigate("List", { title: "Watch Later", data: watchLaterList });
+                  navigation.navigate("List", { title: isVietnamese ? "Xem Sau" : "Watch Later", data: watchLaterList });
                   // navigation.navigate("Bookmark", { title: "Watch Later", data: watchLater });
                 }}
               />
-              <AccordionItem title="Favorite Casts" icon="people"
+              <AccordionItem title={isVietnamese ? "Diễn viên yêu thích" : "Favorite Casts"} icon="people"
                 onPress={() => {
                   getCast(username)
-                  navigation.navigate("List", { title: "Favorite Casts", data: favoriteCast, isCast: true })
+                  navigation.navigate("List", { title: isVietnamese ? "Diễn viên Yêu thích" : "Favorite Casts", data: favoriteCast, isCast: true })
                 }}
                 // onPress={() => navigation.navigate("Cast", { title: "Favorite Casts", cast: cast })}
               />
@@ -292,29 +292,29 @@ const AccountScreen = () => {
         </View>
 
         <View style={styles.userAccordion}>
-          <AccordionHeader title="Settings" icon="settings"
+          <AccordionHeader title={isVietnamese ? "Cài đặt" : "Settings"} icon="settings"
             onPress={() => toggleSettings(!isSettings)} isOpen={isSettings}
           />
           {isSettings && (
             <>
-              <AccordionItem title="Version: 1.0.0" icon="alert-circle" hideIcon={'false'} />
-              <AccordionItem title="languages" icon="globe" onPress={() => navigation.navigate('Languages')} />
-              <AccordionItem title="thumbnail view" icon="images" hideIcon={'false'} />
-              <AccordionItem title="plays in the background" icon="volume-high" hideIcon={'false'} />
+              <AccordionItem title={isVietnamese ? "Phiên bản: 1.0.0" : "Version: 1.0.0"} icon="alert-circle" hideIcon={'false'} />
+              <AccordionItem title={isVietnamese ? "ngôn ngữ" : "languages"} icon="globe" onPress={() => navigation.navigate('Languages')} />
+              <AccordionItem title={isVietnamese ? "xem hình thu nhỏ" : "thumbnail view"} icon="images" hideIcon={'false'} />
+              <AccordionItem title={isVietnamese ? "phát ở chế độ nền" : "plays in the background"} icon="volume-high" hideIcon={'false'} />
             </>
           )}
         </View>
 
         <View style={styles.userAccordion}>
-          <AccordionHeader title="Support" icon="information-circle"
+          <AccordionHeader title={isVietnamese ? "Hỗ trợ" : "Support"} icon="information-circle"
             onPress={() => toggleSupport(!isSupport)} isOpen={isSupport}
           />
           {isSupport && (
             <>
-              <AccordionItem title="Information" icon="document-text" onPress={() => navigation.navigate('Information')} />
-              <AccordionItem title="terms of use" icon="reader" onPress={() => navigation.navigate('Use')} />
-              <AccordionItem title="Privacy Policy" icon="shield-checkmark" onPress={() => navigation.navigate('Privacy')} />
-              <AccordionItem title="Contact" icon="headset" onPress={() => navigation.navigate('Contact')} />
+              <AccordionItem title={isVietnamese ? 'Thông Tin' : 'Information'} icon="document-text" onPress={() => navigation.navigate('Information')} />
+              <AccordionItem title={isVietnamese ? "Điều khoản sử dụng" : "Terms of Use"} icon="reader" onPress={() => navigation.navigate('Use')} />
+              <AccordionItem title={isVietnamese ? "Chính sách quyền riêng tư" : "Privacy Policy"} icon="shield-checkmark" onPress={() => navigation.navigate('Privacy')} />
+              <AccordionItem title={isVietnamese ? 'Liên hệ' : 'Contact'} icon="headset" onPress={() => navigation.navigate('Contact')} />
             </>
           )}
         </View>

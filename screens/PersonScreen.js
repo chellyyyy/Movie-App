@@ -39,6 +39,8 @@ export default function PersonScreen() {
     setLoading(false);
   }, [item, language]);
 
+  const isVietnamese = language === 'vi';
+
   const getPersonDetails = async (id, language) => {
     const data = await fetchPersonDetails(id, language);
     console.log('got person details');
@@ -202,15 +204,15 @@ export default function PersonScreen() {
 
           <View style={styles.infoContainer}>
             <View style={styles.infoItem}>
-              <Text style={styles.subInfoText}>Gender</Text>
-              <Text style={styles.infoText}>{person?.gender === 1 ? 'Female' : 'Male'}</Text>
+              <Text style={styles.subInfoText}>{isVietnamese ? "Giới tính" : "Gender"}</Text>
+              <Text style={styles.infoText}> {person?.gender === 1 ? isVietnamese ? "Nữ" : "Female" : isVietnamese ? "Nam" : "Male"} </Text>
             </View>
             <View style={styles.infoItem}>
-              <Text style={styles.subInfoText}>Birthday</Text>
+              <Text style={styles.subInfoText}>{isVietnamese ? "Ngày sinh" : "Birthday"}</Text>
               <Text style={styles.infoText}>{person?.birthday}</Text>
             </View>
             <View style={styles.infoItem}>
-              <Text style={styles.subInfoText}>Known for</Text>
+              <Text style={styles.subInfoText}>{isVietnamese ? "Nghề nghiệp" : "Known for"}</Text>
               <Text style={styles.infoText}>{person?.known_for_department}</Text>
             </View>
             {/* <View style={styles.infoItem}>
@@ -220,12 +222,12 @@ export default function PersonScreen() {
           </View>
 
           <View style={{ marginVertical: 24, }}>
-            <Text style={styles.biographyText}>Biography</Text>
+            <Text style={styles.biographyText}>{isVietnamese ? "Tiểu sử" : "Biography"}</Text>
             <Text style={styles.biographyContent}>{person?.biography ? person.biography : 'N/A'}</Text>
           </View>
 
           {/* person movies */}
-          {person?.id && personMovies.length > 0 && <MovieList title="Participated in" hideSeeAll data={personMovies} />}
+          {person?.id && personMovies.length > 0 && <MovieList title={isVietnamese ? "Góp mặt trong" : "Participated in Movies"} hideSeeAll data={personMovies} />}
         </View>
       )}
     </ScrollView>

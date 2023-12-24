@@ -12,6 +12,7 @@ const PasswordScreen = () => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const {
+    language,
     username, password,
     isAuthenticated, setIsAuthenticated
   } = useContext(AuthContext)
@@ -55,23 +56,23 @@ const PasswordScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Change Password" hideSearch={true} />
+      <Header title={language === 'vi' ? 'Thay Đổi Mật Khẩu' : 'Change Password'} hideSearch={true} />
       <View style={styles.content}>
-
+      
         <InputPassword
-          title='New Password'
+          title={language === 'vi' ? 'Mật Khẩu Mới' : 'New Password'}
           value={newPassword}
           onChangeText={(text) => setNewPassword(text)}
         />
 
         <InputPassword
-          title='Confirm Password'
+          title={language === 'vi' ? 'Xác Nhận Mật Khẩu' : 'Confirm Password'}
           value={confirmPassword}
           onChangeText={(text) => setConfirmPassword(text)}
         />
 
         <TouchableOpacity style={styles.saveButton} onPress={handleSavePassword}>
-          <Text style={styles.saveButtonText}>Change Password</Text>
+          <Text style={styles.saveButtonText}>{language === 'vi' ? 'Thay Đổi Mật Khẩu' : 'Change Password'}</Text>
         </TouchableOpacity>
       </View>
     </View>

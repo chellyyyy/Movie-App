@@ -1,14 +1,16 @@
 import { View, Text, ScrollView, TouchableOpacity, Image, Dimensions, StyleSheet } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { fallbackPersonImage, image185 } from '../api/moviedb';
+import { AuthContext } from '../AuthContext';
 
 export default function Cast({ cast }) {
   const navigation = useNavigation();
+  const { language } = useContext(AuthContext);
   
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Cast</Text>
+      <Text style={styles.text}>{language === 'vi' ? "Diễn viên" : "Cast"}</Text>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
         {cast &&
           cast.map((person, index) => (

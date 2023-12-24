@@ -29,7 +29,7 @@ export default function TrendingMovies({ title, data }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>{title} <Text style={Mainstyles.mainText}>M</Text>ovies</Text>
+            <Text style={styles.titleText}>{title}</Text>
             <Carousel
                 ref={carouselRef}
                 data={data}
@@ -109,7 +109,8 @@ const styles = StyleSheet.create({
         fontSize: 30,
         fontWeight: 'bold',
         marginLeft: 10,
-        marginBottom: 5
+        marginBottom: 5,
+        textTransform: 'capitalize',
     },
     seeAllText: {
         // color: 'blue',

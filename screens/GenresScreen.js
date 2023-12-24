@@ -42,7 +42,7 @@ const GenreScreen = () => {
 
     return (
         <View style={styles.container}>
-            <HeaderMovit title="Genres" />
+            <HeaderMovit title={language === 'vi' ? "Thể loại" : "Genres"} />
             {loading ? (
                 <Loading />
             ) : (

@@ -24,6 +24,9 @@ export default function HomeScreen() {
   const [loading, setLoading] = useState(true);
   const { language } = useContext(AuthContext);
   const navigation = useNavigation();
+
+  const isVietnamese = language === 'vi';
+
   // const {
   //   loading, language,
   //   page, setPage, totalPage,
@@ -109,14 +112,14 @@ export default function HomeScreen() {
         <Loading />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
-          {trending.length > 0 && <TrendingMovies title="Trending" data={trending} />}
-          {nowPlaying.length > 0 && <MovieList title="Now Playing" data={nowPlaying} />}
-          {upcoming.length > 0 && <MovieList title="Upcoming" data={upcoming} />}
-          {topRated.length > 0 && <MovieList title="Top Rated" data={topRated} />}
-          {popular.length > 0 && <MovieList title="Popular" data={popular} />}
-          {vietNam.length > 0 && <MovieList title="Viet Nam" data={vietNam} />}
-          {japan.length > 0 && <MovieList title="Japan" data={japan} />}
-          {korea.length > 0 && <MovieList title="Korea" data={korea} />}
+          {trending.length > 0 && <TrendingMovies title={isVietnamese ? "Phim thịnh hành" : "Trending Movies"} data={trending} />}
+          {nowPlaying.length > 0 && <MovieList title={isVietnamese ? "Phim Đang chiếu" : "Now Playing Movies"} data={nowPlaying} />}
+          {upcoming.length > 0 && <MovieList title={isVietnamese ? "Phim sắp chiếu" : "Upcoming Movies"} data={upcoming} />}
+          {topRated.length > 0 && <MovieList title={isVietnamese ? "Phim xếp hạng cao" : "Top Rated Movies"} data={topRated} />}
+          {popular.length > 0 && <MovieList title={isVietnamese ? "Phim nổi tiếng" : "Popular Movies"} data={popular} />}
+          {vietNam.length > 0 && <MovieList title={isVietnamese ? "Phim Việt Nam" : "Vietnamese Movies"} data={vietNam} />}
+          {japan.length > 0 && <MovieList title={isVietnamese ? "Phim Nhật" : "Japanese Movies"} data={japan} />}
+          {korea.length > 0 && <MovieList title={isVietnamese ? "Phim Hàn" : "Korean Movies"} data={korea} />}
         </ScrollView>
       )}
     </View>

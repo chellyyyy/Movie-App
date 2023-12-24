@@ -37,12 +37,15 @@ const CastPreviewItem = ({ index, person }) => {
 };
 
 const CastPreview = ({ results, hideResults }) => {
+    const { language } = useContext(AuthContext);
   return (
     <ScrollView
       showsVerticalScrollIndicator={false}
       contentContainerStyle={styles.scrollContainer}>
       {hideResults && (
-        <Text style={styles.resultText}>Results ({results.length})</Text>
+        <Text style={styles.resultText}>
+            {language === 'vi' ? 'Kết quả' : 'Results'} ({results.length})
+        </Text>
       )}
       <View style={styles.resultsContainer}>
         {results.map((item, index) => (

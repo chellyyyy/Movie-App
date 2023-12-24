@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, ScrollView, TouchableWithoutFeedback, Image, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { fallbackMoviePoster, image185, image342, poster342 } from '../api/moviedb';
 import { Mainstyles, theme } from '../theme';
+import { AuthContext } from '../AuthContext';
 
 const { width, height } = Dimensions.get('window');
 
 export default function MovieList({ title, hideSeeAll, data }) {
     const navigation = useNavigation();
+    const { language } = useContext(AuthContext);
+
     const handleSeeAllPress = () => {
         if (!hideSeeAll) {
             navigation.navigate("List", { title, data });
@@ -18,10 +21,12 @@ export default function MovieList({ title, hideSeeAll, data }) {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                <Text style={styles.titleText}>{title} <Text style={Mainstyles.mainText}>M</Text>ovies</Text>
+                <Text style={styles.titleText}>{title}</Text>
                 {!hideSeeAll && (
                     <TouchableOpacity onPress={handleSeeAllPress}>
-                        <Text style={[Mainstyles.text,{fontStyle:'italic', marginRight: 16}]}>See All</Text>
+                        <Text style={[Mainstyles.text,{fontStyle:'italic', marginRight: 16}]}>
+                            {language === 'vi' ? 'Xem thêm' : 'See more'}
+                        </Text>
                     </TouchableOpacity>
                 )}
             </View>
@@ -90,6 +95,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         margin: 16,
+        textTransform: 'capitalize',
     },
     seeAllText: {
         // color: 'blue',

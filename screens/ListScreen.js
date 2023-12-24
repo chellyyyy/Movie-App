@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
@@ -6,12 +6,14 @@ import { useNavigation } from '@react-navigation/native';
 import MoviePreview from '../components/moviePreview';
 import CastPreview from '../components/castPreview';
 import { Header } from '../components/header';
+import { AuthContext } from '../AuthContext';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 const ListScreen = ({ route }) => {
     const { title, data, isCast } = route.params;
     const navigation = useNavigation();
-    // console.log(data)
+    const { language } = useContext(AuthContext);
+
     return (
         <View style={styles.container}>
             <Header title={title} />
@@ -22,7 +24,7 @@ const ListScreen = ({ route }) => {
                     <MoviePreview results={data} />
                 )
             ) : (
-                <Text style={styles.text}>{title} is empty</Text>
+                <Text style={styles.text}>{title} {language === 'vi' ? "đang trống" : "is empty"}</Text>
             )}
         </View>
     );

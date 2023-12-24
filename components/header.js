@@ -38,7 +38,6 @@ const Header = ({ title, hideSearch, onBack }) => {
                     <ChevronLeftIcon width={28} height={28} color="white" />
                 </TouchableOpacity>
                 <Text style={styles.title}>
-                    {/* {title} */}
                     {title.length > 20 ? title.slice(0, 14) + '...' : title}
                 </Text>
             </View>
@@ -70,6 +69,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 30,
         fontWeight: 'bold',
+        textTransform: 'capitalize',
     },
     iconButton: {
         borderRadius: 10,

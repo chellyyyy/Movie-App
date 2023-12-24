@@ -10,9 +10,9 @@ const LanguagesScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Header title="Languages" hideSearch={true} />
+            <Header title={language === 'vi' ? 'Ngôn Ngữ' : 'Languages'} hideSearch={true} />
             <CheckBox
-                title='English'
+                title={language === 'vi' ? 'Tiếng Anh' : 'English'}
                 checkedIcon='dot-circle-o'
                 uncheckedIcon='circle-o'
                 checked={language === 'en'}
@@ -22,7 +22,7 @@ const LanguagesScreen = () => {
                 containerStyle={{ backgroundColor: 'transparent', borderWidth: 0 }}
             />
             <CheckBox
-                title='Vietnamese'
+                title={language === 'vi' ? 'Tiếng Việt' : 'Vietnamese'}
                 checkedIcon='dot-circle-o'
                 uncheckedIcon='circle-o'
                 checked={language === 'vi'}

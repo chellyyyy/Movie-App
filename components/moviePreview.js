@@ -52,7 +52,7 @@ const MoviePreviewItem = ({ item, index }) => {
 
 const MoviePreview = ({ results, hideResults }) => {
     const {
-        loading,
+        loading, language,
         page, setPage, totalPage,
         upcoming, topRated,
         fetchUpcoming, fetchTopRated,
@@ -76,7 +76,9 @@ const MoviePreview = ({ results, hideResults }) => {
             // onEndReachedThreshold={0.1} // Đặt ngưỡng để xác định khi nào cuộc cuộc đến cuối trang
         >
             {hideResults && (
-                <Text style={styles.resultText}>Results ({results.length})</Text>
+                <Text style={styles.resultText}>
+                    {language === 'vi' ? 'Kết quả' : 'Results'} ({results.length})
+                </Text>
             )}
             <View style={styles.resultsContainer}>
                 {

@@ -21,6 +21,8 @@ export default function SearchScreen() {
   const [resultsCast, setResultsCast] = useState([]);
   const [searchType, setSearchType] = useState('movie');
 
+  const isVietnamese = language === 'vi';
+
   const handleSearch = search => {
     if (search && search.length > 2) {
       setLoading(true);
@@ -67,7 +69,7 @@ export default function SearchScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           onChangeText={handleTextDebounce}
-          placeholder="Search Movie/Cast"
+          placeholder={isVietnamese ? "Tìm kiếmm Phim/Diễn viên" : "Search Movie/Cast"}
           placeholderTextColor={'lightgray'}
           style={styles.input}
         />
@@ -82,13 +84,13 @@ export default function SearchScreen() {
           style={[styles.resultItem, searchType === 'movie' && styles.selectedResult]}
           onPress={() => handleSearchTypeChange('movie')}
         >
-          <Text style={styles.resultText}>Movie</Text>
+          <Text style={styles.resultText}>{isVietnamese ? "Phim" : "Movie"}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.resultItem, searchType === 'cast' && styles.selectedResult]}
           onPress={() => handleSearchTypeChange('cast')}
         >
-          <Text style={styles.resultText}>Cast</Text>
+          <Text style={styles.resultText}>{isVietnamese ? "Diễn viên" : "Cast"}</Text>
         </TouchableOpacity>
       </View>
 

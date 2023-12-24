@@ -16,6 +16,7 @@ const ProfileScreen = () => {
 
 
   const {
+    language,
     realName, setRealname,
     user, updateUser,
     username, setUsername,
@@ -78,11 +79,11 @@ const ProfileScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header title="Profile" hideSearch={true} />
+      <Header title={language === 'vi' ? 'Chỉnh Sửa Hồ Sơ' : 'Edit Profile'} hideSearch={true} />
       <View style={styles.content}>
-
+      
         <InputProfile
-          title='Your Name'
+          title={language === 'vi' ? 'Họ & Tên' : 'Your Name'}
           value={realName}
           onChangeText={(text) => setRealname(text)}
         />
@@ -94,19 +95,19 @@ const ProfileScreen = () => {
         />
 
         <InputProfile
-          title='Age'
+          title={language === 'vi' ? 'Tuổi' : 'Age'}
           value={age === null ? ""  : String(age)}
           onChangeText={(text) => setAge(text)}
         />
 
         <InputProfile
-          title='Address'
+          title={language === 'vi' ? 'Đại Chỉ' : 'Address'}
           value={address}
           onChangeText={(text) => setAddress(text)}
         />
 
         <TouchableOpacity style={styles.saveButton} onPress={handleSaveProfile}>
-          <Text style={styles.saveButtonText}>Save Profile</Text>
+          <Text style={styles.saveButtonText}>{language === 'vi' ? 'Lưu Hồ Sơ' : 'Save Profile'}</Text>
         </TouchableOpacity>
       </View>
     </View>

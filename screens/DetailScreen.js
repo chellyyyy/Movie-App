@@ -42,7 +42,9 @@ export default function DetailScreen() {
     favoriteCast, setFavoriteCast
     
     // getWatchLater,
-  } = useContext(AuthContext)
+  } = useContext(AuthContext);
+
+  const isVietnamese = language === 'vi';
 
   useEffect(() => {
     checkMovieInWatchlist(username, item.id);
@@ -408,7 +410,7 @@ export default function DetailScreen() {
                   </Text>
               )}
             <Text style={styles.movieDetails}>
-              {movie?.status} | {movie?.release_date?.split('-')[0] || 'N/A'} | {movie?.runtime} min
+              {movie?.status} | {movie?.release_date?.split('-')[0] || 'N/A'} | {movie?.runtime} {isVietnamese ? "phút" : "min"}
             </Text>
           </View>
         ) : null}
@@ -430,7 +432,7 @@ export default function DetailScreen() {
           style={styles.movieDescriptions}
           onPress={() => toggleDescriptions(!isDescriptions)}
         >
-          <Text style={styles.subTitle}>Descriptions</Text>
+          <Text style={styles.subTitle}>{isVietnamese ? "Mô tả" : "Descriptions"}</Text>
           <IonIcon name={isDescriptions ? 'caret-down' : 'caret-forward'} size={20} color={'white'} />
         </TouchableOpacity>
         {isDescriptions && (
@@ -456,7 +458,7 @@ export default function DetailScreen() {
             }}
           >
             <IonIcon name="play" size={25} color="white" />
-            <Text style={styles.movieButtonText}>Movie</Text>
+            <Text style={styles.movieButtonText}>{isVietnamese ? "Phim" : "Movie"}</Text>
           </TouchableOpacity>
 
           {/* Button "Watch Trailer" */}
@@ -481,7 +483,7 @@ export default function DetailScreen() {
             }} >
               <IonIcon name={isWatchLater ? 'checkmark' : 'add'} size={35} color={'white'} />
             </TouchableOpacity>
-            <Text style={styles.movieDescription}>Later</Text>
+            <Text style={styles.movieDescription}>{isVietnamese ? "Sau" : "Later"}</Text>
           </View>
 
         </View>
@@ -489,7 +491,7 @@ export default function DetailScreen() {
       </View>
 
       {/* similar movies section */}
-      {movie?.id && similarMovies.length > 0 && <MovieList title={'Similar'} hideSeeAll={true} data={similarMovies} />}
+      {movie?.id && similarMovies.length > 0 && <MovieList title={isVietnamese ? "Phim Tương tự" : "Similar Movies"} hideSeeAll={true} data={similarMovies} />}
     </ScrollView>
   );
 }
