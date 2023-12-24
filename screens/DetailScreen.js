@@ -16,13 +16,12 @@ import { AuthContext } from '../AuthContext';
 const topMargin = 20;
 const { width, height } = Dimensions.get('window');
 
-
-
 export default function DetailScreen() {
   const { params: item } = useRoute();
   const navigation = useNavigation();
   const [movie, setMovie] = useState({});
   const [cast, setCast] = useState([]);
+  const [crew, setCrew] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [videoMovies, setVideoMovies] = useState([]);
 
@@ -191,6 +190,9 @@ export default function DetailScreen() {
     console.log('got movie credits');
     if (data && data.cast) {
       setCast(data.cast);
+    }
+    if (data && data.crew) {
+      setCrew(data.crew);
     }
   };
 
@@ -436,7 +438,9 @@ export default function DetailScreen() {
             <Text style={[styles.movieDescription, {marginBottom: 10,}]}>{movie?.overview}</Text>
 
             {/* cast */}
-            {movie?.id && cast.length > 0 && <Cast navigation={navigation} cast={cast} />}
+            {movie?.id && cast.length > 0 && <Cast cast={cast} />}
+            {/* crew */}
+            {/* {movie?.id && crew.length > 0 && <Cast cast={crew} />} */}
           </>
         )}
 

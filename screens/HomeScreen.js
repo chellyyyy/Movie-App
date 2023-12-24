@@ -6,7 +6,7 @@ import TrendingMovies from '../components/trendingMovies';
 import MovieList from '../components/movieList';
 import { HeaderMovit } from '../components/header';
 import { StatusBar } from 'expo-status-bar';
-import { fetchTrendingMovies, fetchNowPlayingMovies, fetchUpcomingMovies, fetchTopRatedMovies, fetchPopularMovies, fetchVietNamMovies } from '../api/moviedb';
+import { fetchTrendingMovies, fetchNowPlayingMovies, fetchUpcomingMovies, fetchTopRatedMovies, fetchPopularMovies, fetchCountryMovies } from '../api/moviedb';
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
@@ -19,6 +19,8 @@ export default function HomeScreen() {
   const [topRated, setTopRated] = useState([]);
   const [popular, setPopular] = useState([]);
   const [vietNam, setVietNam] = useState([]);
+  const [japan, setJapan] = useState([]);
+  const [korea, setKorea] = useState([]);
   const [loading, setLoading] = useState(true);
   const { language } = useContext(AuthContext);
   const navigation = useNavigation();
@@ -48,6 +50,8 @@ export default function HomeScreen() {
     getTopRatedMovies();
     getPopularMovies();
     getVietNamMovies();
+    getJapanMovies();
+    getKoreaMovies();
     setLoading(false);
   },[language]);
 
@@ -77,9 +81,19 @@ export default function HomeScreen() {
     if(data && data.results) setPopular(data.results);
   }
   const getVietNamMovies = async ()=>{
-    const data = await fetchVietNamMovies(language);
+    const data = await fetchCountryMovies(language, 'VN');
     console.log('got Viet Nam', data.results.length)
     if(data && data.results) setVietNam(data.results);
+  }
+  const getJapanMovies = async ()=>{
+    const data = await fetchCountryMovies(language, 'JP');
+    console.log('got Japan', data.results.length)
+    if(data && data.results) setJapan(data.results);
+  }
+  const getKoreaMovies = async ()=>{
+    const data = await fetchCountryMovies(language, 'KP');
+    console.log('got Viet Nam', data.results.length)
+    if(data && data.results) setKorea(data.results);
   }
 
   return (
@@ -95,6 +109,8 @@ export default function HomeScreen() {
           {topRated.length > 0 && <MovieList title="Top Rated" data={topRated} />}
           {popular.length > 0 && <MovieList title="Popular" data={popular} />}
           {vietNam.length > 0 && <MovieList title="Viet Nam" data={vietNam} />}
+          {japan.length > 0 && <MovieList title="Japan" data={japan} />}
+          {korea.length > 0 && <MovieList title="Korea" data={korea} />}
         </ScrollView>
       )}
     </View>

@@ -4,18 +4,23 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
 import MoviePreview from '../components/moviePreview';
+import CastPreview from '../components/castPreview';
 import { Header } from '../components/header';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 const ListScreen = ({ route }) => {
-    const { title, data } = route.params;
+    const { title, data, isCast } = route.params;
     const navigation = useNavigation();
     // console.log(data)
     return (
         <View style={styles.container}>
             <Header title={title} />
             {data.length > 0 ? (
-                <MoviePreview results={data} />
+                isCast ? (
+                    <CastPreview results={data} />
+                ) : (
+                    <MoviePreview results={data} />
+                )
             ) : (
                 <Text style={styles.text}>{title} is empty</Text>
             )}

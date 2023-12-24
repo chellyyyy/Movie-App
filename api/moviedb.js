@@ -10,7 +10,7 @@ const nowplayingMoviesEndpoint = language => `${apiBaseUrl}/movie/now_playing?ap
 const upcomingMoviesEndpoint = language => `${apiBaseUrl}/movie/upcoming?api_key=${apiKey}&language=${language}`;
 const topRatedMoviesEndpoint = language => `${apiBaseUrl}/movie/top_rated?api_key=${apiKey}&language=${language}`;
 const popularMoviesEndpoint = language => `${apiBaseUrl}/movie/popular?api_key=${apiKey}&language=${language}`;
-const vietNamMoviesEndpoint = language => `${apiBaseUrl}/discover/movie?api_key=${apiKey}&language=${language}&with_origin_country=VN`;
+const countryMoviesEndpoint = (language, country) => `${apiBaseUrl}/discover/movie?api_key=${apiKey}&language=${language}&with_origin_country=${country}`;
 const searchMoviesEndpoint = `${apiBaseUrl}/search/movie?api_key=${apiKey}`;
 const searchPeopleEndpoint = `${apiBaseUrl}/search/person?api_key=${apiKey}`;
 
@@ -68,8 +68,8 @@ export const fetchTopRatedMovies = (language) => {
 export const fetchPopularMovies = (language) => {
     return apiCall(popularMoviesEndpoint(language));
 }
-export const fetchVietNamMovies = (language) => {
-    return apiCall(vietNamMoviesEndpoint(language));
+export const fetchCountryMovies = (language, country) => {
+    return apiCall(countryMoviesEndpoint(language, country));
 }
 
 

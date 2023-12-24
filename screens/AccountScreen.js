@@ -283,7 +283,7 @@ const AccountScreen = () => {
               <AccordionItem title="Favorite Casts" icon="people"
                 onPress={() => {
                   getCast(username)
-                  navigation.navigate("Casts", { title: "Favorite Casts", data: favoriteCast })
+                  navigation.navigate("List", { title: "Favorite Casts", data: favoriteCast, isCast: true })
                 }}
                 // onPress={() => navigation.navigate("Cast", { title: "Favorite Casts", cast: cast })}
               />

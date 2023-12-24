@@ -213,10 +213,10 @@ export default function PersonScreen() {
               <Text style={styles.subInfoText}>Known for</Text>
               <Text style={styles.infoText}>{person?.known_for_department}</Text>
             </View>
-            <View style={styles.infoItem}>
+            {/* <View style={styles.infoItem}>
               <Text style={styles.subInfoText}>Popularity</Text>
               <Text style={styles.infoText}>{person?.popularity?.toFixed(2)}%</Text>
-            </View>
+            </View> */}
           </View>
 
           <View style={{ marginVertical: 24, }}>
@@ -297,6 +297,7 @@ const styles = StyleSheet.create({
     borderRadius: 13,
     padding: 13,
     alignItems: 'center',
+    width: 110,
   },
   infoText: {
     fontWeight: '600',

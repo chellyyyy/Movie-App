@@ -165,9 +165,10 @@ const styles = StyleSheet.create({
   },
   resultsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginHorizontal: 16,
     marginBottom: 16,
+    gap: 20,
     // flexWrap: 'wrap',
   },
   resultItem: {
