@@ -43,17 +43,23 @@ export default function HomeScreen() {
   //   }
   // }, [page, language])
 
-  useEffect(()=>{
-    getTrendingMovies();
-    getNowPlayingMovies();
-    getUpcomingMovies();
-    getTopRatedMovies();
-    getPopularMovies();
-    getVietNamMovies();
-    getJapanMovies();
-    getKoreaMovies();
-    setLoading(false);
-  },[language]);
+  useEffect(() => {
+    const fetchData = async () => {
+      await Promise.all([
+        getTrendingMovies(),
+        getNowPlayingMovies(),
+        getUpcomingMovies(),
+        getTopRatedMovies(),
+        getPopularMovies(),
+        getVietNamMovies(),
+        getJapanMovies(),
+        getKoreaMovies(),
+      ]);
+      setLoading(false);
+    };
+  
+    fetchData();
+  }, [language]);
 
   const getTrendingMovies = async ()=>{
     const data = await fetchTrendingMovies(language);
