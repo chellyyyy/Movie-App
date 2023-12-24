@@ -21,7 +21,9 @@ export default function MovieList({ title, hideSeeAll, data }) {
     return (
         <View style={styles.container}>
             <View style={styles.titleContainer}>
-                <Text style={styles.titleText}>{title}</Text>
+            <Text style={styles.titleText}>
+                {title} {language === 'en' && <Text><Text style={Mainstyles.mainText}>M</Text>ovies</Text>}
+            </Text>
                 {!hideSeeAll && (
                     <TouchableOpacity onPress={handleSeeAllPress}>
                         <Text style={[Mainstyles.text,{fontStyle:'italic', marginRight: 16}]}>

@@ -227,7 +227,7 @@ export default function PersonScreen() {
           </View>
 
           {/* person movies */}
-          {person?.id && personMovies.length > 0 && <MovieList title={isVietnamese ? "Góp mặt trong" : "Participated in Movies"} hideSeeAll data={personMovies} />}
+          {person?.id && personMovies.length > 0 && <MovieList title={isVietnamese ? "Góp mặt trong" : "Participated in"} hideSeeAll data={personMovies} />}
         </View>
       )}
     </ScrollView>

@@ -1,16 +1,18 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback, Dimensions, ScrollView, StyleSheet, TouchableOpacity } from 'react-native'; // Import StyleSheet
 import { useNavigation } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Carousel from 'react-native-snap-carousel';
 import { image500 } from '../api/moviedb';
 import { Mainstyles, theme } from '../theme';
+import { AuthContext } from '../AuthContext';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 
 const { width, height } = Dimensions.get('window');
 
 export default function TrendingMovies({ title, data }) {
     const navigation = useNavigation();
+    const { language } = useContext(AuthContext);
     const carouselRef = useRef(null);
 
     const handleClick = (item) => {
@@ -29,7 +31,9 @@ export default function TrendingMovies({ title, data }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>{title}</Text>
+            <Text style={styles.titleText}>
+                {title} {language === 'en' && <Text><Text style={Mainstyles.mainText}>M</Text>ovies</Text>}
+            </Text>
             <Carousel
                 ref={carouselRef}
                 data={data}
