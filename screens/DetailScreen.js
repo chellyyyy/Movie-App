@@ -491,7 +491,7 @@ export default function DetailScreen() {
       </View>
 
       {/* similar movies section */}
-      {movie?.id && similarMovies.length > 0 && <MovieList title={isVietnamese ? "Phim Tương tự" : "Similar"} hideSeeAll={true} data={similarMovies} />}
+      {movie?.id && similarMovies.length > 0 && <MovieList title={isVietnamese ? "Tương tự" : "Similar"} hideSeeAll={true} data={similarMovies} />}
     </ScrollView>
   );
 }

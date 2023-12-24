@@ -31,9 +31,11 @@ export default function TrendingMovies({ title, data }) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.titleText}>
-                {title} {language === 'en' && <Text><Text style={Mainstyles.mainText}>M</Text>ovies</Text>}
-            </Text>
+            {language === 'vi' ? 
+                <Text style={styles.titleText}>Phi<Text style={Mainstyles.mainText}>M</Text> {title}</Text>
+            :
+                <Text style={styles.titleText}>{title} <Text style={Mainstyles.mainText}>M</Text>ovies</Text>
+            }
             <Carousel
                 ref={carouselRef}
                 data={data}

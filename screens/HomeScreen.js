@@ -112,14 +112,14 @@ export default function HomeScreen() {
         <Loading />
       ) : (
         <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContainer}>
-          {trending.length > 0 && <TrendingMovies title={isVietnamese ? "Phim thịnh hành" : "Trending"} data={trending} />}
-          {nowPlaying.length > 0 && <MovieList title={isVietnamese ? "Phim Đang chiếu" : "Now Playing"} data={nowPlaying} />}
-          {upcoming.length > 0 && <MovieList title={isVietnamese ? "Phim sắp chiếu" : "Upcoming"} data={upcoming} />}
-          {topRated.length > 0 && <MovieList title={isVietnamese ? "Phim xếp hạng cao" : "Top Rated"} data={topRated} />}
-          {popular.length > 0 && <MovieList title={isVietnamese ? "Phim nổi tiếng" : "Popular"} data={popular} />}
-          {vietNam.length > 0 && <MovieList title={isVietnamese ? "Phim Việt Nam" : "Vietnamese"} data={vietNam} />}
-          {japan.length > 0 && <MovieList title={isVietnamese ? "Phim Nhật" : "Japanese"} data={japan} />}
-          {korea.length > 0 && <MovieList title={isVietnamese ? "Phim Hàn" : "Korean"} data={korea} />}
+          {trending.length > 0 && <TrendingMovies title={isVietnamese ? "thịnh hành" : "Trending"} data={trending} />}
+          {nowPlaying.length > 0 && <MovieList title={isVietnamese ? "Đang chiếu" : "Now Playing"} data={nowPlaying} />}
+          {upcoming.length > 0 && <MovieList title={isVietnamese ? "sắp chiếu" : "Upcoming"} data={upcoming} />}
+          {topRated.length > 0 && <MovieList title={isVietnamese ? "xếp hạng cao" : "Top Rated"} data={topRated} />}
+          {popular.length > 0 && <MovieList title={isVietnamese ? "nổi tiếng" : "Popular"} data={popular} />}
+          {vietNam.length > 0 && <MovieList title={isVietnamese ? "Việt Nam" : "Vietnamese"} data={vietNam} />}
+          {japan.length > 0 && <MovieList title={isVietnamese ? "Nhật" : "Japanese"} data={japan} />}
+          {korea.length > 0 && <MovieList title={isVietnamese ? "Hàn" : "Korean"} data={korea} />}
         </ScrollView>
       )}
     </View>
