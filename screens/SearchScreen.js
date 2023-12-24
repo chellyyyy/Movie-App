@@ -69,7 +69,7 @@ export default function SearchScreen() {
       <View style={styles.inputContainer}>
         <TextInput
           onChangeText={handleTextDebounce}
-          placeholder={isVietnamese ? "Tìm kiếmm Phim/Diễn viên" : "Search Movie/Cast"}
+          placeholder={isVietnamese ? "Tìm kiếm Phim/Diễn viên" : "Search Movie/Cast"}
           placeholderTextColor={'lightgray'}
           style={styles.input}
         />

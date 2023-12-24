@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 10,
         marginBottom: 5,
-        textTransform: 'capitalize',
+        textTransform: 'uppercase',
     },
     seeAllText: {
         // color: 'blue',
