@@ -14,7 +14,8 @@ const HeaderMovit = ({ title, hideSearch }) => {
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.header}>
                 <Text style={styles.title}>
-                    {title} <Text style={Mainstyles.mainText}>M</Text>ovit
+                    <Text style={{textTransform: 'capitalize'}}>{title} </Text>
+                    <Text style={Mainstyles.mainText}>M</Text>ovit
                 </Text>
             </View>
             {!hideSearch && (
@@ -37,7 +38,7 @@ const Header = ({ title, hideSearch, onBack }) => {
                 <TouchableOpacity style={styles.iconButton} onPress={() => navigation.goBack()}>
                     <ChevronLeftIcon width={28} height={28} color="white" />
                 </TouchableOpacity>
-                <Text style={styles.title}>
+                <Text style={[styles.title, {textTransform: 'capitalize'}]}>
                     {title.length > 20 ? title.slice(0, 14) + '...' : title}
                 </Text>
             </View>
@@ -69,7 +70,6 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 30,
         fontWeight: 'bold',
-        textTransform: 'capitalize',
     },
     iconButton: {
         borderRadius: 10,

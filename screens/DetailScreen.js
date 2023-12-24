@@ -458,7 +458,7 @@ export default function DetailScreen() {
             }}
           >
             <IonIcon name="play" size={25} color="white" />
-            <Text style={styles.movieButtonText}>{isVietnamese ? "Phim" : "Movie"}</Text>
+            <Text style={styles.movieButtonText}>{isVietnamese ? "Xem" : "Movie"}</Text>
           </TouchableOpacity>
 
           {/* Button "Watch Trailer" */}
