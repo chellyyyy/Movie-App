@@ -3,6 +3,7 @@ import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Icons from 'react-native-vector-icons/Ionicons';
+import { BlurView } from 'expo-blur';
 import { theme } from '../theme';
 import { AuthContext } from '../AuthContext';
 
@@ -47,14 +48,9 @@ const BottomTab = () => {
             screenOptions={{
                 tabBarActiveBackgroundColor: theme.mainColor,
                 tabBarInactiveBackgroundColor: theme.background,
-                tabBarLabelStyle: { fontSize: 13 },
-            }}
-            tabBarOptions={{
-                activeTintColor: theme.background,
-                inactiveTintColor: 'white',
-                style: {
-                    backgroundColor: theme.background,
-                },
+                tabBarActiveTintColor: theme.background,
+                tabBarInactiveTintColor: 'white',
+                tabBarLabelStyle: { fontSize: 13, fontWeight: 'bold' },
             }}
         >
             <Bottom.Screen name="Home" component={HomeScreen}

@@ -29,7 +29,7 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen name="Home" component={BottomTab} options={{ headerShown: false }} />
+            <Stack.Screen name="HomeBottomTab" component={BottomTab} options={{ headerShown: false }} />
             <Stack.Screen name="List" component={ListScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Detail" component={DetailScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Player" component={PlayerScreen} options={{ headerShown: false }} />
