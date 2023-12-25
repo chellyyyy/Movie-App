@@ -11,6 +11,10 @@ const LoginScreen = ({ navigation }) => {
     username, setUsername,
     password, setPassword,
     handleLogin,
+    realName, setRealname,
+    email, setEmail,
+    address, setAddress,
+
   } = useContext(AuthContext);
 
   // const [username, setUsername] = useState('');
@@ -41,6 +45,8 @@ const LoginScreen = ({ navigation }) => {
   //     console.error('Error:', error);
   //   }
   // };
+
+  
 
   return (
     <View style={{ flex: 1 }}>
