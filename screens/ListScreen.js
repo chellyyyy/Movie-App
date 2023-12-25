@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeftIcon, MagnifyingGlassIcon } from 'react-native-heroicons/outline';
 import { useNavigation } from '@react-navigation/native';
@@ -12,7 +12,32 @@ import { Mainstyles, Buttonstyles, theme } from '../theme';
 const ListScreen = ({ route }) => {
     const { title, data, isCast, isClear } = route.params;
     const navigation = useNavigation();
-    const { language } = useContext(AuthContext);
+    const { language, username } = useContext(AuthContext);
+
+    const del_history = async (username) => {
+        try {
+            const response = await fetch('http://10.0.2.2:5000/api/delete_history', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username }),
+                credentials: 'include',
+            });
+    
+            if (!response.ok) {
+                console.error('Error deleting history. Server responded with:', response.status);
+                return { success: false, message: 'Error deleting history' };
+            }
+    
+            console.log('History deleted successfully');
+            return { success: true, message: 'History deleted successfully' };
+        } catch (error) {
+            console.error('Error deleting history:', error.message);
+            return { success: false, message: 'Error deleting history' };
+        }
+    };
+    
 
     return (
         <View style={styles.container}>
@@ -21,7 +46,21 @@ const ListScreen = ({ route }) => {
                 <>
                     {isClear && (
                         <View style={{alignItems: 'flex-end'}} >
-                            <TouchableOpacity onPress={() => alert('Simple Button pressed')} >
+                            <TouchableOpacity onPress={() => {
+                                del_history(username)
+
+                                Alert.alert(
+                                    'Success',
+                                    'History deleted successfully!',
+                                    [
+                                      {
+                                        text: 'OK',
+                                        onPress: () => navigation.navigate('Home'),
+                                      },
+                                    ],
+                                    { cancelable: false }
+                                  );
+                            }} >
                                 <Text style={styles.ClearButton}>{language === 'vi' ? "XÓA" : "CLEAR"}</Text>
                             </TouchableOpacity>
                         </View>

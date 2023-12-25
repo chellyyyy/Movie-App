@@ -22,7 +22,12 @@ export default function HomeScreen() {
   const [japan, setJapan] = useState([]);
   const [korea, setKorea] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { language } = useContext(AuthContext);
+  const { language, username,
+          realName, setRealname,
+          email, setEmail,
+          address, setAddress,
+          age, setAge,      
+  } = useContext(AuthContext);
   const navigation = useNavigation();
 
   const isVietnamese = language === 'vi';
@@ -49,6 +54,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchData = async () => {
       await Promise.all([
+        getInfo(),
         getTrendingMovies(),
         getNowPlayingMovies(),
         getUpcomingMovies(),
@@ -104,6 +110,31 @@ export default function HomeScreen() {
     console.log('got Viet Nam', data.results.length)
     if(data && data.results) setKorea(data.results);
   }
+  const getInfo = async () => {
+    try {
+      const response = await fetch('http://10.0.2.2:5000/api/get_user_info', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username }),
+      });
+  
+      const data = await response.json();
+      
+      setEmail(data.email)
+      setAge(data.age)
+      setAddress(data.address)
+      setRealname(data.realname)
+
+      console.log('User Info:', data);
+  
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    console.log('ok')
+    // navigation.navigate('Profile')
+  };
 
   return (
     <View style={styles.container}>

@@ -349,7 +349,30 @@ def get_history():
             return jsonify({'message': 'User not found'}), 404
     else:
         return jsonify({'message': 'Username not provided'}), 400
+
+@app.route('/api/delete_history', methods=['POST'])
+def delete_history():
+    data = request.get_json()
+    username = data.get('username')
     
+    if username:
+        user = get_user_by_username(username)
+        if user:
+            watch_history_entries = WatchHistory.query.filter_by(user_id=user.id).all()
+
+            if watch_history_entries:
+                for entry in watch_history_entries:
+                    db.session.delete(entry)
+
+                db.session.commit()
+                return jsonify({'message': 'History deleted'})
+            else:
+                return jsonify({'message': 'Empty history for the user'}), 404
+        else:
+            return jsonify({'message': 'User not found'}), 404
+    else:
+        return jsonify({'message': 'Username not provided'}), 400
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

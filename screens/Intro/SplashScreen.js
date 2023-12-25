@@ -25,7 +25,7 @@ const SplashScreen = () => {
 
     // Sử dụng setTimeout để chuyển hướng sau 3 giây
     const timeoutId = setTimeout(() => {
-      navigation.navigate('Introducing');
+      navigation.navigate('Slider');
     }, 3000);
 
     return () => {
