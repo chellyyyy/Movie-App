@@ -28,7 +28,7 @@ export default function MovieList({ title, hideSeeAll, data }) {
             }
                 {!hideSeeAll && (
                     <TouchableOpacity onPress={handleSeeAllPress}>
-                        <Text style={[Mainstyles.text,{fontStyle:'italic', marginRight: 16}]}>
+                        <Text style={[Mainstyles.text,{fontStyle:'italic', textTransform: 'capitalize', marginRight: 16}]}>
                             {language === 'vi' ? 'Xem thêm' : 'See more'}
                         </Text>
                     </TouchableOpacity>

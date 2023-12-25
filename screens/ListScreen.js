@@ -10,7 +10,7 @@ import { AuthContext } from '../AuthContext';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 const ListScreen = ({ route }) => {
-    const { title, data, isCast } = route.params;
+    const { title, data, isCast, isClear } = route.params;
     const navigation = useNavigation();
     const { language } = useContext(AuthContext);
 
@@ -18,11 +18,20 @@ const ListScreen = ({ route }) => {
         <View style={styles.container}>
             <Header title={title} />
             {data.length > 0 ? (
-                isCast ? (
-                    <CastPreview results={data} />
-                ) : (
-                    <MoviePreview results={data} />
-                )
+                <>
+                    {isClear && (
+                        <View style={{alignItems: 'flex-end'}} >
+                            <TouchableOpacity onPress={() => alert('Simple Button pressed')} >
+                                <Text style={styles.ClearButton}>{language === 'vi' ? "XÓA" : "CLEAR"}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+                    {isCast ? (
+                        <CastPreview results={data} />
+                    ) : (
+                        <MoviePreview results={data} />
+                    )}
+                </>
             ) : (
                 <Text style={styles.text}>{title} {language === 'vi' ? "đang trống" : "is empty"}</Text>
             )}
@@ -55,6 +64,16 @@ const styles = StyleSheet.create({
     // text: {
     //     ...StyleSheet,
     // },
+    ClearButton: {
+        fontSize: 20,
+        // fontWeight: 'bold',
+        marginHorizontal: 15,
+        marginVertical: 10,
+        color: 'white',
+        // textDecorationLine: 'underline',
+        fontStyle: 'italic',
+        textTransform: 'capitalize',
+    },
 });
 
 export default ListScreen;

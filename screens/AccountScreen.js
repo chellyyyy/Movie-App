@@ -270,7 +270,7 @@ const AccountScreen = () => {
                 onPress={() => {
                   getHistory(username);
                   getHistory(username);
-                  navigation.navigate("List", { title: isVietnamese ? "Lịch sử xem" : "History films", data: historyFilms })
+                  navigation.navigate("List", { title: isVietnamese ? "Lịch sử xem" : "History films", data: historyFilms, isClear: true })
               }}
               />
               <AccordionItem title={isVietnamese ? "Xem Sau" : "Watch Later"} icon="add"
