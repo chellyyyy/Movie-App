@@ -10,7 +10,7 @@ import { AuthContext } from '../AuthContext';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 const ListScreen = ({ route }) => {
-    const { title, data, isCast, isClear } = route.params;
+    const { title, data, isCast, isClear, hideSearch } = route.params;
     const isVietnamese = language === 'vi';
     const navigation = useNavigation();
     const { language, username } = useContext(AuthContext);
@@ -42,7 +42,7 @@ const ListScreen = ({ route }) => {
 
     return (
         <View style={styles.container}>
-            <Header title={title} />
+            <Header title={title} hideSearch={hideSearch} />
             {data.length > 0 ? (
                 <>
                     {isClear && (

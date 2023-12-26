@@ -270,20 +270,20 @@ const AccountScreen = () => {
                 onPress={() => {
                   getHistory(username);
                   getHistory(username);
-                  navigation.navigate("List", { title: isVietnamese ? "Lịch sử xem" : "History films", data: historyFilms, isClear: true })
+                  navigation.navigate("List", { title: isVietnamese ? "Lịch sử xem" : "History films", data: historyFilms, isClear: true, hideSearch: true })
               }}
               />
               <AccordionItem title={isVietnamese ? "Xem Sau" : "Watch Later"} icon="add"
                 onPress={() => {
                   getWatchLater(username);
-                  navigation.navigate("List", { title: isVietnamese ? "Xem Sau" : "Watch Later", data: watchLaterList });
+                  navigation.navigate("List", { title: isVietnamese ? "Xem Sau" : "Watch Later", data: watchLaterList, hideSearch: true });
                   // navigation.navigate("Bookmark", { title: "Watch Later", data: watchLater });
                 }}
               />
               <AccordionItem title={isVietnamese ? "Diễn viên yêu thích" : "Favorite Casts"} icon="people"
                 onPress={() => {
                   getCast(username)
-                  navigation.navigate("List", { title: isVietnamese ? "Diễn viên Yêu thích" : "Favorite Casts", data: favoriteCast, isCast: true })
+                  navigation.navigate("List", { title: isVietnamese ? "Diễn viên Yêu thích" : "Favorite Casts", data: favoriteCast, isCast: true, hideSearch: true })
                 }}
                 // onPress={() => navigation.navigate("Cast", { title: "Favorite Casts", cast: cast })}
               />

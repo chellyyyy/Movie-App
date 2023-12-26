@@ -27,7 +27,7 @@ const HeaderMovit = ({ title, hideSearch }) => {
     );
 };
 
-const Header = ({ title, hideSearch, onBack }) => {
+const Header = ({ title, hideSearch }) => {
     const navigation = useNavigation();
     const {
         getWatchLater, username
