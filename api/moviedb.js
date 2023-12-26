@@ -21,6 +21,7 @@ const movieDetailsEndpoint = (id, language) => `${apiBaseUrl}/movie/${id}?api_ke
 const movieCreditsEndpoint = (id, language) => `${apiBaseUrl}/movie/${id}/credits?api_key=${apiKey}&language=${language}`;
 const similarMoviesEndpoint = (id, language) => `${apiBaseUrl}/movie/${id}/similar?api_key=${apiKey}&language=${language}`;
 const videoMoviesEndpoint = (id, language) => `${apiBaseUrl}/movie/${id}/videos?api_key=${apiKey}&language=${language}`;
+const reviewsMoviesEndpoint = (id, language, page) => `${apiBaseUrl}/movie/${id}/reviews?api_key=${apiKey}&language=${language}&page=${page}`;
 
 // person
 const personDetailsEndpoint = (id, language) => `${apiBaseUrl}/person/${id}?api_key=${apiKey}&language=${language}`;
@@ -85,6 +86,9 @@ export const fetchSimilarMovies = (movieId, language) => {
 }
 export const fetchVideoMovies = (movieId, language) => {
     return apiCall(videoMoviesEndpoint(movieId, language));
+}
+export const fetchReviewsMovies = (movieId, language, page) => {
+    return apiCall(reviewsMoviesEndpoint(movieId, language, page));
 }
 
 // person screen apis

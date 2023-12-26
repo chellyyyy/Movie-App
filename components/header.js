@@ -39,7 +39,7 @@ const Header = ({ title, hideSearch }) => {
                     <ChevronLeftIcon width={28} height={28} color="white" />
                 </TouchableOpacity>
                 <Text style={[styles.title, {textTransform: 'capitalize'}]}>
-                    {title.length > 20 ? title.slice(0, 14) + '...' : title}
+                    {title && title.length > 20 ? title.slice(0, 14) + '...' : title}
                 </Text>
             </View>
             {!hideSearch && (
