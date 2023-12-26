@@ -58,6 +58,26 @@ export default function DetailScreen() {
     setLoading(false);
   }, [item, language]);
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const results = await Promise.all([
+  //         checkMovieInWatchlist(username, item.id),
+  //         getMovieDetials(item.id, language),
+  //         getMovieCredits(item.id, language),
+  //         getSimilarMovies(item.id, language),
+  //         getVideoMovies(item.id, language),
+  //       ]);
+  //       const [checkMovieResult, movieDetailsResult, movieCreditsResult, similarMoviesResult, videoMoviesResult] = results;  
+  //       setLoading(false);
+  //     } catch (error) {
+  //       console.error('An error occurred:', error);
+  //     }
+  //   };
+  
+  //   fetchData();
+  // }, [item, language]);  
+
   
   // const fetchData = async () => {
   //   try {
