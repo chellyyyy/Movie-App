@@ -11,6 +11,7 @@ import { Mainstyles, Buttonstyles, theme } from '../theme';
 
 const ListScreen = ({ route }) => {
     const { title, data, isCast, isClear } = route.params;
+    const isVietnamese = language === 'vi';
     const navigation = useNavigation();
     const { language, username } = useContext(AuthContext);
 
@@ -47,21 +48,50 @@ const ListScreen = ({ route }) => {
                     {isClear && (
                         <View style={{alignItems: 'flex-end'}} >
                             <TouchableOpacity onPress={() => {
-                                del_history(username)
-
                                 Alert.alert(
-                                    'Success',
-                                    'History deleted successfully!',
+                                    isVietnamese ? "Xác Nhận" : "Confirmation",
+                                    isVietnamese ? 'Bạn có chắc chắn muốn xóa lịch sử?' : 'Are you sure you want to delete the history?',
                                     [
-                                      {
-                                        text: 'OK',
-                                        onPress: () => navigation.navigate('Home'),
-                                      },
+                                        {
+                                            text: isVietnamese ? 'Hủy' : 'Cancel',
+                                            style: 'cancel',
+                                        },
+                                        {
+                                            text: 'OK',
+                                            onPress: async () => {
+                                                const result = await del_history(username);
+
+                                                if (result.success) {
+                                                    Alert.alert(
+                                                        isVietnamese ? 'Thành Công' : 'Success',
+                                                        isVietnamese ? 'Xóa lịch sử thành công, xem thêm phim nào!' : 'History deleted successfully, watch more movies!',
+                                                        [
+                                                            {
+                                                                text: 'OK',
+                                                                onPress: () => navigation.navigate('Home'),
+                                                            },
+                                                        ],
+                                                        { cancelable: false }
+                                                    );
+                                                } else {
+                                                    Alert.alert(
+                                                        isVietnamese ? 'Lỗi' : 'Error',
+                                                        isVietnamese ? 'Lỗi khi xóa lịch sử. Vui lòng thử lại.' : 'Error deleting history. Please try again.',
+                                                        [
+                                                            {
+                                                                text: 'OK',
+                                                            },
+                                                        ],
+                                                        { cancelable: false }
+                                                    );
+                                                }
+                                            },
+                                        },
                                     ],
                                     { cancelable: false }
-                                  );
-                            }} >
-                                <Text style={styles.ClearButton}>{language === 'vi' ? "XÓA" : "CLEAR"}</Text>
+                                );
+                            }}>
+                                <Text style={styles.ClearButton}>{isVietnamese ? "XÓA" : "CLEAR"}</Text>
                             </TouchableOpacity>
                         </View>
                     )}
