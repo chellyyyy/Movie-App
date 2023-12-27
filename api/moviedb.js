@@ -159,6 +159,6 @@ export const getSuperembedUrl = (tmdbID) => {
 export const get2embedUrl = (tmdbID) => {
     return `https://www.2embed.cc/embed/${tmdbID}`
 }
-export const getYoutubedUrl = (tmdbID) => {
+export const getYoutubeUrl = (tmdbID) => {
     return `https://www.youtube.com/embed/${tmdbID}`
 }

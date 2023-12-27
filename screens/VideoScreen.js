@@ -8,24 +8,11 @@ import { MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { Mainstyles, Buttonstyles, theme } from '../theme';
 import { Header } from '../components/header';
 import { AuthContext } from '../AuthContext';
-import { getYoutubedUrl, getSmashystreamUrl, getSuperembedUrl, get2embedUrl, fetchMovieDetails, fetchReviewsMovies, fallbackPersonImage, image185 } from '../api/moviedb';
+import { getYoutubeUrl, getSmashystreamUrl, getSuperembedUrl, get2embedUrl, fetchMovieDetails, fetchReviewsMovies, fallbackPersonImage, image185, fetchVideoMovies } from '../api/moviedb';
 
 const { width, height } = Dimensions.get('window');
 
-const GoBack = () => {
-  const navigation = useNavigation();
-
-  return (
-    <TouchableOpacity
-      style={styles.buttonBack}
-      onPress={() => navigation.goBack()}
-    >
-      <ChevronLeftIcon width={28} height={28} color="white" />
-    </TouchableOpacity>
-  );
-};
-
-const PlayerScreen = () => {
+const VideoScreen = () => {
   const { params } = useRoute();
   const { language } = useContext(AuthContext);
   const isVietnamese = language === 'vi';
@@ -74,8 +61,8 @@ const PlayerScreen = () => {
       <View style={styles.reviewHeader}>
         <Image source={{ uri: image185(item.author_details.avatar_path) || fallbackPersonImage }} style={styles.avatar} />
         <Text style={styles.reviewAuthor}>{item.author}</Text>
-        <Text style={styles.reviewRating}>{item.author_details.rating}⭐</Text>
-        {/* <Text style={styles.reviewTime}>{item.created_at}</Text> */}
+        {/* <Text style={styles.reviewRating}>{item.author_details.rating}⭐</Text> */}
+        <Text style={styles.reviewTime}>{item.created_at}</Text>
       </View>
       <Text style={styles.reviewText}>{item.content}</Text>
     </View>
@@ -131,26 +118,13 @@ const PlayerScreen = () => {
       
       {/* Reviews */}
       <View style={styles.reviewsContainer}>
-        <Text style={styles.reviewTitle}>{isVietnamese ? "Đánh giá" : "Reviews"} ({totalReviews})</Text>
+        <Text style={styles.reviewTitle}>{isVietnamese ? "Bình luận" : "Comments"} ({totalReviews})</Text>
         <FlatList
           data={reviews}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderReviewItem}
         />
       </View>
-    </View>
-  );
-};
-
-const TrailerScreen = () => {
-  const { params } = useRoute();
-
-  return (
-    <View style={styles.container}>
-      <GoBack />
-      
-      {/* Video Player */}
-      <WebView source={{ uri: getYoutubedUrl(params.id) }} style={styles.webView} />
     </View>
   );
 };
@@ -242,7 +216,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   reviewTime: {
-    color: 'white',
+    color: theme.grayColor,
     fontSize: 16,
   },
   reviewText: {
@@ -256,4 +230,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export { PlayerScreen, TrailerScreen };
+export default VideoScreen;

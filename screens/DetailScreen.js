@@ -21,7 +21,6 @@ export default function DetailScreen() {
   const navigation = useNavigation();
   const [movie, setMovie] = useState({});
   const [cast, setCast] = useState([]);
-  const [crew, setCrew] = useState([]);
   const [similarMovies, setSimilarMovies] = useState([]);
   const [videoMovies, setVideoMovies] = useState([]);
 
@@ -212,9 +211,6 @@ export default function DetailScreen() {
     console.log('got movie credits');
     if (data && data.cast) {
       setCast(data.cast);
-    }
-    if (data && data.crew) {
-      setCrew(data.crew);
     }
   };
 
@@ -486,7 +482,7 @@ export default function DetailScreen() {
             <TouchableOpacity
               style={styles.movieButton}
               // onPress={() => checkMovieInWatchlist(username, movie.id)}
-              onPress={() => navigation.navigate("Trailer", { id: videoMovies[0].key })}
+              onPress={() => navigation.navigate("Trailer", { id: movie.id })}
             >
               <IonIcon name="film-outline" size={25} color="white" />
               <Text style={styles.movieButtonText}>Trailer</Text>
