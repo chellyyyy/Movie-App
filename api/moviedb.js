@@ -53,6 +53,10 @@ const apiCall = async (endpoint, params) => {
     }
 }
 
+  
+
+
+
 // home screen apis
 export const fetchTrendingMovies = (language) => {
     return apiCall(trendingMoviesEndpoint(language));
@@ -60,9 +64,33 @@ export const fetchTrendingMovies = (language) => {
 export const fetchNowPlayingMovies = (language) => {
     return apiCall(nowplayingMoviesEndpoint(language));
 }
-export const fetchUpcomingMovies = (language) => {
-    return apiCall(upcomingMoviesEndpoint(language));
-}
+export const fetchUpcomingMovies = async (page = 1, language = language) => {
+    const params = {
+        page,
+        api_key: apiKey,
+    };
+
+    try {
+        let response = await apiCall(upcomingMoviesEndpoint(language), params)
+        while (response && response.total_pages > page && response.results) {
+            const nextPage = await apiCall(upcomingMoviesEndpoint(language), {
+                ...params,
+                page: page + 1,
+            });
+            response.results = response.results.concat(nextPage.results);
+            page++;
+            // Giới hạn số page ở đây, nếu ko giới hạn thì nó sẽ
+            // fetch tất cả data nên sẽ tốn rất nhiều thời gian
+            if (page >= 10) {
+                break;
+            }
+        }
+        return response;
+    } catch (error) {
+        console.log('error: ', error);
+        return {};
+    }
+};
 export const fetchTopRatedMovies = (language) => {
     return apiCall(topRatedMoviesEndpoint(language));
 }

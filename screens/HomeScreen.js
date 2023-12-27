@@ -80,7 +80,19 @@ export default function HomeScreen() {
     console.log('got now playing', data.results.length)
     if(data && data.results) setNowPlaying(data.results);
   }
-  const getUpcomingMovies = async ()=>{
+  //test area
+  const getUpcomingMovies = async () => {
+    try {
+      const data = await fetchUpcomingMovies();
+      console.log('Got Upcoming Movies');
+      if (data && data.results) setUpcoming(data.results);
+    } catch (error) {
+      console.error('Error fetching upcoming movies:', error);
+    }
+  };
+  //===========================
+  
+  const getUpcomingMovies2 = async ()=>{
     const data = await fetchUpcomingMovies(language);
     console.log('got upcoming', data.results.length)
     if(data && data.results) setUpcoming(data.results);
