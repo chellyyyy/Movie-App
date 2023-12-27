@@ -266,11 +266,11 @@ const AccountScreen = () => {
           />
           {isPersonal && (
             <>
-              <AccordionItem title={isVietnamese ? "Lịch sử xem" : "History films"} icon="film"
+              <AccordionItem title={isVietnamese ? "Lịch sử xem" : "View History"} icon="film"
                 onPress={() => {
                   getHistory(username);
                   getHistory(username);
-                  navigation.navigate("List", { title: isVietnamese ? "Lịch sử xem" : "History films", data: historyFilms, isClear: true, hideSearch: true })
+                  navigation.navigate("List", { title: isVietnamese ? "Lịch sử xem" : "View History", data: historyFilms, isClear: true, hideSearch: true })
               }}
               />
               <AccordionItem title={isVietnamese ? "Xem Sau" : "Watch Later"} icon="add"

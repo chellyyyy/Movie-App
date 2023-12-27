@@ -147,7 +147,7 @@ export default function HomeScreen() {
           {nowPlaying.length > 0 && <MovieList title={isVietnamese ? "Đang chiếu" : "Now Playing"} data={nowPlaying} />}
           {upcoming.length > 0 && <MovieList title={isVietnamese ? "sắp chiếu" : "Upcoming"} data={upcoming} />}
           {topRated.length > 0 && <MovieList title={isVietnamese ? "xếp hạng cao" : "Top Rated"} data={topRated} />}
-          {popular.length > 0 && <MovieList title={isVietnamese ? "nổi tiếng" : "Popular"} data={popular} />}
+          {popular.length > 0 && <MovieList title={isVietnamese ? "phổ biến" : "Popular"} data={popular} />}
           {vietNam.length > 0 && <MovieList title={isVietnamese ? "Việt Nam" : "Vietnamese"} data={vietNam} />}
           {japan.length > 0 && <MovieList title={isVietnamese ? "Nhật" : "Japanese"} data={japan} />}
           {korea.length > 0 && <MovieList title={isVietnamese ? "Hàn" : "Korean"} data={korea} />}
