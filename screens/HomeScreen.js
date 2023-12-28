@@ -80,19 +80,7 @@ export default function HomeScreen() {
     console.log('got now playing', data.results.length)
     if(data && data.results) setNowPlaying(data.results);
   }
-  //test area
-  const getUpcomingMovies = async () => {
-    try {
-      const data = await fetchUpcomingMovies();
-      console.log('Got Upcoming Movies');
-      if (data && data.results) setUpcoming(data.results);
-    } catch (error) {
-      console.error('Error fetching upcoming movies:', error);
-    }
-  };
-  //===========================
-  
-  const getUpcomingMovies2 = async ()=>{
+  const getUpcomingMovies = async ()=>{
     const data = await fetchUpcomingMovies(language);
     console.log('got upcoming', data.results.length)
     if(data && data.results) setUpcoming(data.results);
@@ -119,7 +107,7 @@ export default function HomeScreen() {
   }
   const getKoreaMovies = async ()=>{
     const data = await fetchCountryMovies(language, 'KP');
-    console.log('got Viet Nam', data.results.length)
+    console.log('got Korea', data.results.length)
     if(data && data.results) setKorea(data.results);
   }
   const getInfo = async () => {
@@ -144,7 +132,7 @@ export default function HomeScreen() {
     } catch (error) {
       console.error('Error:', error);
     }
-    console.log('ok')
+    // console.log('ok')
     // navigation.navigate('Profile')
   };
 

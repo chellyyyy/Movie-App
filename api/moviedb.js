@@ -53,35 +53,28 @@ const apiCall = async (endpoint, params) => {
     }
 }
 
-  
-
-
 
 // home screen apis
 export const fetchTrendingMovies = (language) => {
     return apiCall(trendingMoviesEndpoint(language));
 }
-export const fetchNowPlayingMovies = (language) => {
-    return apiCall(nowplayingMoviesEndpoint(language));
-}
-export const fetchUpcomingMovies = async (page = 1, language = language) => {
+export const fetchNowPlayingMovies = async (language, page = 1) => {
     const params = {
         page,
         api_key: apiKey,
     };
-
     try {
-        let response = await apiCall(upcomingMoviesEndpoint(language), params)
+        let response = await apiCall(nowplayingMoviesEndpoint(language), params)
+        
         while (response && response.total_pages > page && response.results) {
-            const nextPage = await apiCall(upcomingMoviesEndpoint(language), {
+            const nextPage = await apiCall(nowplayingMoviesEndpoint(language), {
                 ...params,
                 page: page + 1,
             });
             response.results = response.results.concat(nextPage.results);
             page++;
-            // Giới hạn số page ở đây, nếu ko giới hạn thì nó sẽ
-            // fetch tất cả data nên sẽ tốn rất nhiều thời gian
-            if (page >= 10) {
+            
+            if (page >= 5) { // Giới hạn số page fetch
                 break;
             }
         }
@@ -91,15 +84,110 @@ export const fetchUpcomingMovies = async (page = 1, language = language) => {
         return {};
     }
 };
-export const fetchTopRatedMovies = (language) => {
-    return apiCall(topRatedMoviesEndpoint(language));
-}
-export const fetchPopularMovies = (language) => {
-    return apiCall(popularMoviesEndpoint(language));
-}
-export const fetchCountryMovies = (language, country) => {
-    return apiCall(countryMoviesEndpoint(language, country));
-}
+export const fetchUpcomingMovies = async (language, page = 1) => {
+    const params = {
+        page,
+        api_key: apiKey,
+    };
+    try {
+        let response = await apiCall(upcomingMoviesEndpoint(language), params)
+        
+        while (response && response.total_pages > page && response.results) {
+            const nextPage = await apiCall(upcomingMoviesEndpoint(language), {
+                ...params,
+                page: page + 1,
+            });
+            response.results = response.results.concat(nextPage.results);
+            page++;
+            
+            if (page >= 5) { // Giới hạn số page fetch
+                break;
+            }
+        }
+        return response;
+    } catch (error) {
+        console.log('error: ', error);
+        return {};
+    }
+};
+export const fetchTopRatedMovies = async (language, page = 1) => {
+    const params = {
+        page,
+        api_key: apiKey,
+    };
+    try {
+        let response = await apiCall(topRatedMoviesEndpoint(language), params)
+        
+        while (response && response.total_pages > page && response.results) {
+            const nextPage = await apiCall(topRatedMoviesEndpoint(language), {
+                ...params,
+                page: page + 1,
+            });
+            response.results = response.results.concat(nextPage.results);
+            page++;
+            
+            if (page >= 5) { // Giới hạn số page fetch
+                break;
+            }
+        }
+        return response;
+    } catch (error) {
+        console.log('error: ', error);
+        return {};
+    }
+};
+export const fetchPopularMovies = async (language, page = 1) => {
+    const params = {
+        page,
+        api_key: apiKey,
+    };
+    try {
+        let response = await apiCall(popularMoviesEndpoint(language), params)
+        
+        while (response && response.total_pages > page && response.results) {
+            const nextPage = await apiCall(popularMoviesEndpoint(language), {
+                ...params,
+                page: page + 1,
+            });
+            response.results = response.results.concat(nextPage.results);
+            page++;
+            
+            if (page >= 5) { // Giới hạn số page fetch
+                break;
+            }
+        }
+        return response;
+    } catch (error) {
+        console.log('error: ', error);
+        return {};
+    }
+};
+export const fetchCountryMovies = async (language, country, page = 1) => {
+    const params = {
+        page,
+        api_key: apiKey,
+    };
+    try {
+        let response = await apiCall(countryMoviesEndpoint(language, country), params)
+        
+        while (response && response.total_pages > page && response.results) {
+            const nextPage = await apiCall(countryMoviesEndpoint(language, country), {
+                ...params,
+                page: page + 1,
+            });
+            response.results = response.results.concat(nextPage.results);
+            page++;
+            
+            if (page >= 5) { // Giới hạn số page fetch
+                break;
+            }
+        }
+        return response;
+    } catch (error) {
+        console.log('error: ', error);
+        return {};
+    }
+};
 
 
 // movie screen apis
