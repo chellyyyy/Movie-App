@@ -7,7 +7,7 @@ const slides = [
   {
     key: '1',
     image: require('../../assets/images/logo0.5.png'),
-    text: 'Welcom to MOVIT',
+    text: 'Welcome to MOVIT',
   },
   {
     key: '2',
@@ -43,16 +43,16 @@ const SliderScreen = ({ navigation }) => {
   };
 
   return (
-    <AppIntroSlider 
+    <AppIntroSlider
       renderItem={renderItem}
       data={slides}
       onDone={onDone}
-      activeDotStyle={{backgroundColor: '#ffffff'}}
+      activeDotStyle={{ backgroundColor: '#ffffff' }}
       //ấn được vào mấy cái chấm tròn nha
       dotClickEnabled
       showSkipButton
       // dotStyle={{backgroundColor: '#c60a2080'}} // chấm tròn màu đỏ thấy cũng đẹp
-      dotStyle={{backgroundColor: '#ffffff80'}}
+      dotStyle={{ backgroundColor: '#ffffff80' }}
       onSkip={onSkip}
     />
   );
